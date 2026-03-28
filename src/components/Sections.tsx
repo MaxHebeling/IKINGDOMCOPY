@@ -146,11 +146,161 @@ const WWD_CARDS = [
   },
 ];
 
+/* SVG digital architecture workstation background */
+function DigitalArchBg() {
+  const VP = { x: 600, y: 160 }; // vanishing point
+  const BOTTOM = 820;
+  const GOLD = "#D4AF37";
+
+  // Perspective converging vertical lines
+  const vLineBottomXs = [0, 109, 218, 327, 436, 545, 600, 655, 764, 873, 982, 1091, 1200];
+  // Horizontal lines with perspective width
+  const hLineYs = [220, 290, 370, 460, 560, 670, BOTTOM];
+
+  // Workstation panels: [x, y, w, h, label, sublabel]
+  const panels: [number, number, number, number, string, string][] = [
+    [490, 200, 220, 50, "MISSION CONTROL", "CORE SYSTEM v2.4"],
+    [200, 360, 160, 40, "DATA LAYER", "REALTIME FEED"],
+    [840, 350, 160, 40, "API GATEWAY", "REST / GRAPHQL"],
+    [130, 530, 140, 36, "UI SYSTEM", "DESIGN ARCH"],
+    [460, 490, 280, 52, "CONVERSION ENGINE", "PRIMARY NODE ACTIVE"],
+    [930, 510, 140, 36, "ANALYTICS", "PROCESSING..."],
+    [300, 660, 150, 38, "AUTH MODULE", "SECURE LAYER"],
+    [750, 640, 170, 38, "CACHE LAYER", "CDN DISTRIBUTED"],
+  ];
+
+  // Connection paths between panel centers
+  const connections: [number, number, number, number][] = [
+    [600, 225, 280, 380],    // mission → data
+    [600, 225, 920, 370],    // mission → api
+    [280, 380, 200, 548],    // data → ui
+    [600, 516, 280, 380],    // engine → data
+    [600, 516, 920, 370],    // engine → api
+    [600, 516, 375, 679],    // engine → auth
+    [920, 370, 1000, 528],   // api → analytics
+    [1000, 528, 835, 659],   // analytics → cache
+    [375, 679, 600, 516],    // auth → engine
+  ];
+
+  // Nodes at key intersections
+  const nodes = [
+    { x: 600, y: 225 }, { x: 280, y: 380 }, { x: 920, y: 370 },
+    { x: 200, y: 548 }, { x: 600, y: 516 }, { x: 1000, y: 528 },
+    { x: 375, y: 679 }, { x: 835, y: 659 },
+  ];
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
+      {/* Base */}
+      <div className="absolute inset-0 bg-[#030302]" />
+
+      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1200 820" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          {/* Radial vignette */}
+          <radialGradient id="vignette" cx="50%" cy="55%" r="55%">
+            <stop offset="0%" stopColor="#030302" stopOpacity="0" />
+            <stop offset="100%" stopColor="#030302" stopOpacity="0.92" />
+          </radialGradient>
+          {/* Flowing data dash animation */}
+          <style>{`
+            @keyframes flowDash { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
+            @keyframes nodePulse { 0%,100% { opacity:0.18; r:3; } 50% { opacity:0.6; r:5; } }
+            @keyframes ringExpand { 0% { r:6; opacity:0.4; } 100% { r:22; opacity:0; } }
+          `}</style>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+        </defs>
+
+        {/* ── Perspective grid ── */}
+        <g opacity="0.06" stroke={GOLD} strokeWidth="0.6" fill="none">
+          {vLineBottomXs.map((bx, i) => (
+            <line key={`v${i}`} x1={VP.x} y1={VP.y} x2={bx} y2={BOTTOM} />
+          ))}
+          {hLineYs.map((y) => {
+            const t = (y - VP.y) / (BOTTOM - VP.y);
+            const hw = t * 600;
+            return <line key={`h${y}`} x1={VP.x - hw} y1={y} x2={VP.x + hw} y2={y} />;
+          })}
+        </g>
+
+        {/* ── Connection lines ── */}
+        {connections.map(([x1, y1, x2, y2], i) => (
+          <g key={`conn${i}`}>
+            <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={GOLD} strokeWidth="0.7" strokeOpacity="0.1" />
+            <line
+              x1={x1} y1={y1} x2={x2} y2={y2}
+              stroke={GOLD} strokeWidth="1.2" strokeOpacity="0.22" fill="none"
+              strokeDasharray="6 14"
+              style={{ animation: `flowDash ${2.8 + i * 0.4}s linear infinite`, animationDelay: `${i * 0.35}s` }}
+            />
+          </g>
+        ))}
+
+        {/* ── Workstation panels ── */}
+        {panels.map(([x, y, w, h, label, sublabel], i) => (
+          <g key={`panel${i}`} opacity="0.18">
+            {/* Panel body */}
+            <rect x={x - w / 2} y={y - h / 2} width={w} height={h} rx="2" fill="none" stroke={GOLD} strokeWidth="0.8" />
+            {/* Inner thin line */}
+            <line x1={x - w / 2 + 4} y1={y - h / 2 + 8} x2={x + w / 2 - 4} y2={y - h / 2 + 8} stroke={GOLD} strokeWidth="0.5" />
+            {/* Corner accents */}
+            <rect x={x - w / 2} y={y - h / 2} width={6} height={6} fill={GOLD} opacity="0.6" rx="0.5" />
+            <rect x={x + w / 2 - 6} y={y - h / 2} width={6} height={6} fill={GOLD} opacity="0.6" rx="0.5" />
+            {/* Label */}
+            <text x={x} y={y - 4} textAnchor="middle" fill={GOLD} fontSize="7" fontFamily="monospace" letterSpacing="2" opacity="0.9">{label}</text>
+            <text x={x} y={y + 10} textAnchor="middle" fill={GOLD} fontSize="5.5" fontFamily="monospace" letterSpacing="1" opacity="0.5">{sublabel}</text>
+            {/* Status bar fill */}
+            <rect x={x - w / 2 + 4} y={y + h / 2 - 7} width={(w - 8) * (0.4 + i * 0.1)} height="3" rx="1" fill={GOLD} opacity="0.25" />
+          </g>
+        ))}
+
+        {/* ── Central command ring ── */}
+        <g opacity="0.12" fill="none" stroke={GOLD}>
+          <circle cx={600} cy={225} r={50} strokeWidth="0.6" />
+          <circle cx={600} cy={225} r={36} strokeWidth="0.4" />
+          <circle cx={600} cy={225} r={22} strokeWidth="0.8" />
+          <line x1={550} y1={225} x2={650} y2={225} strokeWidth="0.4" />
+          <line x1={600} y1={175} x2={600} y2={275} strokeWidth="0.4" />
+        </g>
+
+        {/* ── Nodes ── */}
+        {nodes.map((n, i) => (
+          <g key={`node${i}`} filter="url(#glow)">
+            <circle cx={n.x} cy={n.y} r={3} fill={GOLD}
+              style={{ animation: `nodePulse ${2 + i * 0.3}s ease-in-out infinite`, animationDelay: `${i * 0.4}s` }} />
+            <circle cx={n.x} cy={n.y} r={6} fill="none" stroke={GOLD} strokeWidth="0.6"
+              style={{ animation: `ringExpand ${3 + i * 0.4}s ease-out infinite`, animationDelay: `${i * 0.5}s` }} />
+          </g>
+        ))}
+
+        {/* ── Technical annotation lines ── */}
+        <g opacity="0.07" stroke={GOLD} strokeWidth="0.5" fill="none">
+          <line x1="80" y1="280" x2="80" y2="680" /><line x1="75" y1="280" x2="85" y2="280" /><line x1="75" y1="680" x2="85" y2="680" />
+          <line x1="1120" y1="310" x2="1120" y2="650" /><line x1="1115" y1="310" x2="1125" y2="310" /><line x1="1115" y1="650" x2="1125" y2="650" />
+          <text x="68" y="485" textAnchor="middle" fill={GOLD} fontSize="6" fontFamily="monospace" letterSpacing="1" transform="rotate(-90,68,485)">DEPTH AXIS Z</text>
+        </g>
+
+        {/* ── Vignette overlay ── */}
+        <rect x="0" y="0" width="1200" height="820" fill="url(#vignette)" />
+      </svg>
+
+      {/* Top & bottom gradient fades */}
+      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#030302] to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#050504] to-transparent" />
+      {/* Dark center overlay to keep text legible */}
+      <div className="absolute inset-0 bg-[#030302]/60" />
+    </div>
+  );
+}
+
 export function WhatWeDo() {
   return (
     <>
       <Divider />
-      <section className="py-[140px] md:py-[160px] px-8 bg-[#050504]">
+      <section className="relative py-[140px] md:py-[160px] px-8 overflow-hidden">
+        <DigitalArchBg />
         <div className="max-w-[1280px] mx-auto">
 
           {/* Header */}
