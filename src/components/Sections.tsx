@@ -91,7 +91,7 @@ export function Capabilities() {
   return (
     <>
       <Divider />
-      <section id="capabilities" className="py-[140px] md:py-[180px] px-8 bg-[#030303]">
+      <section id="capabilities" className="py-[140px] md:py-[180px] px-8">
         <div className="max-w-[1200px] mx-auto">
 
           {/* Header */}
