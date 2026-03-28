@@ -317,7 +317,7 @@ export function WhatWeDo() {
             </Reveal>
             <Reveal delay={0.2}>
               <p className="text-secondary text-[16px] leading-[1.85] font-light max-w-[600px] mx-auto">
-                Construimos plataformas digitales que posicionan tu marca, generan confianza y convierten visitantes en clientes de alto valor.
+                Nuestra arquitectura digital posiciona tu marca, genera confianza y convierte visitantes en clientes de alto valor.
               </p>
             </Reveal>
           </div>
