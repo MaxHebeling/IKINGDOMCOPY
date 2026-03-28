@@ -188,37 +188,78 @@ const CLIENTS = [
   { name: "DyT", logo: "/clients/dyt.png" },
 ];
 
+function NodeConnector({ delay }: { delay: number }) {
+  return (
+    <div className="flex items-center flex-shrink-0 w-[60px]">
+      <div className="relative w-full h-px">
+        <div className="absolute inset-0 bg-ink/10" />
+        <motion.div
+          className="absolute top-0 left-0 h-full bg-ink/60"
+          style={{ width: "30%" }}
+          animate={{ left: ["0%", "100%"], opacity: [0, 1, 0] }}
+          transition={{ duration: 2.5, delay, ease: "linear", repeat: Infinity }}
+        />
+        <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-1/2 w-1 h-1 rounded-full bg-ink/30" />
+      </div>
+    </div>
+  );
+}
+
 export function Clients() {
+  const repeated = [...CLIENTS, ...CLIENTS, ...CLIENTS];
   return (
     <>
       <Divider />
-      <section className="py-[80px] md:py-[100px] px-8 overflow-hidden">
-        <div className="max-w-[1280px] mx-auto">
+      <section className="py-[80px] md:py-[100px] overflow-hidden">
+        <div className="max-w-[1280px] mx-auto px-8">
           <Reveal>
             <Label>Empresas que confían en nosotros</Label>
           </Reveal>
         </div>
 
-        <div className="relative mt-12 overflow-hidden">
+        <div className="relative mt-14">
           {/* Fade edges */}
-          <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-bg to-transparent pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-bg to-transparent pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-r from-bg to-transparent pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-l from-bg to-transparent pointer-events-none" />
 
           <motion.div
-            className="flex gap-6 w-max"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 30, ease: "linear", repeat: Infinity }}
+            className="flex items-center w-max"
+            animate={{ x: ["0%", "-33.33%"] }}
+            transition={{ duration: 35, ease: "linear", repeat: Infinity }}
           >
-            {[...CLIENTS, ...CLIENTS].map((c, i) => (
-              <div
-                key={i}
-                className="flex-shrink-0 w-[200px] h-[110px] border border-divider hover:border-ink/20 transition-colors duration-500 flex items-center justify-center group"
-              >
-                {c.logo ? (
-                  <img src={c.logo} alt={c.name} className="max-h-[50px] max-w-[140px] w-auto object-contain opacity-50 group-hover:opacity-80 transition-opacity duration-500 filter grayscale group-hover:grayscale-0" />
-                ) : (
-                  <span className="text-[11px] tracking-[0.2em] uppercase text-secondary/30 group-hover:text-secondary/60 transition-colors duration-500">{c.name}</span>
-                )}
+            {repeated.map((c, i) => (
+              <div key={i} className="flex items-center flex-shrink-0">
+                {/* Node */}
+                <div className="relative group flex-shrink-0">
+                  {/* Outer ring pulse */}
+                  <motion.div
+                    className="absolute inset-0 rounded-full border border-ink/20"
+                    animate={{ scale: [1, 1.15], opacity: [0.4, 0] }}
+                    transition={{ duration: 2.5, delay: i * 0.3, repeat: Infinity, ease: "easeOut" }}
+                  />
+                  {/* Node circle */}
+                  <div className="w-[120px] h-[120px] rounded-full border border-ink/15 bg-bg group-hover:border-ink/40 transition-colors duration-500 flex items-center justify-center relative overflow-hidden">
+                    {/* Scan line */}
+                    <motion.div
+                      className="absolute left-0 right-0 h-px bg-ink/15"
+                      animate={{ top: ["-10%", "110%"] }}
+                      transition={{ duration: 3, delay: i * 0.5, repeat: Infinity, ease: "linear" }}
+                    />
+                    <img
+                      src={c.logo!}
+                      alt={c.name}
+                      className="max-h-[64px] max-w-[80px] w-auto object-contain opacity-40 group-hover:opacity-75 transition-opacity duration-500 filter grayscale brightness-150"
+                    />
+                  </div>
+                  {/* Node dot top */}
+                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-ink/30 group-hover:bg-ink/70 transition-colors duration-500" />
+                  {/* Label */}
+                  <p className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] tracking-[0.2em] uppercase text-secondary/30 group-hover:text-secondary/60 transition-colors duration-500">
+                    {c.name}
+                  </p>
+                </div>
+                {/* Connector */}
+                <NodeConnector delay={i * 0.4} />
               </div>
             ))}
           </motion.div>
