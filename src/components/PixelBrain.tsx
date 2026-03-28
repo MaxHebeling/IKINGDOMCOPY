@@ -232,7 +232,7 @@ export default function PixelBrain() {
     // ── SPINAL CORD — extends downward from brain stem ──
     // Same point style, dense column going straight down
     const spineStartY = -brainRadius * 0.5 - 25; // aligns exactly with brainstem bottom
-    const spineEndY = -600; // extends far down (camera will scroll to reveal)
+    const spineEndY = -2200; // extends far down (camera will scroll to reveal)
     const spineRadius = 5; // width of the cord
 
     for (let i = 0; i < SPINE_POINTS; i++) {

@@ -186,81 +186,99 @@ const CLIENTS = [
   { name: "DyT", logo: "/clients/dyt.png" },
 ];
 
-function NodeConnector({ delay }: { delay: number }) {
-  return (
-    <div className="flex items-center flex-shrink-0 w-[60px]">
-      <div className="relative w-full h-px">
-        <div className="absolute inset-0 bg-ink/10" />
-        <motion.div
-          className="absolute top-0 left-0 h-full bg-ink/60"
-          style={{ width: "30%" }}
-          animate={{ left: ["0%", "100%"], opacity: [0, 1, 0] }}
-          transition={{ duration: 2.5, delay, ease: "linear", repeat: Infinity }}
-        />
-        <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-1/2 w-1 h-1 rounded-full bg-ink/30" />
-      </div>
-    </div>
-  );
-}
+// Constellation positions: [x%, y%] relative to container
+const CONSTELLATION_POSITIONS = [
+  { x: 12, y: 30 },
+  { x: 35, y: 65 },
+  { x: 58, y: 20 },
+  { x: 82, y: 55 },
+];
 
 export function Clients() {
-  const repeated = [...CLIENTS, ...CLIENTS, ...CLIENTS];
   return (
     <>
       <Divider />
-      <section className="py-[80px] md:py-[100px] overflow-hidden">
-        <div className="max-w-[1280px] mx-auto px-8">
-          <Reveal>
+      <section className="py-[100px] md:py-[130px] px-8">
+        <div className="max-w-[1280px] mx-auto">
+          <Reveal className="mb-16">
             <Label>Empresas que confían en nosotros</Label>
           </Reveal>
-        </div>
 
-        <div className="relative mt-14">
-          {/* Fade edges */}
-          <div className="absolute left-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-r from-bg to-transparent pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-l from-bg to-transparent pointer-events-none" />
+          {/* SVG constellation lines */}
+          <div className="relative w-full" style={{ height: "260px" }}>
+            <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+              {CLIENTS.map((_, i) =>
+                CLIENTS.slice(i + 1).map((__, j) => {
+                  const a = CONSTELLATION_POSITIONS[i];
+                  const b = CONSTELLATION_POSITIONS[i + 1 + j];
+                  return (
+                    <motion.line
+                      key={`${i}-${j}`}
+                      x1={`${a.x}%`} y1={`${a.y}%`}
+                      x2={`${b.x}%`} y2={`${b.y}%`}
+                      stroke="#D4AF37"
+                      strokeWidth="0.5"
+                      strokeOpacity="0.12"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{ pathLength: 1, opacity: 1 }}
+                      transition={{ duration: 2, delay: i * 0.3 + j * 0.2 }}
+                    />
+                  );
+                })
+              )}
+            </svg>
 
-          <motion.div
-            className="flex items-center w-max"
-            animate={{ x: ["0%", "-33.33%"] }}
-            transition={{ duration: 35, ease: "linear", repeat: Infinity }}
-          >
-            {repeated.map((c, i) => (
-              <div key={i} className="flex items-center flex-shrink-0">
-                {/* Node */}
-                <div className="relative group flex-shrink-0">
-                  {/* Outer ring pulse */}
+            {CLIENTS.map((c, i) => {
+              const pos = CONSTELLATION_POSITIONS[i];
+              return (
+                <motion.div
+                  key={c.name}
+                  className="absolute group"
+                  style={{ left: `${pos.x}%`, top: `${pos.y}%`, transform: "translate(-50%, -50%)" }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1, delay: 0.3 + i * 0.2 }}
+                >
+                  {/* Pulse ring */}
                   <motion.div
                     className="absolute inset-0 rounded-full border border-ink/20"
-                    animate={{ scale: [1, 1.15], opacity: [0.4, 0] }}
-                    transition={{ duration: 2.5, delay: i * 0.3, repeat: Infinity, ease: "easeOut" }}
+                    animate={{ scale: [1, 1.4], opacity: [0.3, 0] }}
+                    transition={{ duration: 3, delay: i * 0.7, repeat: Infinity, ease: "easeOut" }}
+                    style={{ borderRadius: "50%" }}
                   />
-                  {/* Node circle */}
-                  <div className="w-[120px] h-[120px] rounded-full border border-ink/15 bg-bg group-hover:border-ink/40 transition-colors duration-500 flex items-center justify-center relative overflow-hidden">
+
+                  {/* Node */}
+                  <div className="w-[130px] h-[130px] rounded-full border border-ink/15 bg-[#0A0A08] group-hover:border-ink/35 transition-all duration-700 flex flex-col items-center justify-center gap-2 relative overflow-hidden cursor-default">
+                    {/* Inner glow on hover */}
+                    <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ background: "radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 70%)" }} />
                     {/* Scan line */}
                     <motion.div
-                      className="absolute left-0 right-0 h-px bg-ink/15"
-                      animate={{ top: ["-10%", "110%"] }}
-                      transition={{ duration: 3, delay: i * 0.5, repeat: Infinity, ease: "linear" }}
+                      className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-ink/20 to-transparent"
+                      animate={{ top: ["-5%", "105%"] }}
+                      transition={{ duration: 4, delay: i * 1.1, repeat: Infinity, ease: "linear" }}
                     />
                     <img
                       src={c.logo!}
                       alt={c.name}
-                      className="max-h-[64px] max-w-[80px] w-auto object-contain opacity-40 group-hover:opacity-75 transition-opacity duration-500 filter grayscale brightness-150"
+                      className="max-h-[60px] max-w-[85px] w-auto object-contain opacity-35 group-hover:opacity-70 transition-opacity duration-700 filter grayscale brightness-150"
                     />
                   </div>
-                  {/* Node dot top */}
-                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-ink/30 group-hover:bg-ink/70 transition-colors duration-500" />
+
+                  {/* Dot */}
+                  <motion.div
+                    className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-ink/40"
+                    animate={{ opacity: [0.4, 1, 0.4] }}
+                    transition={{ duration: 2.5, delay: i * 0.5, repeat: Infinity }}
+                  />
+
                   {/* Label */}
-                  <p className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] tracking-[0.2em] uppercase text-secondary/30 group-hover:text-secondary/60 transition-colors duration-500">
+                  <p className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] tracking-[0.22em] uppercase text-secondary/25 group-hover:text-secondary/55 transition-colors duration-500">
                     {c.name}
                   </p>
-                </div>
-                {/* Connector */}
-                <NodeConnector delay={i * 0.4} />
-              </div>
-            ))}
-          </motion.div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </section>
     </>
