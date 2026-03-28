@@ -107,26 +107,18 @@ export function Capabilities() {
    MARQUEE — slow scrolling statement
    ═══════════════════════════════════════════════════════════ */
 
-const MARQUEE_PHRASES = [
-  "El problema no es tener web.",
-  "Es tener una que no ayuda a vender.",
-];
-
 export function Marquee() {
-  const text = MARQUEE_PHRASES.join("   ·   ");
   return (
-    <div className="relative overflow-hidden border-y border-divider py-5 bg-bg">
-      <motion.div
-        className="flex whitespace-nowrap"
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 40, ease: "linear", repeat: Infinity }}
+    <div className="border-y border-divider py-14 md:py-20 px-8 text-center">
+      <motion.h2
+        animate={{ color: ["#D4AF37", "#ffffff", "#D4AF37"] }}
+        transition={{ duration: 3, ease: "easeInOut", repeat: Infinity }}
+        className="text-[clamp(22px,3.5vw,44px)] font-light leading-[1.3] tracking-[-0.01em]"
+        style={{ fontFamily: "var(--font-serif)" }}
       >
-        {[text, text].map((t, i) => (
-          <span key={i} className="text-[13px] font-light tracking-[0.12em] text-secondary/70 pr-16">
-            {t}
-          </span>
-        ))}
-      </motion.div>
+        El problema no es tener web.<br />
+        Es tener una que no ayuda a vender.
+      </motion.h2>
     </div>
   );
 }
