@@ -43,60 +43,147 @@ function CTA({ href, children }: { href: string; children: string }) {
    CAPABILITIES
    ═══════════════════════════════════════════════════════════ */
 
-export function Capabilities() {
-  const { t } = useLang();
-  const CAPS = [
-    { metric: t("cap.1.metric"), metricLabel: t("cap.1.metricLabel"), title: t("cap.1.title"), desc: t("cap.1.desc") },
-    { metric: t("cap.2.metric"), metricLabel: t("cap.2.metricLabel"), title: t("cap.2.title"), desc: t("cap.2.desc") },
-    { metric: t("cap.3.metric"), metricLabel: t("cap.3.metricLabel"), title: t("cap.3.title"), desc: t("cap.3.desc") },
-  ];
+const PLANS = [
+  {
+    featured: false,
+    label: "Web Estratégica",
+    price: "$3,500",
+    copy: "La base correcta para posicionar tu marca y empezar a convertir con claridad.",
+    features: [
+      "Diagnóstico estratégico",
+      "Estructura de mensaje",
+      "Diseño premium alineado",
+      "Desarrollo optimizado",
+      "Base de medición lista",
+    ],
+  },
+  {
+    featured: true,
+    label: "Sistema de Captación",
+    price: "$7,500",
+    copy: "Un sistema diseñado para captar, filtrar y convertir clientes de forma consistente.",
+    features: [
+      "Todo lo anterior",
+      "Páginas adicionales estratégicas",
+      "Integraciones clave",
+      "Automatización inicial",
+      "Formularios avanzados",
+      "Optimización de leads",
+    ],
+  },
+  {
+    featured: false,
+    label: "Ecosistema Completo",
+    price: "$25,000",
+    copy: "Infraestructura completa para operaciones que necesitan escalar con orden y automatización.",
+    features: [
+      "Arquitectura digital completa",
+      "CRM + procesos conectados",
+      "Automatizaciones avanzadas",
+      "Flujos internos",
+      "Integraciones a medida",
+      "Base escalable",
+    ],
+  },
+];
 
+export function Capabilities() {
   return (
     <>
       <Divider />
-      <section id="capabilities" className="py-[120px] md:py-[140px] px-8">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-16 lg:gap-24">
-            <div className="lg:sticky lg:top-[120px] lg:self-start">
-              <Reveal><Label>{t("cap.label")}</Label></Reveal>
-              <Reveal delay={0.1}>
-                <h2 className="mt-5 text-ink leading-[1.08]" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 700 }}>
-                  {t("cap.heading")}
-                </h2>
-              </Reveal>
-              <Reveal delay={0.2}>
-                <p className="mt-5 text-secondary text-[15px] leading-[1.8] font-light text-justify">{t("cap.sub")}</p>
-              </Reveal>
-            </div>
+      <section id="capabilities" className="py-[140px] md:py-[180px] px-8 bg-[#030303]">
+        <div className="max-w-[1200px] mx-auto">
 
-            {/* Right — capability cards */}
-            <div className="space-y-6">
-              {CAPS.map((c, i) => (
-                <Reveal key={c.title} delay={0.1 + i * 0.1}>
-                  <div className="group relative p-8 md:p-10 border border-divider hover:border-ink/15 transition-colors duration-500 overflow-hidden">
-                    {/* Live status indicator — goes bright on hover */}
-                    <div className="absolute top-5 right-5 flex items-center gap-2">
-                      <span className="text-[8px] tracking-[0.2em] uppercase text-secondary/0 group-hover:text-secondary/40 transition-all duration-700">ACTIVE</span>
-                      <div className="w-1.5 h-1.5 rounded-full bg-ink/10 group-hover:bg-ink/60 transition-all duration-500" />
-                    </div>
-                    {/* Scanning line on hover */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-ink/8 to-transparent animate-[scanDown_3s_ease-in-out_infinite]" />
-                    </div>
-                    {/* Outcome metric */}
-                    <div className="flex items-baseline gap-3 mb-5">
-                      <span className="text-ink text-[28px] font-light tracking-[-0.02em]" style={{ fontFamily: "var(--font-serif)" }}>{c.metric}</span>
-                      <span className="text-[11px] tracking-[0.1em] uppercase text-secondary">{c.metricLabel}</span>
-                    </div>
-                    <h3 className="text-[18px] font-semibold text-ink mb-3 tracking-[-0.01em]">{c.title}</h3>
-                    <p className="text-[14px] leading-[1.8] text-secondary font-light text-justify">{c.desc}</p>
-                    {/* Bottom border draws on hover */}
-                    <div className="absolute bottom-0 left-0 right-0 h-px bg-ink/10 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]" />
-                  </div>
-                </Reveal>
-              ))}
-            </div>
+          {/* Header */}
+          <div className="text-center mb-[80px] md:mb-[100px]">
+            <Reveal>
+              <p className="text-[10px] font-semibold tracking-[0.4em] uppercase text-secondary mb-6">Soluciones</p>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h2 className="text-white mb-6 leading-[1.06]" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(34px, 4.5vw, 58px)", fontWeight: 700 }}>
+                Arquitecturas diseñadas para escalar tu negocio
+              </h2>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p className="text-secondary text-[16px] leading-[1.85] font-light max-w-[560px] mx-auto">
+                No vendemos páginas web. Construimos sistemas que convierten, posicionan y sostienen crecimiento real.
+              </p>
+            </Reveal>
           </div>
+
+          {/* Plans grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 items-stretch">
+            {PLANS.map((plan, i) => (
+              <Reveal key={plan.label} delay={0.1 + i * 0.1}>
+                <div
+                  className={`group relative flex flex-col h-full rounded-sm transition-all duration-500 ${
+                    plan.featured
+                      ? "bg-[#0C0B09] border border-ink/30 md:-mt-6 md:-mb-6 md:py-14 py-10 px-8 md:px-10"
+                      : "bg-[#080807] border border-[#1C1A10] py-10 px-8 hover:border-ink/15"
+                  }`}
+                  style={plan.featured ? { boxShadow: "0 0 60px rgba(212,175,55,0.07), 0 0 120px rgba(212,175,55,0.03)" } : {}}
+                >
+                  {/* Featured glow ring */}
+                  {plan.featured && (
+                    <div className="absolute inset-0 rounded-sm pointer-events-none" style={{ boxShadow: "inset 0 0 0 1px rgba(212,175,55,0.18)" }} />
+                  )}
+
+                  {/* Recommended pill */}
+                  {plan.featured && (
+                    <div className="absolute -top-[13px] left-1/2 -translate-x-1/2">
+                      <span className="inline-block px-4 py-[5px] text-[9px] font-semibold tracking-[0.3em] uppercase bg-ink text-bg rounded-full">
+                        Recomendado
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Price */}
+                  <div className="mb-6">
+                    <p className="text-ink text-[clamp(36px,4vw,48px)] font-light tracking-[-0.03em] leading-none" style={{ fontFamily: "var(--font-serif)" }}>
+                      {plan.price}
+                    </p>
+                  </div>
+
+                  {/* Title + copy */}
+                  <h3 className={`font-semibold mb-3 tracking-[-0.01em] ${plan.featured ? "text-white text-[20px]" : "text-white/90 text-[18px]"}`}>
+                    {plan.label}
+                  </h3>
+                  <p className="text-secondary text-[14px] leading-[1.8] font-light mb-8">
+                    {plan.copy}
+                  </p>
+
+                  {/* Divider */}
+                  <div className="h-px bg-divider mb-7" />
+
+                  {/* Features */}
+                  <ul className="space-y-3 flex-grow mb-10">
+                    {plan.features.map((f) => (
+                      <li key={f} className="flex items-start gap-3 text-[13px] text-secondary/80 font-light leading-[1.6]">
+                        <span className="mt-[7px] w-[3px] h-[3px] rounded-full bg-ink/50 flex-shrink-0" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA */}
+                  <div className="mt-auto">
+                    {plan.featured ? (
+                      <a href="#contact" data-hover className="group/btn relative flex items-center justify-center w-full py-[14px] text-[12px] font-semibold tracking-[0.18em] uppercase bg-ink text-bg overflow-hidden transition-all duration-500 rounded-sm">
+                        <div className="absolute inset-0 bg-secondary origin-left scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                        <span className="relative z-10">Agendar llamada estratégica</span>
+                      </a>
+                    ) : (
+                      <a href="#contact" data-hover className="group/btn relative flex items-center justify-center w-full py-[13px] text-[12px] font-semibold tracking-[0.18em] uppercase text-ink border border-ink/25 overflow-hidden transition-all duration-500 rounded-sm hover:text-bg hover:border-ink">
+                        <div className="absolute inset-0 bg-ink origin-left scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                        <span className="relative z-10 transition-colors duration-500">Agendar llamada estratégica</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
         </div>
       </section>
     </>
