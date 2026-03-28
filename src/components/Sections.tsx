@@ -472,7 +472,7 @@ export function Clients() {
           </Reveal>
 
           {/* SVG constellation lines */}
-          <div className="relative w-full" style={{ height: "260px" }}>
+          <div className="relative w-full" style={{ height: "420px" }}>
             <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
               {CLIENTS.map((_, i) =>
                 CLIENTS.slice(i + 1).map((__, j) => {
