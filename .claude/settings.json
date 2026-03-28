@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/maxhebeling -type f \\\\\\(-name *.png -o -name *.svg -o -name *.webp \\\\\\) -newer /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/package.json)",
+      "Bash(find /Users/maxhebeling -type d -iname *hebeling*group* -o -type d -iname '*hebeling group*')",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
+    ]
+  }
+}

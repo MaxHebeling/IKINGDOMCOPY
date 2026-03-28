@@ -110,8 +110,6 @@ export function Capabilities() {
 const MARQUEE_PHRASES = [
   "El problema no es tener web.",
   "Es tener una que no ayuda a vender.",
-  "Cuando la página no aclara la oferta, no genera confianza y no mueve al siguiente paso,",
-  "termina siendo una pieza bonita que no sostiene ventas.",
 ];
 
 export function Marquee() {
@@ -184,6 +182,59 @@ export function Proof() {
               {t("proof.fine")}
             </p>
           </Reveal>
+        </div>
+      </section>
+    </>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CLIENTS — logo slider
+   ═══════════════════════════════════════════════════════════ */
+
+const CLIENTS = [
+  { name: "Empresa 1", logo: null },
+  { name: "Empresa 2", logo: null },
+  { name: "Empresa 3", logo: null },
+  { name: "Empresa 4", logo: null },
+  { name: "Empresa 5", logo: null },
+  { name: "Empresa 6", logo: null },
+];
+
+export function Clients() {
+  return (
+    <>
+      <Divider />
+      <section className="py-[80px] md:py-[100px] px-8 overflow-hidden">
+        <div className="max-w-[1280px] mx-auto">
+          <Reveal>
+            <Label>Empresas que confían en nosotros</Label>
+          </Reveal>
+        </div>
+
+        <div className="relative mt-12 overflow-hidden">
+          {/* Fade edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-bg to-transparent pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-bg to-transparent pointer-events-none" />
+
+          <motion.div
+            className="flex gap-6 w-max"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 30, ease: "linear", repeat: Infinity }}
+          >
+            {[...CLIENTS, ...CLIENTS].map((c, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 w-[200px] h-[110px] border border-divider hover:border-ink/20 transition-colors duration-500 flex items-center justify-center group"
+              >
+                {c.logo ? (
+                  <img src={c.logo} alt={c.name} className="max-h-[50px] max-w-[140px] w-auto object-contain opacity-50 group-hover:opacity-80 transition-opacity duration-500 filter grayscale group-hover:grayscale-0" />
+                ) : (
+                  <span className="text-[11px] tracking-[0.2em] uppercase text-secondary/30 group-hover:text-secondary/60 transition-colors duration-500">{c.name}</span>
+                )}
+              </div>
+            ))}
+          </motion.div>
         </div>
       </section>
     </>

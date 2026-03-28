@@ -6,7 +6,7 @@ import Cursor from "@/components/Cursor";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import PixelBrain from "@/components/PixelBrain";
-import { Capabilities, Marquee, Proof, Process, Engagement, Contact, Footer } from "@/components/Sections";
+import { Capabilities, Marquee, Proof, Clients, Process, Engagement, Contact, Footer } from "@/components/Sections";
 
 export default function Home() {
   return (
@@ -25,6 +25,7 @@ export default function Home() {
         <Capabilities />
         <Marquee />
         <Proof />
+        <Clients />
         <Process />
         <Engagement />
         <Contact />
