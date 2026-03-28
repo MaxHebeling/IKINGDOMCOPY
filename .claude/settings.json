@@ -5,7 +5,13 @@
       "Bash(find /Users/maxhebeling -type d -iname *hebeling*group* -o -type d -iname '*hebeling group*')",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(find /Users/maxhebeling -type f \\\\\\(-name *.png -o -name *.jpg -o -name *.svg -o -name *.webp \\\\\\))",
+      "Bash(cp \"/Users/maxhebeling/.openclaw/workspace/ikingdom-brand/public/client-logos/reino-editorial.png\" /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/public/clients/reino-editorial.png)",
+      "Bash(cp \"/Users/maxhebeling/.openclaw/workspace/ikingdom-brand/public/client-logos/imperium-group.png\" /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/public/clients/imperium-group.png)",
+      "Bash(cp \"/Users/maxhebeling/.openclaw/workspace/ikingdom-brand/public/client-logos/distinct-construction.png\" /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/public/clients/distinct-construction.png)",
+      "Bash(cp \"/Users/maxhebeling/.openclaw/workspace/ikingdom-brand/public/client-logos/raf-logo.png\" /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/public/clients/raf.png)",
+      "Bash(cp \"/Users/maxhebeling/.openclaw/workspace/ikingdom-brand/public/client-logos/dyt-comunicaciones.png\" /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/public/clients/dyt.png)"
     ]
   }
 }

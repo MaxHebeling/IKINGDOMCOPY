@@ -117,7 +117,7 @@ export function Marquee() {
         style={{ fontFamily: "var(--font-serif)" }}
       >
         El problema no es tener web.<br />
-        Es tener una que no ayuda a vender.
+        ES TENER UNA QUE NO AYUDA A VENDER.
       </motion.h2>
     </div>
   );
@@ -180,12 +180,12 @@ export function Proof() {
    ═══════════════════════════════════════════════════════════ */
 
 const CLIENTS = [
-  { name: "Empresa 1", logo: null },
-  { name: "Empresa 2", logo: null },
-  { name: "Empresa 3", logo: null },
-  { name: "Empresa 4", logo: null },
-  { name: "Empresa 5", logo: null },
-  { name: "Empresa 6", logo: null },
+  { name: "Reino Editorial", logo: "/clients/reino-editorial.png" },
+  { name: "Imperium Group", logo: "/clients/imperium-group.png" },
+  { name: "Distinct Construction", logo: "/clients/distinct-construction.png" },
+  { name: "Max Hebeling", logo: "/clients/max-hebeling.png" },
+  { name: "RAF", logo: "/clients/raf.png" },
+  { name: "DyT", logo: "/clients/dyt.png" },
 ];
 
 export function Clients() {
