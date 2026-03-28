@@ -276,7 +276,7 @@ function DigitalArchBg() {
         ))}
 
         {/* ── Technical annotation lines ── */}
-        <g opacity="0.07" stroke={GOLD} strokeWidth="0.5" fill="none">
+        <g opacity="0.18" stroke={GOLD} strokeWidth="0.5" fill="none">
           <line x1="80" y1="280" x2="80" y2="680" /><line x1="75" y1="280" x2="85" y2="280" /><line x1="75" y1="680" x2="85" y2="680" />
           <line x1="1120" y1="310" x2="1120" y2="650" /><line x1="1115" y1="310" x2="1125" y2="310" /><line x1="1115" y1="650" x2="1125" y2="650" />
           <text x="68" y="485" textAnchor="middle" fill={GOLD} fontSize="6" fontFamily="monospace" letterSpacing="1" transform="rotate(-90,68,485)">DEPTH AXIS Z</text>
