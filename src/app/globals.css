@@ -23,6 +23,7 @@ body {
   font-family: "Inter", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  text-align: justify;
 }
 
 ::selection { background: rgba(212,175,55,0.15); }
