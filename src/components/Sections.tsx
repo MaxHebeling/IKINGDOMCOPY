@@ -301,7 +301,7 @@ export function WhatWeDo() {
       <Divider />
       <section className="relative py-[140px] md:py-[160px] px-8 overflow-hidden">
         <DigitalArchBg />
-        <div className="max-w-[1280px] mx-auto">
+        <div className="relative z-10 max-w-[1280px] mx-auto">
 
           {/* Header */}
           <div className="text-center mb-[80px]">
