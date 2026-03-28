@@ -846,14 +846,20 @@ export function Footer() {
     <>
       <Divider />
       <footer className="py-14 px-8">
-        <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <img src="/logo.png" alt="iKingdom" className="h-8 w-auto" />
+        <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          {/* Left — logo + copyright */}
+          <div className="flex items-center gap-4">
+            <img src="/logo-footer.png" alt="iKingdom" className="h-10 w-auto" />
+            <span className="text-[11px] tracking-[0.08em] text-secondary/40 font-light">
+              © 2026 iKingdom. Todos los derechos reservados.
+            </span>
+          </div>
+          {/* Right — links */}
           <div className="flex items-center gap-6">
             {["Privacy", "Terms"].map((l) => (
               <a key={l} href="#" data-hover className="text-[11px] tracking-[0.15em] uppercase text-secondary/40 hover:text-secondary transition-colors duration-300">{l}</a>
             ))}
           </div>
-          <span className="text-[11px] tracking-[0.15em] uppercase text-secondary/30">&copy; {new Date().getFullYear()}</span>
         </div>
       </footer>
     </>
