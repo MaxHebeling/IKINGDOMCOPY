@@ -34,8 +34,8 @@ const T: Record<string, { en: string; es: string }> = {
   "stat.3.label": { en: "Client Retention Rate", es: "Tasa de Retención de Clientes" },
 
   // Capabilities
-  "cap.label": { en: "Capabilities", es: "Capacidades" },
-  "cap.heading": { en: "Three systems. One compounding outcome.", es: "Tres sistemas. Un resultado compuesto." },
+  "cap.label": { en: "Solutions", es: "Soluciones" },
+  "cap.heading": { en: "We design premium digital platforms for businesses, entrepreneurs, and leaders.", es: "Diseñamos plataformas digitales premium para empresas, emprendedores y líderes." },
   "cap.sub": {
     en: "We build digital platforms that position your brand, generate trust, and convert visitors into high-value clients.",
     es: "Construimos plataformas digitales que posicionan tu marca, generan confianza y convierten visitantes en clientes de alto valor.",
