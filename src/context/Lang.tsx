@@ -38,7 +38,7 @@ const T: Record<string, { en: string; es: string }> = {
   "cap.heading": { en: "We design premium digital platforms.", es: "Diseñamos plataformas digitales premium." },
   "cap.sub": {
     en: "We build digital platforms that position your brand, generate trust, and convert visitors into high-value clients.",
-    es: "Construimos plataformas digitales que posicionan tu marca, generan confianza y convierten visitantes en clientes de alto valor.",
+    es: "Nuestra arquitectura digital posiciona tu marca, genera confianza y convierte visitantes en clientes de alto valor.",
   },
   "cap.1.metric": { en: "3–5x", es: "3–5x" },
   "cap.1.metricLabel": { en: "pipeline velocity", es: "velocidad de pipeline" },
