@@ -183,10 +183,10 @@ const T: Record<string, { en: string; es: string }> = {
 
 interface LangCtx { lang: Lang; toggle: () => void; t: (k: string) => string }
 
-const Ctx = createContext<LangCtx>({ lang: "en", toggle: () => {}, t: (k) => k });
+const Ctx = createContext<LangCtx>({ lang: "es", toggle: () => {}, t: (k) => k });
 
 export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>("en");
+  const [lang, setLang] = useState<Lang>("es");
   const toggle = useCallback(() => setLang((l) => (l === "en" ? "es" : "en")), []);
   const t = useCallback((k: string) => T[k]?.[lang] ?? k, [lang]);
   return <Ctx.Provider value={{ lang, toggle, t }}>{children}</Ctx.Provider>;

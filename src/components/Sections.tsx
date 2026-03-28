@@ -65,7 +65,7 @@ export function Capabilities() {
                 </h2>
               </Reveal>
               <Reveal delay={0.2}>
-                <p className="mt-5 text-secondary text-[15px] leading-[1.8] font-light">{t("cap.sub")}</p>
+                <p className="mt-5 text-secondary text-[15px] leading-[1.8] font-light text-justify">{t("cap.sub")}</p>
               </Reveal>
             </div>
 
@@ -89,7 +89,7 @@ export function Capabilities() {
                       <span className="text-[11px] tracking-[0.1em] uppercase text-secondary">{c.metricLabel}</span>
                     </div>
                     <h3 className="text-[18px] font-semibold text-ink mb-3 tracking-[-0.01em]">{c.title}</h3>
-                    <p className="text-[14px] leading-[1.8] text-secondary font-light">{c.desc}</p>
+                    <p className="text-[14px] leading-[1.8] text-secondary font-light text-justify">{c.desc}</p>
                     {/* Bottom border draws on hover */}
                     <div className="absolute bottom-0 left-0 right-0 h-px bg-ink/10 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]" />
                   </div>
@@ -143,7 +143,7 @@ export function Proof() {
                     ))}
                   </div>
 
-                  <p className="text-[13px] leading-[1.7] text-secondary font-light mt-auto">{c.scope}</p>
+                  <p className="text-[13px] leading-[1.7] text-secondary font-light mt-auto text-justify">{c.scope}</p>
                 </div>
               </Reveal>
             ))}
@@ -187,7 +187,7 @@ export function Process() {
                 </h2>
               </Reveal>
               <Reveal delay={0.2}>
-                <p className="mt-5 text-secondary text-[15px] leading-[1.8] font-light">{t("proc.sub")}</p>
+                <p className="mt-5 text-secondary text-[15px] leading-[1.8] font-light text-justify">{t("proc.sub")}</p>
               </Reveal>
             </div>
 
@@ -210,7 +210,7 @@ export function Process() {
                           <h3 className="text-[17px] font-semibold text-ink">{p.title}</h3>
                           <span className="text-[11px] tracking-[0.1em] uppercase text-secondary/40 ml-auto hidden sm:block">{p.duration}</span>
                         </div>
-                        <p className="text-[14px] leading-[1.8] text-secondary font-light">{p.desc}</p>
+                        <p className="text-[14px] leading-[1.8] text-secondary font-light text-justify">{p.desc}</p>
                       </div>
                     </div>
                   </Reveal>
@@ -245,8 +245,8 @@ export function Engagement() {
                 <h2 className="text-ink leading-[1.08] mb-6" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 700 }}>
                   {t("eng.heading")}
                 </h2>
-                <p className="text-secondary text-[15px] leading-[1.8] font-light mb-6">{t("eng.left.p1")}</p>
-                <p className="text-secondary text-[15px] leading-[1.8] font-light">{t("eng.left.p2")}</p>
+                <p className="text-secondary text-[15px] leading-[1.8] font-light mb-6 text-justify">{t("eng.left.p1")}</p>
+                <p className="text-secondary text-[15px] leading-[1.8] font-light text-justify">{t("eng.left.p2")}</p>
               </div>
             </Reveal>
 
@@ -311,7 +311,7 @@ export function Contact() {
                 </h2>
               </Reveal>
               <Reveal delay={0.2}>
-                <p className="mt-5 text-secondary text-[15px] leading-[1.8] font-light">{t("contact.sub")}</p>
+                <p className="mt-5 text-secondary text-[15px] leading-[1.8] font-light text-justify">{t("contact.sub")}</p>
               </Reveal>
               <Reveal delay={0.3}>
                 <p className="mt-4 text-[12px] text-secondary/40 font-light tracking-[0.05em]">{t("contact.fine")}</p>

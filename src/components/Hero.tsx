@@ -68,7 +68,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, delay: 1.8 }}
-              className="mt-7 text-secondary text-[16px] leading-[1.8] font-light max-w-[520px]"
+              className="mt-7 text-secondary text-[16px] leading-[1.8] font-light max-w-[520px] text-justify"
             >
               {t("hero.sub")}
             </motion.p>

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLang } from "@/context/Lang";
 
 export default function Navbar() {
-  const { lang, toggle, t } = useLang();
+  const { t } = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -54,15 +54,6 @@ export default function Navbar() {
           </div>
 
           <div className="hidden lg:flex items-center gap-6">
-            <button
-              onClick={toggle}
-              data-hover
-              className="text-[11px] font-semibold tracking-[0.18em] uppercase text-secondary hover:text-ink transition-colors duration-300"
-            >
-              <span className={lang === "en" ? "text-ink" : ""}>EN</span>
-              <span className="mx-1.5 opacity-25">/</span>
-              <span className={lang === "es" ? "text-ink" : ""}>ES</span>
-            </button>
             <a
               href="#contact"
               data-hover
