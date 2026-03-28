@@ -107,11 +107,13 @@ export default function PixelBrain() {
     const BRAIN_POINTS = 18000;
     const SPINE_POINTS = 6000;  // spinal cord
     const NERVE_POINTS = 4000;  // nerve branches
-    const POINT_COUNT = BRAIN_POINTS + SPINE_POINTS + NERVE_POINTS;
+    const ROOT_POINTS  = 5000;  // root system at footer
+    const POINT_COUNT = BRAIN_POINTS + SPINE_POINTS + NERVE_POINTS + ROOT_POINTS;
     const positions = new Float32Array(POINT_COUNT * 3);
     const sizes = new Float32Array(POINT_COUNT);
     const phases = new Float32Array(POINT_COUNT);
     const depths = new Float32Array(POINT_COUNT); // 0=surface, 1=deep
+    const fades  = new Float32Array(POINT_COUNT).fill(1.0); // 1=opaque, 0=invisible
 
     const brainRadius = 50;
 
@@ -263,7 +265,7 @@ export default function PixelBrain() {
     const nerveInterval = 80; // Y-distance between nerve pairs
     let nerveIdx = BRAIN_POINTS + SPINE_POINTS;
 
-    for (let ny = spineStartY - 40; ny > spineEndY + 50 && nerveIdx < POINT_COUNT; ny -= nerveInterval) {
+    for (let ny = spineStartY - 40; ny > spineEndY + 400 && nerveIdx < POINT_COUNT; ny -= nerveInterval) {
       // Left and right nerve
       for (const side of [-1, 1]) {
         const branchPoints = 15 + Math.floor(Math.random() * 10);
@@ -316,11 +318,66 @@ export default function PixelBrain() {
       }
     }
 
+    // ── ROOT SYSTEM — organic spreading branches at footer ──
+    const rootZoneStart = spineEndY + 420; // where roots begin
+    const rootZoneEnd   = spineEndY;       // bottom tip
+    let rootIdx = BRAIN_POINTS + SPINE_POINTS + NERVE_POINTS;
+
+    // Several root "trunks" spreading from spine bottom
+    const ROOT_TRUNKS = 7;
+    for (let t = 0; t < ROOT_TRUNKS && rootIdx < POINT_COUNT; t++) {
+      const baseAngle = (t / ROOT_TRUNKS) * Math.PI * 2;
+      const trunkPoints = Math.floor(ROOT_POINTS / ROOT_TRUNKS);
+      let rx = 0, ry = rootZoneStart, rz = 0;
+
+      for (let p = 0; p < trunkPoints && rootIdx < POINT_COUNT; p++) {
+        const progress = p / trunkPoints; // 0=top 1=bottom
+        // Roots spread wider and downward
+        rx += Math.cos(baseAngle + Math.sin(p * 0.3) * 0.8) * (2 + progress * 3);
+        ry -= (2 + Math.random() * 4);
+        rz += Math.sin(baseAngle + Math.cos(p * 0.25) * 0.6) * (2 + progress * 3);
+
+        // Sub-branches split off
+        if (p > 0 && Math.random() < 0.15 && rootIdx < POINT_COUNT) {
+          let sx = rx, sy = ry, sz = rz;
+          const subLen = 4 + Math.floor(Math.random() * 8);
+          for (let s = 0; s < subLen && rootIdx < POINT_COUNT; s++) {
+            sx += Math.cos(baseAngle + Math.PI * 0.5) * (1.5 + Math.random() * 2.5);
+            sy -= 1 + Math.random() * 3;
+            sz += Math.sin(baseAngle + Math.PI * 0.5) * (1.5 + Math.random() * 2.5);
+            const si3 = rootIdx * 3;
+            positions[si3]     = sx;
+            positions[si3 + 1] = sy;
+            positions[si3 + 2] = sz;
+            const subProgress = (sy - rootZoneStart) / (rootZoneEnd - rootZoneStart);
+            const fade = Math.max(0, 1 - subProgress) * 0.5; // fade toward bottom
+            sizes[rootIdx]  = (0.5 + Math.random() * 0.8) * fade;
+            phases[rootIdx] = Math.random() * Math.PI * 2;
+            depths[rootIdx] = 0.4;
+            fades[rootIdx]  = Math.max(0, fade * 0.6);
+            rootIdx++;
+          }
+        }
+
+        const i3 = rootIdx * 3;
+        positions[i3]     = rx;
+        positions[i3 + 1] = ry;
+        positions[i3 + 2] = rz;
+        const fade = Math.max(0, 1 - progress) * 0.7; // fade out toward tips
+        sizes[rootIdx]  = (0.8 + Math.random() * 1.0) * (1 - progress * 0.6);
+        phases[rootIdx] = Math.random() * Math.PI * 2;
+        depths[rootIdx] = 0.25 + progress * 0.4;
+        fades[rootIdx]  = Math.max(0, fade);
+        rootIdx++;
+      }
+    }
+
     const brainGeo = new THREE.BufferGeometry();
     brainGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    brainGeo.setAttribute("aSize", new THREE.BufferAttribute(sizes, 1));
-    brainGeo.setAttribute("aPhase", new THREE.BufferAttribute(phases, 1));
-    brainGeo.setAttribute("aDepth", new THREE.BufferAttribute(depths, 1));
+    brainGeo.setAttribute("aSize",    new THREE.BufferAttribute(sizes, 1));
+    brainGeo.setAttribute("aPhase",   new THREE.BufferAttribute(phases, 1));
+    brainGeo.setAttribute("aDepth",   new THREE.BufferAttribute(depths, 1));
+    brainGeo.setAttribute("aFade",    new THREE.BufferAttribute(fades, 1));
 
     const brainMat = new THREE.ShaderMaterial({
       uniforms: {
@@ -331,10 +388,12 @@ export default function PixelBrain() {
         attribute float aSize;
         attribute float aPhase;
         attribute float aDepth;
+        attribute float aFade;
         uniform float uTime;
         uniform vec2 uMouse;
         varying float vBright;
         varying float vDepth;
+        varying float vFade;
 
         void main() {
           vec3 pos = position;
@@ -366,6 +425,7 @@ export default function PixelBrain() {
           vBright += max(0.0, 1.0 - mouseDist * 2.0) * 0.2;
 
           vDepth = aDepth;
+          vFade  = aFade;
 
           gl_PointSize = aSize * (1.0 + firing * 0.8) * (200.0 / -mvPos.z);
           gl_PointSize = clamp(gl_PointSize, 0.5, 8.0);
@@ -375,21 +435,23 @@ export default function PixelBrain() {
       fragmentShader: `
         varying float vBright;
         varying float vDepth;
+        varying float vFade;
         void main() {
           float d = length(gl_PointCoord - 0.5) * 2.0;
           if (d > 1.0) discard;
-          float glow = exp(-d * d * 2.0);
 
           // Surface points: crisp. Deep points: softer.
           float sharpness = vDepth < 0.3 ? 2.5 : 1.5;
-          glow = exp(-d * d * sharpness);
+          float glow = exp(-d * d * sharpness);
 
           // Color: gold, slightly different hue by depth
           vec3 surfaceColor = vec3(0.831, 0.686, 0.216); // #D4AF37 gold
           vec3 deepColor = vec3(0.55, 0.48, 0.24);
           vec3 col = mix(surfaceColor, deepColor, vDepth);
 
-          gl_FragColor = vec4(col, glow * vBright);
+          // aFade=1 → normal point; aFade<1 → root system fades out
+          float alpha = glow * vBright * mix(1.0, vFade, step(0.99, 1.0 - vFade));
+          gl_FragColor = vec4(col, alpha);
         }
       `,
       transparent: true,
