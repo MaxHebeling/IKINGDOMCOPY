@@ -368,7 +368,7 @@ export function Footer() {
       <Divider />
       <footer className="py-14 px-8">
         <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <span className="text-ink tracking-[0.02em]" style={{ fontFamily: "var(--font-serif)", fontSize: "18px", fontWeight: 600 }}>iKingdom</span>
+          <img src="/logo.png" alt="iKingdom" className="h-8 w-auto" />
           <div className="flex items-center gap-6">
             {["Privacy", "Terms"].map((l) => (
               <a key={l} href="#" data-hover className="text-[11px] tracking-[0.15em] uppercase text-secondary/40 hover:text-secondary transition-colors duration-300">{l}</a>

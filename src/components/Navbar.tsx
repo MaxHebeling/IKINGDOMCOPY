@@ -35,13 +35,8 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-[1280px] mx-auto px-8 h-[72px] flex items-center justify-between">
-          <a
-            href="#"
-            data-hover
-            className="text-ink tracking-[0.02em]"
-            style={{ fontFamily: "var(--font-serif)", fontSize: "26px", fontWeight: 700 }}
-          >
-            iKingdom
+          <a href="#" data-hover className="flex items-center">
+            <img src="/logo.png" alt="iKingdom" className="h-10 w-auto" />
           </a>
 
           <div className="hidden lg:flex items-center gap-1">
