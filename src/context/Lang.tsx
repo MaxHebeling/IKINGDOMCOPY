@@ -23,7 +23,7 @@ const T: Record<string, { en: string; es: string }> = {
     es: "Estrategia, arquitectura e ingeniería — unificadas en sistemas con IA que captan clientes, automatizan operaciones y multiplican ingresos. Para organizaciones que superaron a las agencias.",
   },
   "hero.cta": { en: "Request Consultation", es: "Solicitar Consulta" },
-  "hero.fine": { en: "Engagements from $45,000", es: "Alianzas desde $45,000 USD" },
+  "hero.fine": { en: "WEBSITES + DIGITAL SYSTEMS", es: "WEBSITES + SISTEMAS DIGITALES" },
 
   // Stats
   "stat.1.value": { en: "12+", es: "12+" },
@@ -37,8 +37,8 @@ const T: Record<string, { en: string; es: string }> = {
   "cap.label": { en: "Capabilities", es: "Capacidades" },
   "cap.heading": { en: "Three systems. One compounding outcome.", es: "Tres sistemas. Un resultado compuesto." },
   "cap.sub": {
-    en: "Each engagement delivers an integrated system — not isolated features. Revenue, operations, and platform architecture working as one.",
-    es: "Cada alianza entrega un sistema integrado — no funciones aisladas. Revenue, operaciones y arquitectura de plataforma trabajando como uno.",
+    en: "We build digital platforms that position your brand, generate trust, and convert visitors into high-value clients.",
+    es: "Construimos plataformas digitales que posicionan tu marca, generan confianza y convierten visitantes en clientes de alto valor.",
   },
   "cap.1.metric": { en: "3–5x", es: "3–5x" },
   "cap.1.metricLabel": { en: "pipeline velocity", es: "velocidad de pipeline" },

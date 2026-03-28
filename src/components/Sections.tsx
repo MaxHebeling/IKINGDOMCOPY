@@ -104,6 +104,36 @@ export function Capabilities() {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   MARQUEE — slow scrolling statement
+   ═══════════════════════════════════════════════════════════ */
+
+const MARQUEE_PHRASES = [
+  "El problema no es tener web.",
+  "Es tener una que no ayuda a vender.",
+  "Cuando la página no aclara la oferta, no genera confianza y no mueve al siguiente paso,",
+  "termina siendo una pieza bonita que no sostiene ventas.",
+];
+
+export function Marquee() {
+  const text = MARQUEE_PHRASES.join("   ·   ");
+  return (
+    <div className="relative overflow-hidden border-y border-divider py-5 bg-bg">
+      <motion.div
+        className="flex whitespace-nowrap"
+        animate={{ x: ["0%", "-50%"] }}
+        transition={{ duration: 40, ease: "linear", repeat: Infinity }}
+      >
+        {[text, text].map((t, i) => (
+          <span key={i} className="text-[13px] font-light tracking-[0.12em] text-secondary/70 pr-16">
+            {t}
+          </span>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
    PROOF — anonymized case-study style blocks
    ═══════════════════════════════════════════════════════════ */
 

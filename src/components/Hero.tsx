@@ -88,7 +88,7 @@ export default function Hero() {
                 <span className="relative z-10">{t("hero.cta")}</span>
                 <svg className="relative z-10 w-3.5 h-3.5 transition-transform duration-500 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </a>
-              <span className="text-[11px] tracking-[0.08em] text-secondary/50 font-light">
+              <span className="text-[11px] tracking-[0.2em] text-secondary font-semibold">
                 {t("hero.fine")}
               </span>
             </motion.div>
