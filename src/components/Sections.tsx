@@ -257,7 +257,7 @@ function DigitalArchBg() {
         ))}
 
         {/* ── Central command ring ── */}
-        <g opacity="0.12" fill="none" stroke={GOLD}>
+        <g opacity="0.28" fill="none" stroke={GOLD}>
           <circle cx={600} cy={225} r={50} strokeWidth="0.6" />
           <circle cx={600} cy={225} r={36} strokeWidth="0.4" />
           <circle cx={600} cy={225} r={22} strokeWidth="0.8" />
