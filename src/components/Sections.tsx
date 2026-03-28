@@ -240,7 +240,7 @@ function DigitalArchBg() {
 
         {/* ── Workstation panels ── */}
         {panels.map(([x, y, w, h, label, sublabel], i) => (
-          <g key={`panel${i}`} opacity="0.18">
+          <g key={`panel${i}`} opacity="0.38">
             {/* Panel body */}
             <rect x={x - w / 2} y={y - h / 2} width={w} height={h} rx="2" fill="none" stroke={GOLD} strokeWidth="0.8" />
             {/* Inner thin line */}
