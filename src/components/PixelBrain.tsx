@@ -385,7 +385,7 @@ export default function PixelBrain() {
           glow = exp(-d * d * sharpness);
 
           // Color: gold, slightly different hue by depth
-          vec3 surfaceColor = vec3(0.788, 0.659, 0.298); // #C9A84C gold
+          vec3 surfaceColor = vec3(0.831, 0.686, 0.216); // #D4AF37 gold
           vec3 deepColor = vec3(0.55, 0.48, 0.24);
           vec3 col = mix(surfaceColor, deepColor, vDepth);
 

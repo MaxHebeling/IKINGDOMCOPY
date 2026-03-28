@@ -4,12 +4,12 @@
   /* Black ground, gold text */
   --color-bg: #000000;
   --color-bg-raised: #0A0A08;
-  --color-ink: #C9A84C;
-  --color-secondary: #8C7A3E;
-  --color-tertiary: #5C5230;
-  --color-divider: #1A1810;
-  --color-grid: rgba(201, 168, 76, 0.02);
-  --color-hover-fill: #C9A84C;
+  --color-ink: #D4AF37;
+  --color-secondary: #9A7E28;
+  --color-tertiary: #6B5820;
+  --color-divider: #1C1A10;
+  --color-grid: rgba(212, 175, 55, 0.02);
+  --color-hover-fill: #D4AF37;
   --font-serif: "Cormorant Garamond", "Georgia", serif;
   --font-sans: "Inter", system-ui, sans-serif;
 }
@@ -19,13 +19,13 @@ html { scroll-behavior: smooth; }
 
 body {
   background: #000000;
-  color: #C9A84C;
+  color: #D4AF37;
   font-family: "Inter", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
-::selection { background: rgba(201,168,76,0.15); }
+::selection { background: rgba(212,175,55,0.15); }
 
 .grid-overlay {
   background-image:
