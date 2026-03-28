@@ -169,11 +169,6 @@ export function Proof() {
             ))}
           </div>
 
-          <Reveal delay={0.5}>
-            <p className="mt-10 text-[11px] tracking-[0.1em] text-secondary/40 font-light">
-              {t("proof.fine")}
-            </p>
-          </Reveal>
         </div>
       </section>
     </>
