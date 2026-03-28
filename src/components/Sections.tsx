@@ -214,7 +214,7 @@ function DigitalArchBg() {
         </defs>
 
         {/* ── Perspective grid ── */}
-        <g opacity="0.06" stroke={GOLD} strokeWidth="0.6" fill="none">
+        <g opacity="0.13" stroke={GOLD} strokeWidth="0.6" fill="none">
           {vLineBottomXs.map((bx, i) => (
             <line key={`v${i}`} x1={VP.x} y1={VP.y} x2={bx} y2={BOTTOM} />
           ))}
