@@ -287,10 +287,10 @@ function DigitalArchBg() {
       </svg>
 
       {/* Top & bottom gradient fades */}
-      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#030302] to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#050504] to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#030302] to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#050504] to-transparent" />
       {/* Dark center overlay to keep text legible */}
-      <div className="absolute inset-0 bg-[#030302]/60" />
+      <div className="absolute inset-0 bg-[#030302]/30" />
     </div>
   );
 }
