@@ -104,6 +104,111 @@ export function Capabilities() {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   WHAT WE DO — premium value proposition slide
+   ═══════════════════════════════════════════════════════════ */
+
+const WWD_CARDS = [
+  {
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="4" /><line x1="12" y1="2" x2="12" y2="6" /><line x1="12" y1="18" x2="12" y2="22" /><line x1="2" y1="12" x2="6" y2="12" /><line x1="18" y1="12" x2="22" y2="12" />
+      </svg>
+    ),
+    title: "Posicionamiento estratégico",
+    desc: "Definimos cómo te percibe tu cliente ideal",
+  },
+  {
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+      </svg>
+    ),
+    title: "Diseño que genera autoridad",
+    desc: "Presencia visual que justifica tu ticket",
+  },
+  {
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="3" width="20" height="5" rx="1" /><rect x="2" y="10" width="20" height="5" rx="1" /><rect x="2" y="17" width="20" height="5" rx="1" />
+      </svg>
+    ),
+    title: "Arquitectura de conversión",
+    desc: "Cada elemento tiene un objetivo comercial",
+  },
+  {
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 11l19-9-9 19-2-8-8-2z" />
+      </svg>
+    ),
+    title: "Elevación de marca personal",
+    desc: "Construimos tu plataforma de influencia",
+  },
+];
+
+export function WhatWeDo() {
+  return (
+    <>
+      <Divider />
+      <section className="py-[140px] md:py-[160px] px-8 bg-[#050504]">
+        <div className="max-w-[1280px] mx-auto">
+
+          {/* Header */}
+          <div className="text-center mb-[80px]">
+            <Reveal>
+              <p className="text-[10px] font-semibold tracking-[0.4em] uppercase text-secondary mb-6">
+                Lo que realmente hacemos
+              </p>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h2 className="text-white mb-5 leading-[1.06]" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(36px, 5vw, 60px)", fontWeight: 700 }}>
+                No solo diseñamos websites.
+              </h2>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p className="text-secondary text-[16px] leading-[1.85] font-light max-w-[600px] mx-auto">
+                Construimos plataformas digitales que posicionan tu marca, generan confianza y convierten visitantes en clientes de alto valor.
+              </p>
+            </Reveal>
+          </div>
+
+          {/* Cards grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-[80px]">
+            {WWD_CARDS.map((card, i) => (
+              <Reveal key={card.title} delay={0.1 + i * 0.08}>
+                <div className="group h-full p-7 md:p-8 bg-[#0A0A08] border border-[#1C1A10] rounded-sm hover:border-ink/15 transition-colors duration-500 flex flex-col gap-5">
+                  {/* Icon box */}
+                  <div className="w-8 h-8 flex items-center justify-center border border-[#1C1A10] rounded-sm text-secondary group-hover:text-ink group-hover:border-ink/20 transition-colors duration-500">
+                    {card.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-[15px] font-semibold text-white leading-[1.3] mb-2 tracking-[-0.01em]">{card.title}</h3>
+                    <p className="text-[13px] leading-[1.75] text-secondary font-light">{card.desc}</p>
+                  </div>
+                  {/* Bottom accent on hover */}
+                  <div className="mt-auto h-px bg-ink/10 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <Reveal delay={0.35}>
+            <div className="text-center">
+              <a href="#contact" data-hover className="group relative inline-flex items-center gap-3 px-8 py-[13px] text-[12px] font-semibold tracking-[0.18em] uppercase text-ink border border-ink/25 overflow-hidden transition-all duration-500 hover:text-bg hover:border-ink">
+                <div className="absolute inset-0 bg-ink origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                <span className="relative z-10 transition-colors duration-500">Solicita tu diagnóstico →</span>
+              </a>
+            </div>
+          </Reveal>
+
+        </div>
+      </section>
+    </>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
    MARQUEE — slow scrolling statement
    ═══════════════════════════════════════════════════════════ */
 
