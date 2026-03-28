@@ -1,0 +1,32 @@
+{
+  "name": "ikingdom",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@splinetool/runtime": "^1.12.73",
+    "@tailwindcss/postcss": "^4.2.2",
+    "@types/node": "^25.5.0",
+    "@types/react": "^19.2.14",
+    "@types/three": "^0.183.1",
+    "framer-motion": "^12.38.0",
+    "next": "^16.2.1",
+    "postcss": "^8.5.8",
+    "postprocessing": "^6.39.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "simple-icons": "^16.13.0",
+    "tailwindcss": "^4.2.2",
+    "three": "^0.183.2",
+    "three-stdlib": "^2.36.1",
+    "typescript": "^6.0.2"
+  }
+}
