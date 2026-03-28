@@ -6,7 +6,7 @@ type Lang = "en" | "es";
 
 const T: Record<string, { en: string; es: string }> = {
   // Nav
-  "nav.capabilities": { en: "Capabilities", es: "Capacidades" },
+  "nav.capabilities": { en: "Solutions", es: "Soluciones" },
   "nav.proof": { en: "Proof", es: "Resultados" },
   "nav.process": { en: "Process", es: "Proceso" },
   "nav.engagement": { en: "Engagement", es: "Alianza" },

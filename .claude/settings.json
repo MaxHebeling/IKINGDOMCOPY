@@ -11,7 +11,24 @@
       "Bash(cp \"/Users/maxhebeling/.openclaw/workspace/ikingdom-brand/public/client-logos/imperium-group.png\" /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/public/clients/imperium-group.png)",
       "Bash(cp \"/Users/maxhebeling/.openclaw/workspace/ikingdom-brand/public/client-logos/distinct-construction.png\" /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/public/clients/distinct-construction.png)",
       "Bash(cp \"/Users/maxhebeling/.openclaw/workspace/ikingdom-brand/public/client-logos/raf-logo.png\" /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/public/clients/raf.png)",
-      "Bash(cp \"/Users/maxhebeling/.openclaw/workspace/ikingdom-brand/public/client-logos/dyt-comunicaciones.png\" /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/public/clients/dyt.png)"
+      "Bash(cp \"/Users/maxhebeling/.openclaw/workspace/ikingdom-brand/public/client-logos/dyt-comunicaciones.png\" /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/public/clients/dyt.png)",
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "Bash(jq -e '.hooks.PostToolUse[] | select\\(.matcher == \"\"Write|Edit|NotebookEdit\"\"\\) | .hooks[] | .command' /Users/maxhebeling/Downloads/IKINGDOMCOPY-main/.claude/settings.json)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /Users/maxhebeling/Downloads/IKINGDOMCOPY-main && git add -A && git commit -m \"auto: update via Claude Code\" && git push origin main 2>/dev/null || true",
+            "statusMessage": "Deploying to Vercel..."
+          }
+        ]
+      }
     ]
   }
 }
