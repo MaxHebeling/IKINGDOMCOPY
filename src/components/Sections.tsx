@@ -435,22 +435,30 @@ export function Proof() {
    ═══════════════════════════════════════════════════════════ */
 
 const CLIENTS = [
-  { name: "Reino Editorial", logo: "/clients/reino-editorial.png" },
-  { name: "Distinct Construction", logo: "/clients/distinct-construction.png" },
-  { name: "Max Hebeling", logo: "/clients/max-hebeling.png" },
-  { name: "DyT", logo: "/clients/dyt.png" },
-  { name: "Imperium Group", logo: "/clients/imperium-group.png" },
-  { name: "RAF", logo: "/clients/raf.png" },
+  { name: "Reino Editorial",        logo: "/clients/Reino_Editorial.png" },
+  { name: "Distinct Construction",  logo: "/clients/DCS.png" },
+  { name: "Max Hebeling",           logo: "/clients/Max_Hebeling.png" },
+  { name: "DyT Comunicaciones",     logo: "/clients/dyt_comunicacones.png" },
+  { name: "Imperium Group",         logo: "/clients/Imperium_group.png" },
+  { name: "RAF",                    logo: "/clients/LOGO%20RAF%20Blanco%20SIN%20FONDO.png" },
+  { name: "Fuente de Vida",         logo: "/clients/LOGO%20FUENTE%20DE%20VIDA%202.png" },
+  { name: "Inversionistas del Reino", logo: "/clients/Inversionistas_del_Reino.png" },
+  { name: "Hebeling Imperium",      logo: "/clients/Hebeling_Imperium.png" },
+  { name: "Pérgolas Zolutions",     logo: "/clients/Pergolas_Zolutions.jpg" },
 ];
 
 // Constellation positions: [x%, y%] relative to container
 const CONSTELLATION_POSITIONS = [
-  { x: 10, y: 25 },
-  { x: 32, y: 70 },
-  { x: 52, y: 18 },
-  { x: 72, y: 65 },
-  { x: 88, y: 28 },
-  { x: 50, y: 50 },
+  { x: 8,  y: 20 },
+  { x: 28, y: 55 },
+  { x: 50, y: 15 },
+  { x: 72, y: 50 },
+  { x: 92, y: 20 },
+  { x: 18, y: 82 },
+  { x: 40, y: 75 },
+  { x: 62, y: 80 },
+  { x: 83, y: 72 },
+  { x: 50, y: 45 },
 ];
 
 export function Clients() {
