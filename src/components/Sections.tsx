@@ -278,8 +278,8 @@ function DigitalArchBg() {
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
-      {/* Base — semi-transparent so the spine behind shows through */}
-      <div className="absolute inset-0 bg-[#030302]/35" />
+      {/* Base — fully transparent, spine shows through */}
+      <div className="absolute inset-0 bg-[#030302]/10" />
 
       <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1200 820" preserveAspectRatio="xMidYMid slice">
         <defs>
