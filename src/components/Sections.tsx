@@ -439,14 +439,18 @@ const CLIENTS = [
   { name: "Distinct Construction", logo: "/clients/distinct-construction.png" },
   { name: "Max Hebeling", logo: "/clients/max-hebeling.png" },
   { name: "DyT", logo: "/clients/dyt.png" },
+  { name: "Imperium Group", logo: "/clients/imperium-group.png" },
+  { name: "RAF", logo: "/clients/raf.png" },
 ];
 
 // Constellation positions: [x%, y%] relative to container
 const CONSTELLATION_POSITIONS = [
-  { x: 12, y: 30 },
-  { x: 35, y: 65 },
-  { x: 58, y: 20 },
-  { x: 82, y: 55 },
+  { x: 10, y: 25 },
+  { x: 32, y: 70 },
+  { x: 52, y: 18 },
+  { x: 72, y: 65 },
+  { x: 88, y: 28 },
+  { x: 50, y: 50 },
 ];
 
 export function Clients() {
