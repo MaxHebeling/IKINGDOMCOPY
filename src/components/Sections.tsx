@@ -604,7 +604,7 @@ const TICKS = Array.from({ length: TICK_N }, (_, i) => {
   const θ    = (i / TICK_N) * 2 * Math.PI - Math.PI / 2;
   const maj  = i % 9 === 0;               // cardinal: 0°/90°/180°/270°
   const med  = !maj && i % 3 === 0;       // 30° intervals
-  const len  = maj ? 14 : med ? 8 : 5;
+  const len  = maj ? 9 : med ? 5 : 3;    // shorter — recede behind logos
   const r0   = RING_R;
   const r1   = RING_R - len;
   return {
@@ -612,8 +612,8 @@ const TICKS = Array.from({ length: TICK_N }, (_, i) => {
     y1: CENTER + r0 * Math.sin(θ),
     x2: CENTER + r1 * Math.cos(θ),
     y2: CENTER + r1 * Math.sin(θ),
-    strokeWidth:   maj ? 1 : 0.5,
-    strokeOpacity: maj ? 0.35 : med ? 0.18 : 0.09,
+    strokeWidth:   maj ? 0.7 : 0.4,
+    strokeOpacity: maj ? 0.16 : med ? 0.08 : 0.04,  // whispered, not asserted
   };
 });
 
