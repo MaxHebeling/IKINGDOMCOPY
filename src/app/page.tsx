@@ -10,7 +10,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import PixelBrain from "@/components/PixelBrain";
 import AmbientLight from "@/components/AmbientLight";
-import { ClarityStrip, Capabilities, WhatWeDo, Marquee, Proof, Clients, Process, Engagement, Contact, DisqualificationSection, Footer } from "@/components/Sections";
+import { ClarityStrip, WhatWeDo, Capabilities, Marquee, Process, Proof, Clients, Engagement, Contact, DisqualificationSection, Footer } from "@/components/Sections";
 
 export default function Home() {
   return (
