@@ -767,30 +767,7 @@ export function Clients() {
                 </motion.g>
               </svg>
 
-              {/* ── Light sweep (pulsar-inspired) ────────────────────── */}
-              {/* A conic-gradient wedge that rotates slowly — like a radar arm */}
-              <motion.div
-                className="absolute rounded-full pointer-events-none"
-                style={{
-                  left:   CENTER - RING_R - 22,
-                  top:    CENTER - RING_R - 22,
-                  width:  (RING_R + 22) * 2,
-                  height: (RING_R + 22) * 2,
-                  background: [
-                    "conic-gradient(from 0deg,",
-                    "  transparent 350deg,",
-                    "  rgba(212,175,55,0.012) 355deg,",
-                    "  rgba(212,175,55,0.024) 359deg,",
-                    "  rgba(212,175,55,0.012) 360deg)",
-                  ].join(""),
-                }}
-                initial={{ opacity: 0 }}
-                animate={inView ? { opacity: 1, rotate: 360 } : {}}
-                transition={{
-                  opacity: { duration: 1, delay: 3 },
-                  rotate:  { duration: SWEEP_DUR, repeat: Infinity, ease: "linear", delay: 3 },
-                }}
-              />
+              {/* No sweep — pure Concept 2 is a static clockwork instrument */}
 
               {/* ── Rotating ring group — carries all logo nodes ──────── */}
               <motion.div
