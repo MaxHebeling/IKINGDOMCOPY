@@ -1640,6 +1640,7 @@ export function Contact() {
     e.preventDefault();
     setStatus("loading");
     setErrorMsg("");
+    trackLeadIntent("contact-form");
     try {
       const res = await fetch("/api/submit-lead", {
         method: "POST",
