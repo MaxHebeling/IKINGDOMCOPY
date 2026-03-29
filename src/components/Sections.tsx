@@ -849,7 +849,7 @@ export function Footer() {
         <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Left — logo + copyright */}
           <div className="flex items-center gap-4">
-            <img src="/logo-footer.png" alt="iKingdom" className="h-10 w-auto" />
+            <img src="/clients/Hebeling_Imperium.png" alt="iKingdom" className="h-10 w-auto" />
             <span className="text-[11px] tracking-[0.08em] text-secondary/40 font-light">
               © 2026 iKingdom. Todos los derechos reservados.
             </span>
