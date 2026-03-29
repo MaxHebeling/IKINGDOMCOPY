@@ -22,7 +22,7 @@ const T: Record<string, { en: string; es: string }> = {
     en: "Systems that convert traffic into real clients, predictably.",
     es: "Sistemas que convierten tráfico en clientes reales, de forma predecible.",
   },
-  "hero.cta": { en: "Request strategic diagnosis", es: "Solicitar diagnóstico estratégico" },
+  "hero.cta": { en: "Apply for strategic diagnosis", es: "Aplicar para diagnóstico estratégico" },
   "hero.cta2": { en: "See how it works", es: "Ver cómo funciona" },
   "hero.fine": {
     en: "Limited applications. We only work with companies ready to scale.",
