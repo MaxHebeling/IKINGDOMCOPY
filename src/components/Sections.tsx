@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { Check, ArrowRight } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 import { useLang } from "@/context/Lang";
 
