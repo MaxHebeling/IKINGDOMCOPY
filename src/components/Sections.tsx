@@ -81,7 +81,7 @@ export function ClarityStrip() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.85, delay: 0.12, ease: [0.08, 0.82, 0.17, 1] }}
           >
-            La mayoría tiene presencia digital. Pocos tienen un sistema que vende.
+            Tener visibilidad no es lo mismo que tener conversión.
           </motion.p>
 
           <motion.p
