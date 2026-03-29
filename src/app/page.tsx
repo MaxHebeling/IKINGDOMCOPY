@@ -31,12 +31,12 @@ export default function Home() {
       <main className="relative z-[2]">
         <Hero />
         <ClarityStrip />
-        <Capabilities />
         <WhatWeDo />
+        <Capabilities />
         <Marquee />
+        <Process />
         <Proof />
         <Clients />
-        <Process />
         <Engagement />
         <Contact />
         <DisqualificationSection />
