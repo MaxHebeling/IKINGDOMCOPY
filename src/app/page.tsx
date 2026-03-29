@@ -18,6 +18,7 @@ export default function Home() {
       <Cursor />
       <WhatsAppButton />
       <SpaceShipPass />
+      <LightningPass />
       <AmbientLight />
       <PixelBrain />
       <motion.div
