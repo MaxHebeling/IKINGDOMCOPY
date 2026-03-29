@@ -35,6 +35,12 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-end pb-20 md:pb-28 pt-[140px] px-8 overflow-hidden">
 
+      {/* Dark overlay — improves text readability without touching the 3D background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ zIndex: 1, background: "rgba(4,30,57,0.70)" }}
+      />
+
       <div className="relative z-10 max-w-[1280px] mx-auto w-full">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-16 lg:gap-24 items-end">
           {/* Left — headline block */}
