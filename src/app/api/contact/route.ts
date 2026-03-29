@@ -170,5 +170,15 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // Non-blocking DB insert — never fails the response
+  (async () => {
+    try {
+      const leadData = buildFromContact(safe, ip);
+      await insertLead(leadData);
+    } catch (err) {
+      console.error("[iKingdom] DB insert failed (contact):", err);
+    }
+  })();
+
   return NextResponse.json({ success: true }, { status: 200 });
 }
