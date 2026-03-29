@@ -582,19 +582,51 @@ const CLIENTS = [
   { name: "Pérgolas Zolutions",           logo: "/clients/P%C3%A9rgolas_zolutions.png" },
 ];
 
-// Constellation positions: [x%, y%] relative to container
-const CONSTELLATION_POSITIONS = [
-  { x: 8,  y: 20 },
-  { x: 28, y: 55 },
-  { x: 50, y: 15 },
-  { x: 72, y: 50 },
-  { x: 92, y: 20 },
-  { x: 18, y: 82 },
-  { x: 40, y: 75 },
-  { x: 62, y: 80 },
-  { x: 83, y: 72 },
-  { x: 50, y: 45 },
-];
+// ── Orrery ring configuration ─────────────────────────────────────────────────
+const RING_R      = 228;          // ring radius in px
+const C_SIZE      = 660;          // square container side length
+const CENTER      = C_SIZE / 2;   // 330 — geometric center
+const NODE        = 112;          // logo node diameter
+const TICK_N      = 36;           // tick marks (every 10°)
+const SWEEP_DUR   = 70;           // seconds per light-sweep revolution
+
+// Pre-computed node positions — calculated once at module level
+const ORRERY_POSITIONS = Array.from({ length: 10 }, (_, i) => {
+  const θ = -Math.PI / 2 + (i / 10) * 2 * Math.PI; // start at 12-o'clock
+  return {
+    left: CENTER + RING_R * Math.cos(θ) - NODE / 2,
+    top:  CENTER + RING_R * Math.sin(θ) - NODE / 2,
+  };
+});
+
+// Tick mark geometry — calculated once at module level
+const TICKS = Array.from({ length: TICK_N }, (_, i) => {
+  const θ    = (i / TICK_N) * 2 * Math.PI - Math.PI / 2;
+  const maj  = i % 9 === 0;               // cardinal: 0°/90°/180°/270°
+  const med  = !maj && i % 3 === 0;       // 30° intervals
+  const len  = maj ? 14 : med ? 8 : 5;
+  const r0   = RING_R;
+  const r1   = RING_R - len;
+  return {
+    x1: CENTER + r0 * Math.cos(θ),
+    y1: CENTER + r0 * Math.sin(θ),
+    x2: CENTER + r1 * Math.cos(θ),
+    y2: CENTER + r1 * Math.sin(θ),
+    strokeWidth:   maj ? 1 : 0.5,
+    strokeOpacity: maj ? 0.35 : med ? 0.18 : 0.09,
+  };
+});
+
+// Cardinal degree labels
+const CARDINALS = [0, 9, 18, 27].map((ti, li) => {
+  const θ = (ti / TICK_N) * 2 * Math.PI - Math.PI / 2;
+  const r = RING_R - 30;
+  return {
+    x:     CENTER + r * Math.cos(θ),
+    y:     CENTER + r * Math.sin(θ),
+    label: ["0°", "90°", "180°", "270°"][li],
+  };
+});
 
 export function Clients() {
   return (
