@@ -842,10 +842,16 @@ export function Clients() {
         <div className="max-w-[1280px] mx-auto">
 
           {/* Header */}
-          <Reveal className="mb-8 md:mb-16">
-            <Label>Empresas que confían en nosotros</Label>
+          <Reveal className="mb-8 md:mb-20">
+            <Label>Confianza</Label>
+            <h2 className="mt-5 text-ink leading-[1.08] max-w-[680px]" style={{ fontSize: "clamp(26px, 3.2vw, 44px)", letterSpacing: "-0.03em" }}>
+              Empresas que confiaron en nosotros para crecer con estructura, no con intuición.
+            </h2>
+            <p className="mt-4 text-secondary text-[13px] leading-[1.85] font-light max-w-[500px]">
+              No mostramos logos. Mostramos relaciones construidas sobre dirección, sistema y ejecución.
+            </p>
             <motion.div
-              className="mt-4 flex items-center gap-4"
+              className="mt-6 flex items-center gap-4"
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
