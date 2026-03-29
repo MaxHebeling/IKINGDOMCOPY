@@ -39,9 +39,9 @@ function Divider() {
   );
 }
 
-function CTA({ href, children }: { href: string; children: string }) {
+function CTA({ href, children, onClick }: { href: string; children: string; onClick?: () => void }) {
   return (
-    <a href={href} data-hover className="group relative inline-flex items-center gap-3 px-8 py-[13px] text-[13px] font-semibold tracking-[0.14em] uppercase text-ink border border-ink/20 overflow-hidden transition-all duration-500 hover:text-bg hover:border-ink">
+    <a href={href} data-hover onClick={onClick} className="group relative inline-flex items-center gap-3 px-8 py-[13px] text-[13px] font-semibold tracking-[0.14em] uppercase text-ink border border-ink/20 overflow-hidden transition-all duration-500 hover:text-bg hover:border-ink">
       <div className="absolute inset-0 bg-ink origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
       <span className="relative z-10 transition-colors duration-500">{children}</span>
     </a>
