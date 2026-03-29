@@ -1513,7 +1513,10 @@ export function Engagement() {
                 </div>
 
                 <div className="mt-8 pt-6 border-t border-divider">
-                  <CTA href="#contact">{t("eng.cta")}</CTA>
+                  <CTA href="#contact">Solicita tu diagnóstico estratégico</CTA>
+                  <p className="mt-5 text-[10px] tracking-[0.28em] uppercase" style={{ color: "rgba(212,175,55,0.30)" }}>
+                    Sin compromiso. Solo claridad.
+                  </p>
                 </div>
               </div>
             </Reveal>
