@@ -1536,55 +1536,88 @@ export function Process() {
    ENGAGEMENT — two-column: narrative left, deliverables right
    ═══════════════════════════════════════════════════════════ */
 
-export function Engagement() {
-  const { t } = useLang();
-  const deliverables = [t("eng.d1"), t("eng.d2"), t("eng.d3"), t("eng.d4"), t("eng.d5")];
+const FIT_IDEAL = [
+  { n: "01", text: "Negocios que venden servicios o tickets altos y necesitan un sistema que los soporte." },
+  { n: "02", text: "Marcas que ya invierten en marketing pero no ven los resultados que esperaban." },
+  { n: "03", text: "Equipos que necesitan claridad de mensaje, más autoridad y mejores leads." },
+  { n: "04", text: "Empresas que valoran la estrategia, el diseño y la ejecución como una sola cosa." },
+];
 
+const FIT_NOT = [
+  { n: "01", text: "Quien solo compara opciones baratas y decide por precio." },
+  { n: "02", text: "Quien necesita publicar mañana sin haber definido su oferta." },
+  { n: "03", text: "Quien quiere una web decorativa sin objetivo comercial claro." },
+  { n: "04", text: "Quien no tiene margen para ejecutar una solución seria." },
+];
+
+export function Engagement() {
   return (
     <>
       <Divider />
       <section id="engagement" className="py-[120px] md:py-[140px] px-8">
         <div className="max-w-[1280px] mx-auto">
-          <Reveal><Label>{t("eng.label")}</Label></Reveal>
+          <Reveal><Label>Fit del proyecto</Label></Reveal>
 
-          <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
-            <Reveal delay={0.1}>
-              <div>
-                <h2 className="text-ink leading-[1.08] mb-6" style={{ fontSize: "clamp(32px, 4vw, 48px)" }}>
-                  {t("eng.heading")}
-                </h2>
-                <p className="text-secondary text-[15px] leading-[1.8] font-light mb-6 text-justify">{t("eng.left.p1")}</p>
-                <p className="text-secondary text-[15px] leading-[1.8] font-light text-justify">{t("eng.left.p2")}</p>
-              </div>
-            </Reveal>
+          <Reveal delay={0.1}>
+            <h2 className="mt-6 text-ink leading-[1.08]" style={{ fontSize: "clamp(32px, 4vw, 52px)" }}>
+              Para quién sí tiene sentido.
+            </h2>
+          </Reveal>
 
-            <Reveal delay={0.2}>
-              <div className="p-8 md:p-10 border border-divider">
-                <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-secondary/50 mb-3">Investment</p>
-                <p className="text-ink text-[clamp(28px,3.5vw,42px)] font-light tracking-[-0.02em] mb-2" style={{}}>
-                  {t("eng.price")}
+          <div className="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-0 border border-divider">
+            {/* IDEAL PARA */}
+            <Reveal delay={0.15}>
+              <div className="p-10 md:p-12 border-b lg:border-b-0 lg:border-r border-divider">
+                <p className="text-[10px] font-semibold tracking-[0.35em] uppercase mb-8" style={{ color: "rgba(212,175,55,0.45)" }}>
+                  Ideal para
                 </p>
-                <p className="text-[13px] text-secondary/50 font-light mb-8">{t("eng.scope")}</p>
-
-                <div className="space-y-4 pt-6 border-t border-divider">
-                  <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-secondary/50 mb-2">{t("eng.what")}</p>
-                  {deliverables.map((item) => (
-                    <div key={item} className="flex items-start gap-3 text-[14px] text-ink/70 font-light leading-[1.6]">
-                      <span className="w-1 h-1 rounded-full bg-ink/20 flex-shrink-0 mt-[9px]" />
-                      {item}
+                <div className="space-y-8">
+                  {FIT_IDEAL.map((item) => (
+                    <div key={item.n} className="flex gap-5 items-start">
+                      <span
+                        className="text-[11px] font-semibold tracking-[0.2em] flex-shrink-0 mt-[3px]"
+                        style={{ color: "rgba(212,175,55,0.35)" }}
+                      >
+                        {item.n}
+                      </span>
+                      <p className="text-[15px] text-ink/80 font-light leading-[1.75]">{item.text}</p>
                     </div>
                   ))}
                 </div>
+              </div>
+            </Reveal>
 
-                <div className="mt-8 pt-6 border-t border-divider">
-                  <CTA href="#contact" onClick={() => trackCTAClick("engagement")}>Solicita tu diagnóstico estratégico</CTA>
-                  <p className="mt-5 text-[10px] tracking-[0.28em] uppercase" style={{ color: "rgba(212,175,55,0.30)" }}>
-                    Sin compromiso. Solo claridad.
-                  </p>
+            {/* NO ES PARA */}
+            <Reveal delay={0.25}>
+              <div className="p-10 md:p-12" style={{ background: "rgba(212,175,55,0.015)" }}>
+                <p className="text-[10px] font-semibold tracking-[0.35em] uppercase mb-8" style={{ color: "rgba(212,175,55,0.25)" }}>
+                  No es para
+                </p>
+                <div className="space-y-8">
+                  {FIT_NOT.map((item) => (
+                    <div key={item.n} className="flex gap-5 items-start">
+                      <span
+                        className="text-[11px] font-semibold tracking-[0.2em] flex-shrink-0 mt-[3px]"
+                        style={{ color: "rgba(212,175,55,0.20)" }}
+                      >
+                        {item.n}
+                      </span>
+                      <p className="text-[15px] leading-[1.75] font-light" style={{ color: "rgba(212,175,55,0.40)" }}>{item.text}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </Reveal>
           </div>
+
+          <Reveal delay={0.35}>
+            <div className="mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+              <CTA href="#contact" onClick={() => trackCTAClick("engagement")}>Solicita tu diagnóstico estratégico</CTA>
+              <p className="text-[10px] tracking-[0.28em] uppercase" style={{ color: "rgba(212,175,55,0.28)" }}>
+                Primero entendemos. Luego decides.
+              </p>
+            </div>
+          </Reveal>
         </div>
       </section>
     </>
