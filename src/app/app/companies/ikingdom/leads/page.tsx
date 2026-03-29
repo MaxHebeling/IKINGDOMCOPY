@@ -70,7 +70,7 @@ export default function LeadsKanban() {
   async function logout() {
     const supabase = createClient();
     await supabase.auth.signOut();
-    router.push("/app/login");
+    router.push("/login");
   }
 
   const grouped = COLUMNS.reduce<Record<ColId, Lead[]>>(
