@@ -13,17 +13,25 @@ const T: Record<string, { en: string; es: string }> = {
   "nav.contact": { en: "Contact", es: "Contacto" },
 
   // Hero
-  "hero.eyebrow": { en: "AI Ecosystem Architecture", es: "Arquitectura de Ecosistemas con IA" },
+  "hero.eyebrow": { en: "Premium Growth Architecture", es: "Arquitectura de crecimiento de alto nivel" },
   "hero.headline": {
-    en: "We Build the Digital Infrastructure That Runs Your Business.",
-    es: "Construimos la Infraestructura Digital Que Opera Tu Negocio.",
+    en: "Growth architecture for companies that don't play average.",
+    es: "Arquitectura de crecimiento para empresas que no juegan a ser promedio.",
   },
   "hero.sub": {
-    en: "Strategy, architecture, and engineering — unified into AI-powered systems that acquire customers, automate operations, and compound revenue. For organizations that have outgrown agencies.",
-    es: "Estrategia, arquitectura e ingeniería — unificadas en sistemas con IA que captan clientes, automatizan operaciones y multiplican ingresos. Para organizaciones que superaron a las agencias.",
+    en: "We design acquisition, conversion and scaling systems for companies ready to operate at a high level.",
+    es: "Diseñamos sistemas de captación, conversión y escalamiento para compañías que están listas para operar a alto nivel.",
   },
-  "hero.cta": { en: "Request Consultation", es: "Solicitar Consulta" },
-  "hero.fine": { en: "WEBSITES + DIGITAL SYSTEMS", es: "WEBSITES + SISTEMAS DIGITALES" },
+  "hero.cta": { en: "Request strategic diagnosis", es: "Solicitar diagnóstico estratégico" },
+  "hero.cta2": { en: "See how it works", es: "Ver cómo funciona" },
+  "hero.fine": {
+    en: "Limited applications. We only work with companies ready to scale.",
+    es: "Aplicación limitada. Solo trabajamos con empresas listas para escalar.",
+  },
+  "hero.trust": {
+    en: "Systems designed for real growth, not superficial marketing.",
+    es: "Sistemas diseñados para crecimiento real, no marketing superficial.",
+  },
 
   // Stats
   "stat.1.value": { en: "12+", es: "12+" },
