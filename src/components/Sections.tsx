@@ -1904,12 +1904,12 @@ export function Contact() {
               <Reveal><Label>Contacto</Label></Reveal>
               <Reveal delay={0.1}>
                 <h2 className="mt-5 text-ink leading-[1.08]" style={{ fontSize: "clamp(28px,3.5vw,44px)" }}>
-                  Empieza con un diagnóstico.
+                  Solicita tu diagnóstico estratégico.
                 </h2>
               </Reveal>
               <Reveal delay={0.2}>
                 <p className="mt-5 text-[15px] font-light leading-[1.85] text-justify" style={{ color: "rgba(212,175,55,0.55)" }}>
-                  Completa los datos. Analizamos el contexto antes de responderte.
+                  Nuestro equipo revisará tu caso y te contactará si hay ajuste estratégico.
                 </p>
               </Reveal>
               <Reveal delay={0.3}>
