@@ -33,14 +33,12 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  // Protect all /app/* routes except /app/login
-  if (
-    !user &&
-    pathname.startsWith("/app") &&
-    !pathname.startsWith("/app/login")
-  ) {
+  const isProtectedPath =
+    pathname.startsWith("/companies") || pathname.startsWith("/editorial");
+
+  if (!user && isProtectedPath) {
     const url = request.nextUrl.clone();
-    url.pathname = "/app/login";
+    url.pathname = "/login";
     return NextResponse.redirect(url);
   }
 
