@@ -28,7 +28,7 @@ export const LEAD_BRAND_PROFILES: Record<LeadBrand, LeadBrandProfile> = {
     pipeline: "ikingdom",
     dealLabel: "Landing Page",
     formPath: "/apply/ikingdom-diagnosis",
-    companyPath: "/app/companies/ikingdom",
+    companyPath: "/companies/ikingdom",
   },
   "editorial-reino": {
     value: "editorial-reino",
