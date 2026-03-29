@@ -14,9 +14,15 @@ export const metadata: Metadata = {
     shortcut: "/favicon.svg",
     apple: "/logo.png",
   },
-  title: "iKingdom — Agencia de crecimiento digital",
+  title: {
+    default: "iKingdom — Agencia de crecimiento digital",
+    template: "%s | iKingdom",
+  },
   description:
     "Creamos sistemas de captación, conversión y escalamiento digital de alto nivel.",
+  alternates: {
+    canonical: "https://www.ikingdom.org",
+  },
   openGraph: {
     title: "iKingdom — Agencia de crecimiento digital",
     description:
