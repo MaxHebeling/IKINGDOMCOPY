@@ -46,7 +46,7 @@ export const LEAD_BRAND_PROFILES: Record<LeadBrand, LeadBrandProfile> = {
     pipeline: "lead_hunter",
     dealLabel: "Construction Lead",
     formPath: "/apply/lead-hunter",
-    companyPath: "/app/companies/lead-hunter",
+    companyPath: "/companies/lead-hunter",
   },
   imperium: {
     value: "imperium",
