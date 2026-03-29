@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { LangProvider } from "@/context/Lang";
 import Cursor from "@/components/Cursor";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import SpaceShipPass from "@/components/SpaceShipPass";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import PixelBrain from "@/components/PixelBrain";
