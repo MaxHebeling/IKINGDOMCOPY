@@ -50,10 +50,7 @@ export default function Hero() {
             <h1
               className="text-ink leading-[1.02]"
               style={{
-                fontFamily: "var(--font-serif)",
                 fontSize: "clamp(38px, 6vw, 80px)",
-                fontWeight: 700,
-                letterSpacing: "-0.02em",
               }}
             >
               {words.map((w, i) => (
