@@ -819,196 +819,238 @@ export function Clients() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const inView = useInView(sectionRef, { once: true, margin: "-12%" });
 
-  // ── Mouse parallax (low-intensity, desktop only) ──────────────────────────
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 35, damping: 22 });
-  const springY = useSpring(mouseY, { stiffness: 35, damping: 22 });
+  const mouseX  = useMotionValue(0);
+  const mouseY  = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 30, damping: 20 });
+  const springY = useSpring(mouseY, { stiffness: 30, damping: 20 });
 
   function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     const r = e.currentTarget.getBoundingClientRect();
-    mouseX.set(((e.clientX - r.left) / r.width  - 0.5) * 14);
-    mouseY.set(((e.clientY - r.top)  / r.height - 0.5) * 14);
+    mouseX.set(((e.clientX - r.left) / r.width  - 0.5) * 12);
+    mouseY.set(((e.clientY - r.top)  / r.height - 0.5) * 12);
   }
   function onMouseLeave() { mouseX.set(0); mouseY.set(0); }
 
-  // ── Shared transition for ring-group and every counter-rotation ───────────
-  const orbitT = { duration: 120, repeat: Infinity, ease: "linear" as const };
+  // Different orbital velocities for depth
+  const innerOrbitT = { duration: 80,  repeat: Infinity, ease: "linear" as const };
+  const outerOrbitT = { duration: 115, repeat: Infinity, ease: "linear" as const };
 
   return (
     <>
       <Divider />
-      <section ref={sectionRef} className="py-[100px] md:py-[130px] px-8">
+      <section ref={sectionRef} className="py-[100px] md:py-[130px] px-8 overflow-hidden">
         <div className="max-w-[1280px] mx-auto">
-          <Reveal className="mb-10 md:mb-20">
+
+          {/* Header */}
+          <Reveal className="mb-8 md:mb-16">
             <Label>Empresas que confían en nosotros</Label>
+            <motion.div
+              className="mt-4 flex items-center gap-4"
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <motion.div
+                className="w-[5px] h-[5px] rounded-full flex-shrink-0"
+                style={{ background: "#D4AF37" }}
+                animate={{ opacity: [0.25, 0.90, 0.25] }}
+                transition={{ duration: 2.4, repeat: Infinity }}
+              />
+              <span className="text-[9px] tracking-[0.36em] uppercase" style={{ color: "rgba(212,175,55,0.32)" }}>
+                10 unidades conectadas
+              </span>
+              <span className="h-px flex-1 max-w-[60px]" style={{ background: "rgba(212,175,55,0.10)" }} />
+              <span className="text-[9px] tracking-[0.28em] uppercase" style={{ color: "rgba(212,175,55,0.18)" }}>
+                sys: activo
+              </span>
+            </motion.div>
           </Reveal>
 
-          {/* ── Desktop: Orrery ────────────────────────────────────────────── */}
+          {/* ── Desktop: Velocity Dashboard ──────────────────────────────── */}
           <div
             className="relative hidden md:flex items-center justify-center"
-            style={{ height: C_SIZE }}
+            style={{ height: VD_SIZE }}
             onMouseMove={onMouseMove}
             onMouseLeave={onMouseLeave}
           >
-            {/* Parallax wrapper */}
             <motion.div
-              style={{ width: C_SIZE, height: C_SIZE, position: "relative", x: springX, y: springY }}
+              style={{ width: VD_SIZE, height: VD_SIZE, position: "relative", x: springX, y: springY }}
             >
 
-              {/* ── Center: compass rose / clockwork origin ───────────── */}
-              {/* Pure Concept 2 — static instrument mark, no animation */}
-              <motion.div
-                className="absolute pointer-events-none"
-                style={{ left: CENTER - 28, top: CENTER - 28, width: 56, height: 56 }}
-                initial={{ opacity: 0 }}
-                animate={inView ? { opacity: 1 } : {}}
-                transition={{ duration: 1.2, delay: 2.8 }}
-              >
-                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 56 56">
-                  {/* Outer ring */}
-                  <circle cx="28" cy="28" r="11" fill="none" stroke="#D4AF37" strokeWidth="0.5" strokeOpacity="0.18"/>
-                  {/* Inner ring */}
-                  <circle cx="28" cy="28" r="4.5" fill="none" stroke="#D4AF37" strokeWidth="0.4" strokeOpacity="0.20"/>
-                  {/* Cardinal arms — N S E W */}
-                  <line x1="28" y1="17" x2="28" y2="23.5" stroke="#D4AF37" strokeWidth="0.5" strokeOpacity="0.22"/>
-                  <line x1="28" y1="32.5" x2="28" y2="39" stroke="#D4AF37" strokeWidth="0.5" strokeOpacity="0.22"/>
-                  <line x1="17" y1="28" x2="23.5" y2="28" stroke="#D4AF37" strokeWidth="0.5" strokeOpacity="0.22"/>
-                  <line x1="32.5" y1="28" x2="39" y2="28" stroke="#D4AF37" strokeWidth="0.5" strokeOpacity="0.22"/>
-                  {/* Diagonal arms — 45° intervals, shorter */}
-                  <line x1="20.2" y1="20.2" x2="23.8" y2="23.8" stroke="#D4AF37" strokeWidth="0.4" strokeOpacity="0.10"/>
-                  <line x1="35.8" y1="20.2" x2="32.2" y2="23.8" stroke="#D4AF37" strokeWidth="0.4" strokeOpacity="0.10"/>
-                  <line x1="20.2" y1="35.8" x2="23.8" y2="32.2" stroke="#D4AF37" strokeWidth="0.4" strokeOpacity="0.10"/>
-                  <line x1="35.8" y1="35.8" x2="32.2" y2="32.2" stroke="#D4AF37" strokeWidth="0.4" strokeOpacity="0.10"/>
-                  {/* Center dot */}
-                  <circle cx="28" cy="28" r="1.5" fill="#D4AF37" fillOpacity="0.28"/>
-                </svg>
-              </motion.div>
-
-              {/* ── SVG layer: ring + ticks + cardinals ──────────────── */}
+              {/* ── Background instrument SVG ────────────────────────── */}
               <svg
                 className="absolute inset-0 w-full h-full pointer-events-none"
-                viewBox={`0 0 ${C_SIZE} ${C_SIZE}`}
+                viewBox={`0 0 ${VD_SIZE} ${VD_SIZE}`}
               >
-                {/* Main ring — draws in on enter */}
-                <motion.circle
-                  cx={CENTER} cy={CENTER} r={RING_R}
-                  fill="none"
-                  stroke="#D4AF37"
-                  strokeWidth="0.7"
-                  strokeOpacity="0.17"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={inView ? { pathLength: 1, opacity: 1 } : {}}
-                  transition={{ duration: 2.8, ease: [0.08, 0.82, 0.17, 1] }}
-                />
-                {/* Outer guide ring — very faint */}
-                <motion.circle
-                  cx={CENTER} cy={CENTER} r={RING_R + 18}
-                  fill="none"
-                  stroke="#D4AF37"
-                  strokeWidth="0.4"
-                  strokeOpacity="0.05"
-                  strokeDasharray="3 9"
-                  initial={{ opacity: 0 }}
-                  animate={inView ? { opacity: 1 } : {}}
-                  transition={{ duration: 1, delay: 2.6 }}
-                />
-
-                {/* Tick marks — appear as a group after ring draws */}
+                {/* Axis crosshair lines */}
                 <motion.g
                   initial={{ opacity: 0 }}
                   animate={inView ? { opacity: 1 } : {}}
-                  transition={{ duration: 0.8, delay: 2.4 }}
+                  transition={{ duration: 1.2, delay: 0.6 }}
                 >
-                  {TICKS.map((t, i) => (
+                  {VD_AXIS.map((a, i) => (
                     <line
                       key={i}
-                      x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2}
+                      x1={a.x1} y1={a.y1} x2={a.x2} y2={a.y2}
                       stroke="#D4AF37"
-                      strokeWidth={t.strokeWidth}
-                      strokeOpacity={t.strokeOpacity}
+                      strokeWidth={0.4}
+                      strokeOpacity={0.045}
+                      strokeDasharray="1.5 7"
                     />
                   ))}
                 </motion.g>
 
-                {/* Cardinal degree labels */}
+                {/* Inner reference ring (r=90) */}
+                <motion.circle
+                  cx={VD_CX} cy={VD_CY} r={90}
+                  fill="none" stroke="#D4AF37"
+                  strokeWidth={0.35} strokeOpacity={0.05}
+                  strokeDasharray="1 8"
+                  initial={{ opacity: 0 }}
+                  animate={inView ? { opacity: 1 } : {}}
+                  transition={{ duration: 1.0, delay: 0.8 }}
+                />
+
+                {/* Inner orbit ring (r=130) — draws in */}
+                <motion.circle
+                  cx={VD_CX} cy={VD_CY} r={VD_INNER_R}
+                  fill="none" stroke="#D4AF37"
+                  strokeWidth={0.45} strokeOpacity={0.09}
+                  strokeDasharray="1 7"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={inView ? { pathLength: 1, opacity: 1 } : {}}
+                  transition={{ duration: 1.8, delay: 0.5, ease: [0.08, 0.82, 0.17, 1] }}
+                />
+
+                {/* Velocity calibration segments (r=192) */}
                 <motion.g
                   initial={{ opacity: 0 }}
                   animate={inView ? { opacity: 1 } : {}}
-                  transition={{ duration: 0.8, delay: 2.8 }}
+                  transition={{ duration: 1.0, delay: 1.4 }}
                 >
-                  {CARDINALS.map((c) => (
-                    <text
-                      key={c.label}
-                      x={c.x} y={c.y}
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                      fill="#D4AF37"
-                      fillOpacity="0.15"
-                      fontSize="7"
-                      letterSpacing="1.5"
-                      fontFamily='"Space Grotesk", sans-serif'
-                    >
-                      {c.label}
-                    </text>
+                  {VD_VEL_SEGS.map((d, i) => (
+                    <path
+                      key={i}
+                      d={d}
+                      fill="none"
+                      stroke="#D4AF37"
+                      strokeWidth={0.5}
+                      strokeOpacity={0.07}
+                      strokeLinecap="round"
+                    />
                   ))}
                 </motion.g>
+
+                {/* Outer orbit ring (r=255) — draws in */}
+                <motion.circle
+                  cx={VD_CX} cy={VD_CY} r={VD_OUTER_R}
+                  fill="none" stroke="#D4AF37"
+                  strokeWidth={0.45} strokeOpacity={0.10}
+                  strokeDasharray="1 7"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={inView ? { pathLength: 1, opacity: 1 } : {}}
+                  transition={{ duration: 2.2, delay: 0.3, ease: [0.08, 0.82, 0.17, 1] }}
+                />
+
+                {/* Outer boundary ring (r=282) */}
+                <motion.circle
+                  cx={VD_CX} cy={VD_CY} r={282}
+                  fill="none" stroke="#D4AF37"
+                  strokeWidth={0.3} strokeOpacity={0.04}
+                  strokeDasharray="2 12"
+                  initial={{ opacity: 0 }}
+                  animate={inView ? { opacity: 1 } : {}}
+                  transition={{ duration: 1.2, delay: 1.8 }}
+                />
               </svg>
 
-              {/* No sweep — pure Concept 2 is a static clockwork instrument */}
+              {/* ── Center hub ───────────────────────────────────────── */}
+              <motion.div
+                className="absolute pointer-events-none"
+                style={{ left: VD_CX - 32, top: VD_CY - 32, width: 64, height: 64 }}
+                initial={{ opacity: 0, scale: 0.4 }}
+                animate={inView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 1.0, delay: 2.2, ease: [0.08, 0.82, 0.17, 1] }}
+              >
+                <svg viewBox="0 0 64 64" className="absolute inset-0 w-full h-full">
+                  {/* Rings */}
+                  <circle cx="32" cy="32" r="22" fill="none" stroke="#D4AF37" strokeWidth="0.45" strokeOpacity="0.16"/>
+                  <circle cx="32" cy="32" r="15" fill="none" stroke="#D4AF37" strokeWidth="0.35" strokeOpacity="0.11"/>
+                  <circle cx="32" cy="32" r="8"  fill="none" stroke="#D4AF37" strokeWidth="0.30" strokeOpacity="0.18"/>
+                  {/* Cardinal arms */}
+                  <line x1="32" y1="10" x2="32" y2="24" stroke="#D4AF37" strokeWidth="0.45" strokeOpacity="0.18"/>
+                  <line x1="32" y1="40" x2="32" y2="54" stroke="#D4AF37" strokeWidth="0.45" strokeOpacity="0.18"/>
+                  <line x1="10" y1="32" x2="24" y2="32" stroke="#D4AF37" strokeWidth="0.45" strokeOpacity="0.18"/>
+                  <line x1="40" y1="32" x2="54" y2="32" stroke="#D4AF37" strokeWidth="0.45" strokeOpacity="0.18"/>
+                  {/* Diagonal micro-marks */}
+                  <line x1="21" y1="21" x2="25.5" y2="25.5" stroke="#D4AF37" strokeWidth="0.35" strokeOpacity="0.09"/>
+                  <line x1="43" y1="21" x2="38.5" y2="25.5" stroke="#D4AF37" strokeWidth="0.35" strokeOpacity="0.09"/>
+                  <line x1="21" y1="43" x2="25.5" y2="38.5" stroke="#D4AF37" strokeWidth="0.35" strokeOpacity="0.09"/>
+                  <line x1="43" y1="43" x2="38.5" y2="38.5" stroke="#D4AF37" strokeWidth="0.35" strokeOpacity="0.09"/>
+                </svg>
+                {/* Pulsing center dot */}
+                <motion.div
+                  className="absolute rounded-full"
+                  style={{
+                    left: "50%", top: "50%",
+                    width: "5px", height: "5px",
+                    transform: "translate(-50%, -50%)",
+                    background: "#D4AF37",
+                  }}
+                  animate={{ opacity: [0.30, 0.80, 0.30], scale: [1, 1.3, 1] }}
+                  transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+                />
+              </motion.div>
 
-              {/* ── Rotating ring group — carries all logo nodes ──────── */}
+              {/* ── Inner orbit — 4 nodes, 80s ───────────────────────── */}
               <motion.div
                 className="absolute inset-0"
                 animate={{ rotate: 360 }}
-                transition={orbitT}
+                transition={innerOrbitT}
               >
-                {CLIENTS.map((c, i) => {
-                  const pos = ORRERY_POSITIONS[i];
+                {CLIENTS.slice(0, 4).map((c, i) => {
+                  const pos = VD_INNER_POS[i];
                   return (
-                    /* Counter-rotation: cancels the ring rotation so logos stay upright */
                     <motion.div
                       key={c.name}
                       className="absolute"
-                      style={{ left: pos.left, top: pos.top, width: NODE, height: NODE }}
+                      style={{ left: pos.left, top: pos.top, width: VD_NODE, height: VD_NODE }}
                       animate={{ rotate: -360 }}
-                      transition={orbitT}
+                      transition={innerOrbitT}
                     >
-                      {/* Entrance animation — separate from rotation */}
-                      <motion.div
-                        className="w-full h-full"
-                        initial={{ opacity: 0, scale: 0.65 }}
-                        animate={inView ? { opacity: 1, scale: 1 } : {}}
-                        transition={{
-                          duration: 0.9,
-                          delay: 2.9 + i * 0.09,
-                          ease: [0.08, 0.82, 0.17, 1],
-                        }}
-                      >
-                        {/* Logo node */}
-                        <div className="group w-full h-full rounded-full border border-[#D4AF37]/[0.13] bg-[#0A0A08] hover:border-[#D4AF37]/30 transition-all duration-700 flex items-center justify-center relative overflow-hidden cursor-default">
-                          {/* Hover glow */}
-                          <div
-                            className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                            style={{ background: "radial-gradient(circle, rgba(212,175,55,0.07) 0%, transparent 70%)" }}
-                          />
-                          {/* Slow scan line */}
-                          <motion.div
-                            className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/[0.12] to-transparent"
-                            animate={{ top: ["-5%", "105%"] }}
-                            transition={{ duration: 6 + i * 0.4, delay: i * 1.4, repeat: Infinity, ease: "linear" }}
-                          />
-                          <img
-                            src={c.logo}
-                            alt={c.name}
-                            className="max-h-[56px] max-w-[76px] w-auto object-contain opacity-35 group-hover:opacity-72 transition-opacity duration-700 filter grayscale brightness-150"
-                          />
-                        </div>
-                        {/* Name label */}
-                        <p className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[8px] tracking-[0.22em] uppercase text-[#D4AF37]/22 group-hover:text-[#D4AF37]/50 transition-colors duration-500">
-                          {c.name}
-                        </p>
-                      </motion.div>
+                      <VelocityNode
+                        client={c}
+                        index={i}
+                        inView={inView}
+                        entranceDelay={2.6 + i * 0.12}
+                      />
+                    </motion.div>
+                  );
+                })}
+              </motion.div>
+
+              {/* ── Outer orbit — 6 nodes, 115s ─────────────────────── */}
+              <motion.div
+                className="absolute inset-0"
+                animate={{ rotate: 360 }}
+                transition={outerOrbitT}
+              >
+                {CLIENTS.slice(4).map((c, i) => {
+                  const pos = VD_OUTER_POS[i];
+                  return (
+                    <motion.div
+                      key={c.name}
+                      className="absolute"
+                      style={{ left: pos.left, top: pos.top, width: VD_NODE, height: VD_NODE }}
+                      animate={{ rotate: -360 }}
+                      transition={outerOrbitT}
+                    >
+                      <VelocityNode
+                        client={c}
+                        index={i + 4}
+                        inView={inView}
+                        entranceDelay={2.7 + (i + 4) * 0.10}
+                      />
                     </motion.div>
                   );
                 })}
@@ -1017,19 +1059,16 @@ export function Clients() {
             </motion.div>
           </div>
 
-          {/* ── Mobile: 2-col grid fallback ───────────────────────────────── */}
-          <div className="grid grid-cols-2 gap-6 md:hidden">
-            {CLIENTS.map((c) => (
-              <div key={c.name} className="flex flex-col items-center gap-3">
-                <div className="w-[88px] h-[88px] rounded-full border border-[#D4AF37]/[0.12] bg-[#0A0A08] flex items-center justify-center">
-                  <img
-                    src={c.logo}
-                    alt={c.name}
-                    className="max-h-[48px] max-w-[62px] w-auto object-contain opacity-32 filter grayscale brightness-150"
-                  />
-                </div>
-                <p className="text-[8px] tracking-[0.2em] uppercase text-[#D4AF37]/25 text-center">{c.name}</p>
-              </div>
+          {/* ── Mobile: 3-col velocity grid ──────────────────────────────── */}
+          <div className="grid grid-cols-3 gap-8 md:hidden place-items-center">
+            {CLIENTS.map((c, i) => (
+              <VelocityNode
+                key={c.name}
+                client={c}
+                index={i}
+                inView={inView}
+                entranceDelay={0.1 + i * 0.07}
+              />
             ))}
           </div>
 
