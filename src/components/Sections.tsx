@@ -1763,7 +1763,7 @@ export function Engagement() {
             <Reveal delay={0.25}>
               <div
                 className="p-10 md:p-14 relative"
-                style={{ backdropFilter: "blur(2px)", background: "rgba(10,10,8,0.65)" }}
+                style={{ backdropFilter: "blur(4px)", background: "rgba(6,22,42,0.78)" }}
               >
                 <div className="absolute top-0 left-1/4 right-1/4 h-[1px]" style={{ background: "linear-gradient(90deg, rgba(212,175,55,0) 0%, rgba(212,175,55,0.22) 50%, rgba(212,175,55,0) 100%)" }} />
                 <p className="text-[10px] font-semibold tracking-[0.42em] uppercase mb-10" style={{ color: "rgba(212,175,55,0.55)" }}>
