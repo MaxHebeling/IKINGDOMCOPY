@@ -668,26 +668,34 @@ export function Clients() {
               style={{ width: C_SIZE, height: C_SIZE, position: "relative", x: springX, y: springY }}
             >
 
-              {/* ── Center pulsar ─────────────────────────────────────── */}
-              <div
+              {/* ── Center: compass rose / clockwork origin ───────────── */}
+              {/* Pure Concept 2 — static instrument mark, no animation */}
+              <motion.div
                 className="absolute pointer-events-none"
                 style={{ left: CENTER - 28, top: CENTER - 28, width: 56, height: 56 }}
+                initial={{ opacity: 0 }}
+                animate={inView ? { opacity: 1 } : {}}
+                transition={{ duration: 1.2, delay: 2.8 }}
               >
-                {/* Two slow, barely-visible breath rings */}
-                {[0, 2.0].map((delay, pi) => (
-                  <motion.div
-                    key={pi}
-                    className="absolute inset-0 rounded-full border border-[#D4AF37]"
-                    initial={{ scale: 1, opacity: 0 }}
-                    animate={inView ? { scale: [1, 4.5], opacity: [0.07, 0] } : {}}
-                    transition={{ duration: 6.5, delay, repeat: Infinity, ease: "easeOut" }}
-                  />
-                ))}
-                {/* Center mark — minimal dot only */}
                 <svg className="absolute inset-0 w-full h-full" viewBox="0 0 56 56">
-                  <circle cx="28" cy="28" r="2" fill="#D4AF37" fillOpacity="0.22"/>
+                  {/* Outer ring */}
+                  <circle cx="28" cy="28" r="11" fill="none" stroke="#D4AF37" strokeWidth="0.5" strokeOpacity="0.18"/>
+                  {/* Inner ring */}
+                  <circle cx="28" cy="28" r="4.5" fill="none" stroke="#D4AF37" strokeWidth="0.4" strokeOpacity="0.20"/>
+                  {/* Cardinal arms — N S E W */}
+                  <line x1="28" y1="17" x2="28" y2="23.5" stroke="#D4AF37" strokeWidth="0.5" strokeOpacity="0.22"/>
+                  <line x1="28" y1="32.5" x2="28" y2="39" stroke="#D4AF37" strokeWidth="0.5" strokeOpacity="0.22"/>
+                  <line x1="17" y1="28" x2="23.5" y2="28" stroke="#D4AF37" strokeWidth="0.5" strokeOpacity="0.22"/>
+                  <line x1="32.5" y1="28" x2="39" y2="28" stroke="#D4AF37" strokeWidth="0.5" strokeOpacity="0.22"/>
+                  {/* Diagonal arms — 45° intervals, shorter */}
+                  <line x1="20.2" y1="20.2" x2="23.8" y2="23.8" stroke="#D4AF37" strokeWidth="0.4" strokeOpacity="0.10"/>
+                  <line x1="35.8" y1="20.2" x2="32.2" y2="23.8" stroke="#D4AF37" strokeWidth="0.4" strokeOpacity="0.10"/>
+                  <line x1="20.2" y1="35.8" x2="23.8" y2="32.2" stroke="#D4AF37" strokeWidth="0.4" strokeOpacity="0.10"/>
+                  <line x1="35.8" y1="35.8" x2="32.2" y2="32.2" stroke="#D4AF37" strokeWidth="0.4" strokeOpacity="0.10"/>
+                  {/* Center dot */}
+                  <circle cx="28" cy="28" r="1.5" fill="#D4AF37" fillOpacity="0.28"/>
                 </svg>
-              </div>
+              </motion.div>
 
               {/* ── SVG layer: ring + ticks + cardinals ──────────────── */}
               <svg
