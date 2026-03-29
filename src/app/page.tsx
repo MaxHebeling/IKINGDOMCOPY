@@ -13,6 +13,7 @@ export default function Home() {
   return (
     <LangProvider>
       <Cursor />
+      <AmbientLight />
       <PixelBrain />
       <motion.div
         initial={{ opacity: 1 }}
