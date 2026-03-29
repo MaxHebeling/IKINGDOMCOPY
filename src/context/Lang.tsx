@@ -25,8 +25,8 @@ const T: Record<string, { en: string; es: string }> = {
   "hero.cta": { en: "Apply for strategic diagnosis", es: "Aplicar para diagnóstico estratégico" },
   "hero.cta2": { en: "See how it works", es: "Ver cómo funciona" },
   "hero.fine": {
-    en: "Limited applications. We only work with companies ready to scale.",
-    es: "Aplicación limitada. Solo trabajamos con empresas listas para escalar.",
+    en: "Limited applications. We only work with companies ready to scale with structure.",
+    es: "Aplicación limitada. Solo trabajamos con empresas listas para escalar con estructura.",
   },
   "hero.trust": {
     en: "Most companies have a digital presence. Few have a system that sells.",
