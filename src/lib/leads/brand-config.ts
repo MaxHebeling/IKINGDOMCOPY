@@ -55,7 +55,7 @@ export const LEAD_BRAND_PROFILES: Record<LeadBrand, LeadBrandProfile> = {
     pipeline: "imperium",
     dealLabel: "Investor Opportunity",
     formPath: "/apply?brand=imperium",
-    companyPath: "/app/companies/imperium",
+    companyPath: "/companies/imperium",
   },
   "max-hebeling": {
     value: "max-hebeling",
