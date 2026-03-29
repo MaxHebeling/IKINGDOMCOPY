@@ -1715,7 +1715,7 @@ export function Engagement() {
       <Divider />
       <section
         id="engagement"
-        className="relative py-[140px] md:py-[180px] px-8 overflow-hidden"
+        className="relative py-[100px] md:py-[180px] px-8 overflow-hidden"
         style={{ background: "#000000" }}
       >
         {/* Animated blueprint background */}
