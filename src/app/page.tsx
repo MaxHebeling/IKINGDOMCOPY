@@ -5,6 +5,7 @@ import { LangProvider } from "@/context/Lang";
 import Cursor from "@/components/Cursor";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import SpaceShipPass from "@/components/SpaceShipPass";
+import LightningPass from "@/components/LightningPass";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import PixelBrain from "@/components/PixelBrain";
