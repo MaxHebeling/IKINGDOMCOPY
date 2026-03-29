@@ -4,35 +4,42 @@ import CookieConsent from "@/components/CookieConsent";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ikingdom.org"),
+  metadataBase: new URL("https://www.ikingdom.org"),
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
     apple: "/logo.png",
   },
-  title: "iKingdom — Arquitectura de Ecosistemas Digitales con IA",
-  description: "Construimos la infraestructura digital que opera tu negocio. Estrategia, arquitectura e ingeniería unificadas en sistemas con IA que captan clientes y multiplican ingresos.",
+  title: "iKingdom — Agencia de crecimiento digital",
+  description:
+    "Creamos sistemas de captación, conversión y escalamiento digital de alto nivel.",
   openGraph: {
-    type: "website",
-    url: "/",
+    title: "iKingdom — Agencia de crecimiento digital",
+    description:
+      "Creamos sistemas de captación, conversión y escalamiento digital de alto nivel.",
+    url: "https://www.ikingdom.org",
     siteName: "iKingdom",
-    title: "iKingdom — Arquitectura de Ecosistemas Digitales con IA",
-    description: "Construimos la infraestructura digital que opera tu negocio. Sistemas con IA que captan clientes, automatizan operaciones y multiplican ingresos.",
     images: [
       {
-        url: "/logo.png",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "iKingdom — Arquitectura de Ecosistemas Digitales con IA",
+      },
+      {
+        url: "https://www.ikingdom.org/og-image.jpg",
+        width: 1200,
+        height: 630,
       },
     ],
     locale: "es_ES",
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "iKingdom — Arquitectura de Ecosistemas Digitales con IA",
-    description: "Construimos la infraestructura digital que opera tu negocio. Sistemas con IA que captan clientes, automatizan operaciones y multiplican ingresos.",
-    images: ["/logo.png"],
+    title: "iKingdom — Agencia de crecimiento digital",
+    description:
+      "Creamos sistemas de captación, conversión y escalamiento digital de alto nivel.",
+    images: ["/og-image.jpg", "https://www.ikingdom.org/og-image.jpg"],
   },
 };
 
