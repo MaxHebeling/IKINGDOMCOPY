@@ -11,7 +11,7 @@
   --color-grid: rgba(212, 175, 55, 0.02);
   --color-hover-fill: #D4AF37;
   --font-serif: "Cormorant Garamond", "Georgia", serif;
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-sans: "Space Grotesk", "Inter", system-ui, sans-serif;
 }
 
 * { cursor: none !important; }
