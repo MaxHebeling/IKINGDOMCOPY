@@ -313,7 +313,7 @@ const WWD_CARDS = [
       </svg>
     ),
     title: "Posicionamiento estratégico",
-    desc: "Definimos cómo te percibe tu cliente ideal",
+    desc: "Definimos el mensaje exacto que mueve a tu cliente ideal a tomar acción.",
   },
   {
     icon: (
@@ -321,8 +321,8 @@ const WWD_CARDS = [
         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
       </svg>
     ),
-    title: "Diseño que genera autoridad",
-    desc: "Presencia visual que justifica tu ticket",
+    title: "Autoridad visual premium",
+    desc: "Diseño que justifica tu precio antes de que el cliente lea una palabra.",
   },
   {
     icon: (
@@ -331,7 +331,7 @@ const WWD_CARDS = [
       </svg>
     ),
     title: "Arquitectura de conversión",
-    desc: "Cada elemento tiene un objetivo comercial",
+    desc: "Cada elemento tiene un propósito comercial. Nada es decorativo.",
   },
   {
     icon: (
@@ -339,8 +339,8 @@ const WWD_CARDS = [
         <path d="M3 11l19-9-9 19-2-8-8-2z" />
       </svg>
     ),
-    title: "Elevación de marca personal",
-    desc: "Construimos tu plataforma de influencia",
+    title: "Sistemas de captación activa",
+    desc: "Infraestructura que genera y califica prospectos de forma continua.",
   },
 ];
 
