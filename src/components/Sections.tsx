@@ -852,7 +852,7 @@ export function Clients() {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   PROCESS — premium navy pipeline, horizontal node system
+   PROCESS — spacecraft control panel, site palette (black/gold)
    ═══════════════════════════════════════════════════════════ */
 
 const PROCESS_STAGES = [
@@ -882,238 +882,281 @@ const PROCESS_STAGES = [
   },
 ];
 
+/* Corner brackets — spacecraft HUD reticle detail */
+function HudBrackets({ opacity = "0.20" }: { opacity?: string }) {
+  const s = `rgba(212,175,55,${opacity})`;
+  const sz = "10px";
+  return (
+    <>
+      <span className="absolute top-0 left-0 pointer-events-none" style={{ width: sz, height: sz, borderTop: `1px solid ${s}`, borderLeft: `1px solid ${s}` }} />
+      <span className="absolute top-0 right-0 pointer-events-none" style={{ width: sz, height: sz, borderTop: `1px solid ${s}`, borderRight: `1px solid ${s}` }} />
+      <span className="absolute bottom-0 left-0 pointer-events-none" style={{ width: sz, height: sz, borderBottom: `1px solid ${s}`, borderLeft: `1px solid ${s}` }} />
+      <span className="absolute bottom-0 right-0 pointer-events-none" style={{ width: sz, height: sz, borderBottom: `1px solid ${s}`, borderRight: `1px solid ${s}` }} />
+    </>
+  );
+}
+
 export function Process() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-12%" });
 
   return (
-    <section
-      ref={ref}
-      id="process"
-      className="relative py-[120px] md:py-[160px] px-8 overflow-hidden"
-      style={{ background: "#041E39" }}
-    >
-      {/* ── Top / bottom blends into surrounding black ── */}
-      <div className="absolute inset-x-0 top-0 h-28 pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, #000000, transparent)" }} />
-      <div className="absolute inset-x-0 bottom-0 h-28 pointer-events-none"
-        style={{ background: "linear-gradient(to top, #000000, transparent)" }} />
+    <>
+      <Divider />
+      <section
+        ref={ref}
+        id="process"
+        className="relative py-[120px] md:py-[160px] px-8 overflow-hidden"
+      >
+        {/* Precision grid — spacecraft instrument feel */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "linear-gradient(rgba(212,175,55,0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.018) 1px, transparent 1px)",
+            backgroundSize: "64px 64px",
+          }}
+        />
 
-      {/* ── Subtle precision grid ── */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundImage: "linear-gradient(rgba(212,175,55,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.025) 1px, transparent 1px)",
-        backgroundSize: "72px 72px",
-      }} />
+        <div className="max-w-[1280px] mx-auto relative z-10">
 
-      <div className="max-w-[1280px] mx-auto relative z-10">
+          {/* ── Header ──────────────────────────────────────────── */}
+          <div className="mb-20 md:mb-28">
+            <Reveal><Label>Metodología</Label></Reveal>
+            <Reveal delay={0.1}>
+              <h2 className="mt-5 text-ink leading-[1.06]" style={{ fontSize: "clamp(36px, 5vw, 62px)", letterSpacing: "-0.03em" }}>
+                Cómo trabajamos.
+              </h2>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p className="mt-5 text-secondary text-[15px] leading-[1.85] font-light max-w-[480px]">
+                Un proceso claro, breve y orientado a que tomes decisiones correctas antes de invertir.
+              </p>
+            </Reveal>
+          </div>
 
-        {/* ── Header ─────────────────────────────────────────── */}
-        <div className="mb-20 md:mb-28">
-          <Reveal>
-            <div className="inline-flex items-center gap-3 mb-7">
-              <span className="h-px w-6" style={{ background: "rgba(212,175,55,0.5)" }} />
-              <span className="text-[11px] font-medium uppercase tracking-[0.38em]" style={{ color: "#D4AF37" }}>
-                Metodología
-              </span>
-              <span className="h-px w-6" style={{ background: "rgba(212,175,55,0.5)" }} />
-            </div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <h2
-              className="font-semibold"
-              style={{
-                fontSize: "clamp(36px, 5vw, 62px)",
-                letterSpacing: "-0.03em",
-                lineHeight: 1.06,
-                color: "#F0EDE4",
-              }}
+          {/* ── Desktop: horizontal node pipeline ───────────────── */}
+          <div className="hidden md:block">
+
+            {/* HUD status bar */}
+            <motion.div
+              className="flex items-center justify-between mb-10 px-1"
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.8, delay: 0.1 }}
             >
-              Cómo trabajamos.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <p className="mt-5 text-[15px] leading-[1.85] font-light max-w-[480px]" style={{ color: "#5E7A96" }}>
-              Un proceso claro, breve y orientado a que tomes decisiones correctas antes de invertir.
-            </p>
-          </Reveal>
-        </div>
+              <div className="flex items-center gap-3">
+                {/* Live status dot */}
+                <motion.div
+                  className="w-[5px] h-[5px] rounded-full"
+                  style={{ background: "#D4AF37" }}
+                  animate={{ opacity: [0.3, 1, 0.3] }}
+                  transition={{ duration: 2.2, repeat: Infinity }}
+                />
+                <span className="text-[9px] tracking-[0.35em] uppercase" style={{ color: "rgba(212,175,55,0.45)" }}>
+                  Sistema activo
+                </span>
+              </div>
+              <span className="text-[9px] tracking-[0.25em] uppercase" style={{ color: "rgba(212,175,55,0.25)" }}>
+                04 etapas · 5–6 semanas
+              </span>
+            </motion.div>
 
-        {/* ── Desktop: horizontal node pipeline ─────────────── */}
-        <div className="hidden md:block">
+            {/* Connector + node row */}
+            <div className="relative mb-10">
 
-          {/* Connector + node row */}
-          <div className="relative mb-14">
+              {/* Dashed base rail */}
+              <div
+                className="absolute pointer-events-none"
+                style={{
+                  top: "27px",
+                  left: "calc(100% / 8)",
+                  right: "calc(100% / 8)",
+                  height: "1px",
+                  background: "repeating-linear-gradient(to right, rgba(212,175,55,0.12) 0, rgba(212,175,55,0.12) 5px, transparent 5px, transparent 14px)",
+                }}
+              />
 
-            {/* Base connector (always visible, very faint) */}
-            <div
-              className="absolute h-px pointer-events-none"
-              style={{
-                top: "24px",
-                left: "calc(100% / 8)",
-                right: "calc(100% / 8)",
-                background: "rgba(212,175,55,0.08)",
-              }}
-            />
+              {/* Animated solid fill — powers up left to right */}
+              <motion.div
+                className="absolute pointer-events-none origin-left"
+                style={{
+                  top: "27px",
+                  left: "calc(100% / 8)",
+                  right: "calc(100% / 8)",
+                  height: "1px",
+                  background: "linear-gradient(to right, rgba(212,175,55,0.55), rgba(212,175,55,0.20), rgba(212,175,55,0.06))",
+                }}
+                initial={{ scaleX: 0 }}
+                animate={inView ? { scaleX: 1 } : {}}
+                transition={{ duration: 2.0, delay: 0.25, ease: [0.08, 0.82, 0.17, 1] }}
+              />
 
-            {/* Animated fill connector — draws left to right on enter */}
-            <motion.div
-              className="absolute h-px origin-left pointer-events-none"
-              style={{
-                top: "24px",
-                left: "calc(100% / 8)",
-                right: "calc(100% / 8)",
-                background: "linear-gradient(to right, rgba(212,175,55,0.40), rgba(212,175,55,0.18), rgba(212,175,55,0.08))",
-              }}
-              initial={{ scaleX: 0 }}
-              animate={inView ? { scaleX: 1 } : {}}
-              transition={{ duration: 1.8, delay: 0.2, ease: [0.08, 0.82, 0.17, 1] }}
-            />
+              {/* Data pulse — glowing orb travels the rail once on enter */}
+              <motion.div
+                className="absolute pointer-events-none"
+                style={{
+                  top: "22px",
+                  left: "calc(100% / 8)",
+                  width: "9px",
+                  height: "9px",
+                  borderRadius: "50%",
+                  background: "#D4AF37",
+                  boxShadow: "0 0 14px 4px rgba(212,175,55,0.5), 0 0 30px 8px rgba(212,175,55,0.15)",
+                }}
+                initial={{ x: "0%", opacity: 0 }}
+                animate={inView ? { x: "calc(75vw - 80px)", opacity: [0, 1, 1, 0] } : {}}
+                transition={{ duration: 2.0, delay: 0.25, ease: [0.08, 0.82, 0.17, 1] }}
+              />
 
-            {/* Glowing dot that slides along the connector */}
-            <motion.div
-              className="absolute pointer-events-none"
-              style={{
-                top: "20px",
-                width: "8px",
-                height: "8px",
-                borderRadius: "50%",
-                background: "#D4AF37",
-                boxShadow: "0 0 10px 3px rgba(212,175,55,0.35)",
-                left: "calc(100% / 8)",
-              }}
-              initial={{ x: 0, opacity: 0 }}
-              animate={inView ? {
-                x: ["0%", "calc((100vw - 16px) * 0.75)"],
-                opacity: [0, 1, 1, 0],
-              } : {}}
-              transition={{ duration: 1.8, delay: 0.2, ease: [0.08, 0.82, 0.17, 1] }}
-            />
-
-            {/* Node circles */}
-            <div className="grid grid-cols-4">
-              {PROCESS_STAGES.map((s, i) => (
-                <div key={s.n} className="group flex flex-col items-center">
-                  <motion.div
-                    className="relative w-12 h-12 rounded-full flex items-center justify-center cursor-default"
-                    style={{ border: "1px solid rgba(212,175,55,0.25)" }}
-                    initial={{ opacity: 0, scale: 0.6 }}
-                    animate={inView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ duration: 0.65, delay: 0.28 + i * 0.14, ease: [0.08, 0.82, 0.17, 1] }}
-                  >
-                    {/* Hover: inner glow */}
-                    <div
-                      className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                      style={{ background: "radial-gradient(circle, rgba(212,175,55,0.13) 0%, transparent 70%)" }}
-                    />
-                    {/* Hover: outer ring */}
-                    <div
-                      className="absolute inset-0 rounded-full border opacity-0 group-hover:opacity-30 transition-opacity duration-500"
-                      style={{ border: "1px solid #D4AF37", transform: "scale(1.35)" }}
-                    />
-                    <span
-                      className="relative z-10 text-[12px] font-light tracking-[0.06em]"
-                      style={{ color: "rgba(212,175,55,0.65)" }}
+              {/* Node circles */}
+              <div className="grid grid-cols-4">
+                {PROCESS_STAGES.map((s, i) => (
+                  <div key={s.n} className="group flex flex-col items-center">
+                    <motion.div
+                      className="relative w-[54px] h-[54px] rounded-full flex items-center justify-center cursor-default"
+                      style={{ border: "1px solid rgba(212,175,55,0.22)", background: "rgba(212,175,55,0.03)" }}
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={inView ? { opacity: 1, scale: 1 } : {}}
+                      transition={{ duration: 0.6, delay: 0.3 + i * 0.15, ease: [0.08, 0.82, 0.17, 1] }}
                     >
-                      {s.n}
-                    </span>
-                  </motion.div>
-                </div>
+                      {/* Inner glow on hover */}
+                      <div
+                        className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                        style={{ background: "radial-gradient(circle, rgba(212,175,55,0.14) 0%, transparent 70%)" }}
+                      />
+                      {/* Outer pulse ring on hover */}
+                      <div
+                        className="absolute rounded-full opacity-0 group-hover:opacity-25 transition-all duration-700"
+                        style={{ inset: "-8px", border: "1px solid #D4AF37", borderRadius: "50%" }}
+                      />
+                      {/* Number */}
+                      <span className="relative z-10 text-[11px] font-light tracking-[0.08em]" style={{ color: "rgba(212,175,55,0.70)" }}>
+                        {s.n}
+                      </span>
+                      {/* Status dot — top right of node */}
+                      <motion.div
+                        className="absolute rounded-full"
+                        style={{ top: "4px", right: "4px", width: "4px", height: "4px", background: "#D4AF37" }}
+                        animate={{ opacity: [0.25, 0.9, 0.25] }}
+                        transition={{ duration: 2.5, delay: i * 0.6, repeat: Infinity }}
+                      />
+                    </motion.div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Data panels below nodes */}
+            <div className="grid grid-cols-4 gap-4">
+              {PROCESS_STAGES.map((s, i) => (
+                <motion.div
+                  key={s.n}
+                  className="group relative overflow-hidden"
+                  style={{
+                    padding: "20px 20px 22px",
+                    background: "rgba(212,175,55,0.022)",
+                    border: "1px solid rgba(212,175,55,0.09)",
+                  }}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.7, delay: 0.55 + i * 0.12, ease: [0.08, 0.82, 0.17, 1] }}
+                  whileHover={{ borderColor: "rgba(212,175,55,0.22)", background: "rgba(212,175,55,0.035)" } as never}
+                >
+                  {/* HUD corner brackets */}
+                  <HudBrackets />
+
+                  {/* Slow scan line — reads like active telemetry */}
+                  <motion.div
+                    className="absolute left-0 right-0 h-px pointer-events-none"
+                    style={{ background: "linear-gradient(to right, transparent, rgba(212,175,55,0.10), transparent)" }}
+                    animate={{ top: ["-2%", "104%"] }}
+                    transition={{ duration: 9 + i * 1.5, delay: i * 2.2, repeat: Infinity, ease: "linear" }}
+                  />
+
+                  {/* Week readout — telemetry style */}
+                  <p className="text-[9px] tracking-[0.30em] uppercase mb-4" style={{ color: "rgba(212,175,55,0.38)" }}>
+                    {s.week}
+                  </p>
+
+                  {/* Title */}
+                  <h3 className="text-ink font-semibold leading-[1.25] mb-4" style={{ fontSize: "14px", letterSpacing: "-0.02em" }}>
+                    {s.title}
+                  </h3>
+
+                  {/* Gold separator */}
+                  <div className="mb-4 w-6 h-px" style={{ background: "rgba(212,175,55,0.25)" }} />
+
+                  {/* Description */}
+                  <p className="text-secondary text-[12px] leading-[1.9] font-light">
+                    {s.desc}
+                  </p>
+                </motion.div>
               ))}
             </div>
           </div>
 
-          {/* Content cards below nodes */}
-          <div className="grid grid-cols-4 gap-5">
-            {PROCESS_STAGES.map((s, i) => (
+          {/* ── Mobile: vertical pipeline ────────────────────────── */}
+          <div className="md:hidden">
+
+            {/* Mobile HUD status */}
+            <div className="flex items-center gap-3 mb-10">
               <motion.div
-                key={s.n}
-                className="group relative p-5 rounded-[2px]"
-                style={{
-                  background: "rgba(255,255,255,0.018)",
-                  border: "1px solid rgba(212,175,55,0.07)",
-                  backdropFilter: "blur(4px)",
-                }}
-                initial={{ opacity: 0, y: 18 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.75, delay: 0.5 + i * 0.13, ease: [0.08, 0.82, 0.17, 1] }}
-                whileHover={{ borderColor: "rgba(212,175,55,0.18)" }}
-              >
-                {/* Week label */}
-                <p
-                  className="text-[9px] tracking-[0.28em] uppercase mb-4"
-                  style={{ color: "rgba(212,175,55,0.4)" }}
-                >
-                  {s.week}
-                </p>
-                {/* Title */}
-                <h3
-                  className="font-semibold leading-[1.25] mb-4"
-                  style={{ fontSize: "15px", letterSpacing: "-0.02em", color: "#E8E4DA" }}
-                >
-                  {s.title}
-                </h3>
-                {/* Gold rule */}
-                <div
-                  className="mb-4 w-7 h-px"
-                  style={{ background: "rgba(212,175,55,0.22)" }}
-                />
-                {/* Description */}
-                <p
-                  className="text-[13px] leading-[1.9] font-light"
-                  style={{ color: "#4E6880" }}
-                >
-                  {s.desc}
-                </p>
-              </motion.div>
+                className="w-[5px] h-[5px] rounded-full"
+                style={{ background: "#D4AF37" }}
+                animate={{ opacity: [0.3, 1, 0.3] }}
+                transition={{ duration: 2.2, repeat: Infinity }}
+              />
+              <span className="text-[9px] tracking-[0.32em] uppercase" style={{ color: "rgba(212,175,55,0.40)" }}>
+                Sistema activo · 04 etapas
+              </span>
+            </div>
+
+            {PROCESS_STAGES.map((s, i) => (
+              <Reveal key={s.n} delay={0.08 + i * 0.1}>
+                <div className="relative flex gap-6 pb-12 last:pb-0">
+
+                  {/* Node + vertical line */}
+                  <div className="flex flex-col items-center flex-shrink-0">
+                    <div
+                      className="relative w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0"
+                      style={{ border: "1px solid rgba(212,175,55,0.22)", background: "rgba(212,175,55,0.03)" }}
+                    >
+                      <span className="text-[10px] font-light" style={{ color: "rgba(212,175,55,0.65)" }}>{s.n}</span>
+                      <motion.div
+                        className="absolute rounded-full"
+                        style={{ top: "3px", right: "3px", width: "4px", height: "4px", background: "#D4AF37" }}
+                        animate={{ opacity: [0.2, 0.9, 0.2] }}
+                        transition={{ duration: 2.5, delay: i * 0.5, repeat: Infinity }}
+                      />
+                    </div>
+                    {i < PROCESS_STAGES.length - 1 && (
+                      <div
+                        className="mt-3 w-px flex-1"
+                        style={{
+                          background: "repeating-linear-gradient(to bottom, rgba(212,175,55,0.15) 0, rgba(212,175,55,0.15) 4px, transparent 4px, transparent 10px)",
+                          minHeight: "48px",
+                        }}
+                      />
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="relative pt-1 pb-2 flex-1 overflow-hidden" style={{ padding: "4px 16px 16px", background: "rgba(212,175,55,0.018)", border: "1px solid rgba(212,175,55,0.08)" }}>
+                    <HudBrackets />
+                    <p className="text-[9px] tracking-[0.28em] uppercase mb-2 mt-2" style={{ color: "rgba(212,175,55,0.38)" }}>{s.week}</p>
+                    <h3 className="text-ink font-semibold leading-[1.25] mb-3" style={{ fontSize: "16px", letterSpacing: "-0.02em" }}>{s.title}</h3>
+                    <div className="w-5 h-px mb-3" style={{ background: "rgba(212,175,55,0.22)" }} />
+                    <p className="text-secondary text-[13px] leading-[1.85] font-light">{s.desc}</p>
+                  </div>
+
+                </div>
+              </Reveal>
             ))}
           </div>
+
         </div>
-
-        {/* ── Mobile: vertical pipeline ──────────────────────── */}
-        <div className="md:hidden">
-          {PROCESS_STAGES.map((s, i) => (
-            <Reveal key={s.n} delay={0.08 + i * 0.1}>
-              <div className="relative flex gap-7 pb-12 last:pb-0">
-
-                {/* Left column: node + vertical connector */}
-                <div className="flex flex-col items-center flex-shrink-0">
-                  <div
-                    className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0"
-                    style={{ border: "1px solid rgba(212,175,55,0.25)" }}
-                  >
-                    <span className="text-[11px] font-light tracking-[0.06em]" style={{ color: "rgba(212,175,55,0.65)" }}>
-                      {s.n}
-                    </span>
-                  </div>
-                  {i < PROCESS_STAGES.length - 1 && (
-                    <div className="mt-3 flex-1 w-px" style={{ background: "rgba(212,175,55,0.10)", minHeight: "48px" }} />
-                  )}
-                </div>
-
-                {/* Right column: content */}
-                <div className="pt-1 pb-2">
-                  <p className="text-[9px] tracking-[0.28em] uppercase mb-2" style={{ color: "rgba(212,175,55,0.4)" }}>
-                    {s.week}
-                  </p>
-                  <h3
-                    className="font-semibold leading-[1.25] mb-3"
-                    style={{ fontSize: "17px", letterSpacing: "-0.02em", color: "#E8E4DA" }}
-                  >
-                    {s.title}
-                  </h3>
-                  <div className="w-6 h-px mb-3" style={{ background: "rgba(212,175,55,0.22)" }} />
-                  <p className="text-[13px] leading-[1.9] font-light" style={{ color: "#4E6880" }}>
-                    {s.desc}
-                  </p>
-                </div>
-
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
 
