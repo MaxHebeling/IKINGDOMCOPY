@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { insertLead } from "@/lib/db";
-import { buildFromSubmit } from "@/lib/leads/helpers";
+import { createLead } from "@/lib/leads/helpers";
 
 // ── Lead payload ─────────────────────────────────────────────────────────────
 // Attribution fields are pre-wired and ready to populate once ads are running.
