@@ -829,7 +829,7 @@ export function Clients() {
                           <img
                             src={c.logo}
                             alt={c.name}
-                            className="max-h-[56px] max-w-[76px] w-auto object-contain opacity-30 group-hover:opacity-65 transition-opacity duration-700 filter grayscale brightness-150"
+                            className="max-h-[56px] max-w-[76px] w-auto object-contain opacity-35 group-hover:opacity-72 transition-opacity duration-700 filter grayscale brightness-150"
                           />
                         </div>
                         {/* Name label */}
