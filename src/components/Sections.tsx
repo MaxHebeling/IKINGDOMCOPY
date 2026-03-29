@@ -1766,16 +1766,16 @@ export function Engagement() {
                 style={{ backdropFilter: "blur(2px)", background: "rgba(10,10,8,0.65)" }}
               >
                 <div className="absolute top-0 left-1/4 right-1/4 h-[1px]" style={{ background: "linear-gradient(90deg, rgba(212,175,55,0) 0%, rgba(212,175,55,0.22) 50%, rgba(212,175,55,0) 100%)" }} />
-                <p className="text-[10px] font-semibold tracking-[0.42em] uppercase mb-10" style={{ color: "rgba(212,175,55,0.25)" }}>
+                <p className="text-[10px] font-semibold tracking-[0.42em] uppercase mb-10" style={{ color: "rgba(212,175,55,0.55)" }}>
                   No es para
                 </p>
                 <div className="space-y-9">
                   {FIT_NOT.map((item) => (
                     <div key={item.n} className="flex gap-6 items-start">
-                      <span className="text-[11px] font-semibold tracking-[0.22em] flex-shrink-0 mt-[4px]" style={{ color: "rgba(212,175,55,0.22)" }}>
+                      <span className="text-[11px] font-semibold tracking-[0.22em] flex-shrink-0 mt-[4px]" style={{ color: "rgba(212,175,55,0.50)" }}>
                         {item.n}
                       </span>
-                      <p className="text-[15px] font-light leading-[1.82]" style={{ color: "rgba(212,175,55,0.42)" }}>{item.text}</p>
+                      <p className="text-[15px] font-light leading-[1.82]" style={{ color: "rgba(212,175,55,0.65)" }}>{item.text}</p>
                     </div>
                   ))}
                 </div>
