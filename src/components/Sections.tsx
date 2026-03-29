@@ -2332,14 +2332,7 @@ export function Footer() {
                     onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(212,175,55,0.52)"; }}
                   >+1 956 509 5558</a>
                 </li>
-                <li>
-                  <a href="https://ikingdom.agency" data-hover
-                    className="text-[13px] font-light block transition-colors duration-300"
-                    style={{ color: "rgba(212,175,55,0.52)" }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(212,175,55,1)"; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(212,175,55,0.52)"; }}
-                  >ikingdom.agency</a>
-                </li>
+
                 <li className="text-[13px] font-light" style={{ color: "rgba(212,175,55,0.32)" }}>San Diego, California · EE.UU.</li>
               </ul>
 
