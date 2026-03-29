@@ -64,7 +64,7 @@ export const LEAD_BRAND_PROFILES: Record<LeadBrand, LeadBrandProfile> = {
     pipeline: "max-hebeling",
     dealLabel: "Brand Inquiry",
     formPath: "/apply?brand=maxhebeling",
-    companyPath: "/app/companies/max-hebeling",
+    companyPath: "/companies/max-hebeling",
   },
 };
 
