@@ -1088,10 +1088,10 @@ const GCX = GC_W / 2;  // 290
 const GCY = GC_H / 2;  // 250
 
 const GALAXY_NODES = [
-  { n: "01", week: "Semana 1",   title: "Diagnóstico estratégico",   desc: "Analizamos tu negocio, mercado y objetivos. Primero entendemos, después construimos.", r: 72,  angle: 325 },
-  { n: "02", week: "Semana 2",   title: "Definición narrativa",       desc: "Desarrollamos el mensaje que posiciona tu marca y conecta con tu cliente ideal.",      r: 140, angle: 58  },
-  { n: "03", week: "Semana 3–4", title: "Arquitectura de conversión", desc: "Diseñamos la estructura que guía al visitante hacia la acción correcta.",             r: 200, angle: 212 },
-  { n: "04", week: "Semana 5–6", title: "Implementación digital",     desc: "Construimos, integramos y dejamos todo listo para operar y escalar.",                  r: 252, angle: 128 },
+  { n: "01", week: "Semana 1",   title: "Diagnóstico estratégico",   desc: "Evitamos que tomes decisiones costosas sin claridad estratégica.", r: 72,  angle: 325 },
+  { n: "02", week: "Semana 2",   title: "Definición narrativa",       desc: "Definimos el mensaje que realmente conecta y posiciona tu marca.",  r: 140, angle: 58  },
+  { n: "03", week: "Semana 3–4", title: "Arquitectura de conversión", desc: "Construimos una estructura que guía al usuario hacia la acción.",    r: 200, angle: 212 },
+  { n: "04", week: "Semana 5–6", title: "Implementación digital",     desc: "Implementamos un sistema listo para operar y escalar.",              r: 252, angle: 128 },
 ];
 
 // Fixed stars — no Math.random to avoid SSR hydration mismatch
