@@ -6,66 +6,51 @@ import { createClient } from "@/lib/supabase/client";
 import type { Lead } from "@/lib/leads/helpers";
 import { getLeadInsight } from "@/lib/ikingdom/lead-assistant";
 
-// ── Constants ─────────────────────────────────────────────────────────────────
+// ── Columns ───────────────────────────────────────────────────────────────────
 
-const STATUSES = ["", "new_lead", "contacted", "qualified", "disqualified", "closed"] as const;
-const SOURCES  = ["", "contact-form", "fit-intake", "submit-lead", "external"] as const;
+const COLUMNS = [
+  { id: "new_lead",     label: "Nuevo",      accent: "#D4AF37" },
+  { id: "contacted",    label: "Contactado", accent: "#64A0FF" },
+  { id: "qualified",    label: "Calificado", accent: "#50C878" },
+  { id: "disqualified", label: "Descartado", accent: "#FF5050" },
+  { id: "closed",       label: "Cerrado",    accent: "rgba(255,255,255,0.25)" },
+] as const;
 
-const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
-  new_lead:     { bg: "rgba(212,175,55,0.12)",  text: "#D4AF37" },
-  contacted:    { bg: "rgba(100,160,255,0.12)", text: "#64A0FF" },
-  qualified:    { bg: "rgba(80,200,120,0.15)",  text: "#50C878" },
-  disqualified: { bg: "rgba(255,80,80,0.12)",   text: "#FF5050" },
-  closed:       { bg: "rgba(255,255,255,0.06)", text: "rgba(255,255,255,0.4)" },
-};
+type ColId = (typeof COLUMNS)[number]["id"];
 
-const PRIORITY_COLORS: Record<string, string> = {
-  hot:  "#FF6B35",
-  warm: "#D4AF37",
-  cold: "rgba(255,255,255,0.3)",
-};
-
-interface Pagination { page: number; limit: number; total: number; pages: number; }
+const PRIORITY_COLOR = { hot: "#FF6B35", warm: "#D4AF37", cold: "rgba(255,255,255,0.2)" } as const;
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 
-export default function LeadsPage() {
+export default function LeadsKanban() {
   const router = useRouter();
 
   const [leads,       setLeads]       = useState<Lead[]>([]);
-  const [pagination,  setPagination]  = useState<Pagination | null>(null);
   const [loading,     setLoading]     = useState(true);
   const [error,       setError]       = useState("");
-  const [filterStatus, setFilterStatus] = useState("");
-  const [filterSource, setFilterSource] = useState("");
-  const [page,         setPage]         = useState(1);
-  const [expanded,    setExpanded]    = useState<string | null>(null);
+  const [selected,    setSelected]    = useState<Lead | null>(null);
   const [patchLoading, setPatchLoading] = useState<string | null>(null);
 
   const fetchLeads = useCallback(async () => {
     setLoading(true);
     setError("");
     try {
-      const params = new URLSearchParams({ page: String(page), limit: "50" });
-      if (filterStatus) params.set("status", filterStatus);
-      if (filterSource) params.set("source", filterSource);
-      const res = await fetch(`/api/app/leads?${params}`);
+      const res = await fetch("/api/app/leads?limit=200");
       if (res.status === 401) { router.push("/app/login"); return; }
-      if (res.status === 403) throw new Error("Sin acceso — tu cuenta no tiene rol de staff en este sistema.");
+      if (res.status === 403) { setError("Sin acceso — tu cuenta no tiene rol de staff en este sistema."); return; }
       if (!res.ok) throw new Error("Error al cargar leads");
       const data = await res.json();
       setLeads(data.leads ?? []);
-      setPagination(data.pagination ?? null);
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Error desconocido");
     } finally {
       setLoading(false);
     }
-  }, [page, filterStatus, filterSource, router]);
+  }, [router]);
 
   useEffect(() => { fetchLeads(); }, [fetchLeads]);
 
-  async function updateStatus(id: string, status: string) {
+  async function moveCard(id: string, status: string) {
     setPatchLoading(id);
     try {
       const res = await fetch(`/api/app/leads/${id}`, {
@@ -76,6 +61,7 @@ export default function LeadsPage() {
       if (!res.ok) return;
       const data = await res.json();
       setLeads((prev) => prev.map((l) => (l.id === id ? data.lead : l)));
+      if (selected?.id === id) setSelected(data.lead);
     } finally {
       setPatchLoading(null);
     }
@@ -87,225 +73,340 @@ export default function LeadsPage() {
     router.push("/app/login");
   }
 
-  // ── Render ────────────────────────────────────────────────────────────────
+  const grouped = COLUMNS.reduce<Record<ColId, Lead[]>>(
+    (acc, col) => { acc[col.id] = leads.filter((l) => l.status === col.id); return acc; },
+    {} as Record<ColId, Lead[]>
+  );
+
+  const hotCount  = leads.filter((l) => getLeadInsight(l).priority === "hot").length;
+  const warmCount = leads.filter((l) => getLeadInsight(l).priority === "warm").length;
 
   return (
-    <div style={{ minHeight: "100vh", background: "#020202", fontFamily: "'Space Grotesk', monospace", color: "#D4AF37" }}>
-      {/* Header */}
-      <div style={{ borderBottom: "1px solid rgba(212,175,55,0.1)", padding: "20px 32px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <div>
-          <p style={{ margin: 0, fontSize: 9, letterSpacing: "0.45em", color: "rgba(212,175,55,0.4)", textTransform: "uppercase" }}>
-            iKingdom · Sales Intake
-          </p>
-          <h1 style={{ margin: "4px 0 0", fontSize: 20, fontWeight: 600, letterSpacing: "-0.02em" }}>
-            Leads{pagination && <span style={{ fontSize: 13, color: "rgba(212,175,55,0.4)", fontWeight: 400, marginLeft: 8 }}>({pagination.total})</span>}
-          </h1>
+    <div style={{ minHeight: "100vh", height: "100vh", display: "flex", flexDirection: "column", background: "#080808", fontFamily: "'Space Grotesk', monospace", color: "#D4AF37", overflow: "hidden" }}>
+
+      {/* ── Top bar ── */}
+      <header style={{ flexShrink: 0, borderBottom: "1px solid rgba(212,175,55,0.08)", padding: "0 28px", height: 56, display: "flex", alignItems: "center", justifyContent: "space-between", background: "#040404" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
+            <span style={{ fontSize: 9, letterSpacing: "0.45em", color: "rgba(212,175,55,0.3)", textTransform: "uppercase" }}>iKingdom</span>
+            <span style={{ fontSize: 16, fontWeight: 600, letterSpacing: "-0.02em" }}>Pipeline</span>
+          </div>
+          <div style={{ display: "flex", gap: 20, borderLeft: "1px solid rgba(212,175,55,0.08)", paddingLeft: 24 }}>
+            <StatPill label="Total"  value={leads.length} color="rgba(212,175,55,0.5)" />
+            <StatPill label="HOT"    value={hotCount}      color="#FF6B35" />
+            <StatPill label="WARM"   value={warmCount}     color="#D4AF37" />
+          </div>
         </div>
-        <div style={{ display: "flex", gap: 12 }}>
-          <button onClick={() => fetchLeads()} style={btnGhost}>↻</button>
-          <button onClick={logout} style={btnGhost}>Salir</button>
+        <div style={{ display: "flex", gap: 8 }}>
+          <button onClick={fetchLeads} style={btnGhost}>↻</button>
+          <button onClick={logout}     style={btnGhost}>Salir</button>
         </div>
+      </header>
+
+      {/* ── States ── */}
+      {loading && (
+        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <span style={{ fontSize: 12, letterSpacing: "0.3em", color: "rgba(212,175,55,0.3)", textTransform: "uppercase" }}>Cargando pipeline…</span>
+        </div>
+      )}
+      {error && (
+        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <span style={{ fontSize: 13, color: "#ff6b6b" }}>{error}</span>
+        </div>
+      )}
+
+      {/* ── Board ── */}
+      {!loading && !error && (
+        <div style={{ flex: 1, display: "flex", overflowX: "auto", overflowY: "hidden", padding: "20px 20px 0", gap: 12, alignItems: "flex-start" }}>
+          {COLUMNS.map((col) => (
+            <Column
+              key={col.id}
+              col={col}
+              leads={grouped[col.id] ?? []}
+              selected={selected}
+              patchLoading={patchLoading}
+              onSelect={setSelected}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* ── Detail panel ── */}
+      {selected && (
+        <DetailPanel
+          lead={selected}
+          patchLoading={patchLoading}
+          onClose={() => setSelected(null)}
+          onMove={moveCard}
+        />
+      )}
+    </div>
+  );
+}
+
+// ── Column ────────────────────────────────────────────────────────────────────
+
+function Column({
+  col, leads, selected, patchLoading, onSelect,
+}: {
+  col: (typeof COLUMNS)[number];
+  leads: Lead[];
+  selected: Lead | null;
+  patchLoading: string | null;
+  onSelect: (lead: Lead) => void;
+}) {
+  return (
+    <div style={{ flexShrink: 0, width: 240, display: "flex", flexDirection: "column", maxHeight: "calc(100vh - 96px)" }}>
+      {/* Column header */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12, paddingLeft: 4, paddingRight: 4 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: col.accent, display: "inline-block", flexShrink: 0 }} />
+          <span style={{ fontSize: 10, letterSpacing: "0.25em", textTransform: "uppercase", color: col.accent, fontWeight: 500 }}>{col.label}</span>
+        </div>
+        <span style={{ fontSize: 11, color: "rgba(212,175,55,0.3)", fontWeight: 400 }}>{leads.length}</span>
       </div>
 
-      {/* Filters */}
-      <div style={{ padding: "14px 32px", borderBottom: "1px solid rgba(212,175,55,0.06)", display: "flex", gap: 12, flexWrap: "wrap" }}>
-        <select value={filterStatus} onChange={(e) => { setFilterStatus(e.target.value); setPage(1); }} style={selectStyle}>
-          <option value="">Todos los estados</option>
-          {STATUSES.filter(Boolean).map((s) => <option key={s} value={s}>{s}</option>)}
-        </select>
-        <select value={filterSource} onChange={(e) => { setFilterSource(e.target.value); setPage(1); }} style={selectStyle}>
-          <option value="">Todas las fuentes</option>
-          {SOURCES.filter(Boolean).map((s) => <option key={s} value={s}>{s}</option>)}
-        </select>
-      </div>
-
-      {/* Table */}
-      <div style={{ padding: "24px 32px" }}>
-        {loading && <p style={{ color: "rgba(212,175,55,0.4)", fontSize: 13 }}>Cargando…</p>}
-        {error   && <p style={{ color: "#ff6b6b", fontSize: 13 }}>{error}</p>}
-
-        {!loading && !error && leads.length === 0 && (
-          <p style={{ color: "rgba(212,175,55,0.3)", fontSize: 13, textAlign: "center", paddingTop: 60 }}>
-            Sin leads. Verifica que las env vars de Supabase estén configuradas.
-          </p>
-        )}
-
-        {!loading && leads.length > 0 && (
-          <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
-              <thead>
-                <tr style={{ borderBottom: "1px solid rgba(212,175,55,0.12)" }}>
-                  {["Código", "Nombre", "Empresa", "Email", "Fuente", "Servicio", "Budget", "Score", "Estado", "Fecha", ""].map((h) => (
-                    <th key={h} style={{ padding: "8px 10px", textAlign: "left", fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(212,175,55,0.35)", fontWeight: 400, whiteSpace: "nowrap" }}>{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {leads.map((lead) => {
-                  const insight = getLeadInsight(lead);
-                  const isOpen  = expanded === lead.id;
-                  const sc      = STATUS_COLORS[lead.status] ?? STATUS_COLORS.new_lead;
-                  const pColor  = PRIORITY_COLORS[insight.priority];
-
-                  return (
-                    <>
-                      <tr
-                        key={lead.id}
-                        onClick={() => setExpanded(isOpen ? null : lead.id)}
-                        style={{ borderBottom: "1px solid rgba(212,175,55,0.06)", cursor: "pointer", background: isOpen ? "rgba(212,175,55,0.03)" : "transparent" }}
-                      >
-                        <td style={{ ...td, fontSize: 10, color: "rgba(212,175,55,0.5)", letterSpacing: "0.05em" }}>{lead.lead_code}</td>
-                        <td style={td}>{lead.full_name}</td>
-                        <td style={td}>{lead.company_name ?? "—"}</td>
-                        <td style={{ ...td, color: "rgba(212,175,55,0.6)", fontSize: 11 }}>{lead.email ?? "—"}</td>
-                        <td style={td}><span style={{ fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(212,175,55,0.5)" }}>{lead.source}</span></td>
-                        <td style={{ ...td, fontSize: 11 }}>{lead.main_service ?? "—"}</td>
-                        <td style={{ ...td, fontSize: 11 }}>{lead.budget_range ?? "—"}</td>
-                        <td style={td}>
-                          <span style={{ color: pColor, fontWeight: 600 }}>{insight.score}</span>
-                          <span style={{ fontSize: 9, color: pColor, marginLeft: 4, opacity: 0.7 }}>{insight.priorityLabel}</span>
-                        </td>
-                        <td style={td}>
-                          <span style={{ padding: "3px 8px", fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", background: sc.bg, color: sc.text }}>{lead.status}</span>
-                        </td>
-                        <td style={{ ...td, fontSize: 11, color: "rgba(212,175,55,0.4)", whiteSpace: "nowrap" }}>
-                          {new Date(lead.created_at).toLocaleDateString("es-MX", { day: "2-digit", month: "short" })}
-                        </td>
-                        <td style={td}><span style={{ fontSize: 14, color: "rgba(212,175,55,0.3)" }}>{isOpen ? "▲" : "▼"}</span></td>
-                      </tr>
-
-                      {isOpen && (
-                        <tr key={`${lead.id}-detail`}>
-                          <td colSpan={11} style={{ padding: "20px 10px 24px", background: "rgba(212,175,55,0.02)", borderBottom: "1px solid rgba(212,175,55,0.1)" }}>
-                            <LeadDetail lead={lead} insight={insight} onUpdate={updateStatus} patchLoading={patchLoading} />
-                          </td>
-                        </tr>
-                      )}
-                    </>
-                  );
-                })}
-              </tbody>
-            </table>
+      {/* Cards list */}
+      <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: 8, paddingBottom: 20 }}>
+        {leads.length === 0 && (
+          <div style={{ border: "1px dashed rgba(212,175,55,0.06)", borderRadius: 6, padding: "24px 0", textAlign: "center" }}>
+            <span style={{ fontSize: 10, color: "rgba(212,175,55,0.15)", letterSpacing: "0.2em", textTransform: "uppercase" }}>vacío</span>
           </div>
         )}
-
-        {/* Pagination */}
-        {pagination && pagination.pages > 1 && (
-          <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 32 }}>
-            <button disabled={page <= 1} onClick={() => setPage((p) => p - 1)} style={btnGhost}>← Anterior</button>
-            <span style={{ padding: "6px 12px", fontSize: 12, color: "rgba(212,175,55,0.5)" }}>{page} / {pagination.pages}</span>
-            <button disabled={page >= pagination.pages} onClick={() => setPage((p) => p + 1)} style={btnGhost}>Siguiente →</button>
-          </div>
-        )}
+        {leads.map((lead) => (
+          <Card
+            key={lead.id}
+            lead={lead}
+            isSelected={selected?.id === lead.id}
+            isLoading={patchLoading === lead.id}
+            onClick={() => onSelect(lead)}
+          />
+        ))}
       </div>
     </div>
   );
 }
 
-// ── Lead Detail ───────────────────────────────────────────────────────────────
+// ── Card ──────────────────────────────────────────────────────────────────────
 
-function LeadDetail({
-  lead, insight, onUpdate, patchLoading,
-}: {
+function Card({ lead, isSelected, isLoading, onClick }: {
   lead: Lead;
-  insight: ReturnType<typeof getLeadInsight>;
-  onUpdate: (id: string, status: string) => void;
-  patchLoading: string | null;
+  isSelected: boolean;
+  isLoading: boolean;
+  onClick: () => void;
 }) {
-  const pColor = PRIORITY_COLORS[insight.priority];
-  const STATUS_OPTIONS = ["new_lead", "contacted", "qualified", "disqualified", "closed"];
-
-  function field(label: string, value: unknown) {
-    if (!value) return null;
-    return (
-      <div key={label} style={{ marginBottom: 8 }}>
-        <span style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(212,175,55,0.35)" }}>{label}</span>
-        <p style={{ margin: "3px 0 0", fontSize: 13, color: "#D4AF37", fontWeight: 300 }}>{String(value)}</p>
-      </div>
-    );
-  }
+  const insight = getLeadInsight(lead);
+  const pColor  = PRIORITY_COLOR[insight.priority];
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 32, maxWidth: 960 }}>
-      {/* Col 1 */}
-      <div>
-        <SL>Contacto</SL>
-        {field("Email", lead.email)}
-        {field("WhatsApp", lead.whatsapp)}
-        {field("Website", lead.website_url)}
-        {field("Ciudad", lead.city)}
-        {field("País", lead.country)}
-        <SL>Negocio</SL>
-        {field("Descripción", lead.project_description)}
-        {field("Cliente ideal", lead.ideal_client)}
-        {field("Objetivo principal", lead.main_goal)}
+    <div
+      onClick={onClick}
+      style={{
+        background: isSelected ? "rgba(212,175,55,0.06)" : "rgba(255,255,255,0.02)",
+        border: `1px solid ${isSelected ? "rgba(212,175,55,0.25)" : "rgba(212,175,55,0.07)"}`,
+        borderRadius: 8,
+        padding: "12px 14px",
+        cursor: "pointer",
+        opacity: isLoading ? 0.5 : 1,
+        transition: "background 0.15s, border-color 0.15s",
+        position: "relative",
+      }}
+    >
+      {/* Priority stripe */}
+      <div style={{ position: "absolute", left: 0, top: 10, bottom: 10, width: 2, borderRadius: "0 2px 2px 0", background: pColor }} />
+
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 6 }}>
+        <span style={{ fontSize: 13, fontWeight: 500, color: "#D4AF37", lineHeight: 1.3, flex: 1, marginRight: 8 }}>
+          {lead.full_name}
+        </span>
+        <span style={{ fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: pColor, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
+          {insight.priorityLabel}
+        </span>
       </div>
 
-      {/* Col 2 */}
-      <div>
-        <SL>Proyecto</SL>
-        {field("Servicio", lead.main_service)}
-        {field("Budget", lead.budget_range)}
-        {field("Timeline", lead.timeline)}
-        {field("Tipo", lead.project_type)}
-        {field("Resultado esperado", lead.expected_result)}
-        <SL>Marca</SL>
-        {field("Estilo visual", lead.visual_style)}
-        {field("Referencias", lead.reference_websites)}
-        {field("Notas adicionales", lead.additional_notes)}
+      {lead.company_name && (
+        <p style={{ margin: "0 0 6px", fontSize: 11, color: "rgba(212,175,55,0.45)", lineHeight: 1.3 }}>
+          {lead.company_name}
+        </p>
+      )}
+
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8 }}>
+        <span style={{ fontSize: 10, color: "rgba(212,175,55,0.3)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+          {lead.source}
+        </span>
+        {lead.budget_range && (
+          <span style={{ fontSize: 10, color: "rgba(212,175,55,0.4)" }}>
+            {lead.budget_range}
+          </span>
+        )}
       </div>
 
-      {/* Col 3 — Actions */}
-      <div>
-        <SL>Prioridad iKingdom</SL>
-        <div style={{ marginBottom: 16 }}>
-          <span style={{ fontSize: 24, fontWeight: 700, color: pColor }}>{insight.score}</span>
-          <span style={{ fontSize: 10, color: pColor, marginLeft: 6, letterSpacing: "0.2em" }}>/ 100 · {insight.priorityLabel}</span>
-          <p style={{ margin: "6px 0 0", fontSize: 12, color: "rgba(212,175,55,0.6)" }}>{insight.summary}</p>
-          <p style={{ margin: "8px 0 0", fontSize: 12, color: "#D4AF37", borderLeft: "2px solid rgba(212,175,55,0.3)", paddingLeft: 8 }}>{insight.nextAction}</p>
-        </div>
-
-        <SL>Cambiar estado</SL>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 16 }}>
-          {STATUS_OPTIONS.map((s) => {
-            const sc = STATUS_COLORS[s] ?? STATUS_COLORS.new_lead;
-            const active = lead.status === s;
-            return (
-              <button
-                key={s}
-                disabled={patchLoading === lead.id}
-                onClick={(e) => { e.stopPropagation(); onUpdate(lead.id, s); }}
-                style={{ padding: "4px 10px", fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase", background: active ? sc.bg : "transparent", color: active ? sc.text : "rgba(212,175,55,0.3)", border: `1px solid ${active ? sc.text : "rgba(212,175,55,0.15)"}`, cursor: "pointer", fontFamily: "inherit", opacity: patchLoading === lead.id ? 0.5 : 1 }}
-              >
-                {s}
-              </button>
-            );
-          })}
-        </div>
-
-        <SL>Meta</SL>
-        <span style={{ fontSize: 9, color: "rgba(212,175,55,0.25)", letterSpacing: "0.15em", textTransform: "uppercase" }}>
-          {lead.lead_code} · {lead.source} · {new Date(lead.created_at).toLocaleString("es-MX")}
+      <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid rgba(212,175,55,0.05)", display: "flex", justifyContent: "space-between" }}>
+        <span style={{ fontSize: 9, color: "rgba(212,175,55,0.2)", letterSpacing: "0.05em" }}>
+          {lead.lead_code}
+        </span>
+        <span style={{ fontSize: 9, color: "rgba(212,175,55,0.2)" }}>
+          {new Date(lead.created_at).toLocaleDateString("es-MX", { day: "2-digit", month: "short" })}
         </span>
       </div>
     </div>
   );
 }
 
-function SL({ children }: { children: React.ReactNode }) {
-  return <p style={{ margin: "12px 0 6px", fontSize: 9, letterSpacing: "0.35em", textTransform: "uppercase", color: "rgba(212,175,55,0.3)" }}>{children}</p>;
+// ── Detail Panel ──────────────────────────────────────────────────────────────
+
+function DetailPanel({ lead, patchLoading, onClose, onMove }: {
+  lead: Lead;
+  patchLoading: string | null;
+  onClose: () => void;
+  onMove: (id: string, status: string) => void;
+}) {
+  const insight = getLeadInsight(lead);
+  const pColor  = PRIORITY_COLOR[insight.priority];
+  const isLoading = patchLoading === lead.id;
+
+  return (
+    <>
+      {/* Backdrop */}
+      <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 40 }} />
+
+      {/* Panel */}
+      <aside style={{
+        position: "fixed", top: 0, right: 0, bottom: 0, width: 400,
+        background: "#0c0c0c", borderLeft: "1px solid rgba(212,175,55,0.1)",
+        zIndex: 50, display: "flex", flexDirection: "column", overflowY: "auto",
+      }}>
+        {/* Panel header */}
+        <div style={{ padding: "20px 24px 16px", borderBottom: "1px solid rgba(212,175,55,0.08)", flexShrink: 0 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <div style={{ flex: 1, marginRight: 12 }}>
+              <p style={{ margin: "0 0 4px", fontSize: 9, letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(212,175,55,0.3)" }}>
+                {lead.lead_code} · {lead.source}
+              </p>
+              <h2 style={{ margin: 0, fontSize: 18, fontWeight: 600, color: "#D4AF37", lineHeight: 1.2 }}>
+                {lead.full_name}
+              </h2>
+              {lead.company_name && (
+                <p style={{ margin: "4px 0 0", fontSize: 13, color: "rgba(212,175,55,0.5)" }}>{lead.company_name}</p>
+              )}
+            </div>
+            <button onClick={onClose} style={{ ...btnGhost, padding: "6px 10px", fontSize: 14, flexShrink: 0 }}>✕</button>
+          </div>
+
+          {/* Score */}
+          <div style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+              <span style={{ fontSize: 28, fontWeight: 700, color: pColor, lineHeight: 1 }}>{insight.score}</span>
+              <span style={{ fontSize: 10, color: pColor, letterSpacing: "0.15em", opacity: 0.8 }}>/ 100</span>
+            </div>
+            <span style={{ padding: "3px 10px", border: `1px solid ${pColor}`, fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: pColor }}>
+              {insight.priorityLabel}
+            </span>
+          </div>
+          <p style={{ margin: "8px 0 0", fontSize: 11, color: "rgba(212,175,55,0.5)", lineHeight: 1.5 }}>
+            {insight.nextAction}
+          </p>
+        </div>
+
+        {/* Move to column */}
+        <div style={{ padding: "16px 24px", borderBottom: "1px solid rgba(212,175,55,0.06)", flexShrink: 0 }}>
+          <p style={{ margin: "0 0 10px", fontSize: 9, letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(212,175,55,0.3)" }}>Mover a</p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+            {COLUMNS.map((col) => {
+              const active = lead.status === col.id;
+              return (
+                <button
+                  key={col.id}
+                  disabled={isLoading || active}
+                  onClick={() => onMove(lead.id, col.id)}
+                  style={{
+                    padding: "5px 12px", fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase",
+                    background: active ? `${col.accent}18` : "transparent",
+                    color: active ? col.accent : "rgba(212,175,55,0.3)",
+                    border: `1px solid ${active ? col.accent : "rgba(212,175,55,0.12)"}`,
+                    cursor: active ? "default" : "pointer", fontFamily: "inherit",
+                    opacity: isLoading ? 0.5 : 1,
+                  }}
+                >
+                  {col.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Detail fields */}
+        <div style={{ flex: 1, padding: "20px 24px", display: "flex", flexDirection: "column", gap: 20 }}>
+          <Section label="Contacto">
+            <Field label="Email"     value={lead.email} />
+            <Field label="WhatsApp"  value={lead.whatsapp} />
+            <Field label="Website"   value={lead.website_url} />
+            <Field label="Ciudad"    value={lead.city} />
+            <Field label="País"      value={lead.country} />
+          </Section>
+
+          <Section label="Proyecto">
+            <Field label="Servicio"     value={lead.main_service} />
+            <Field label="Budget"       value={lead.budget_range} />
+            <Field label="Timeline"     value={lead.timeline} />
+            <Field label="Tipo"         value={lead.project_type} />
+            <Field label="Descripción"  value={lead.project_description} />
+            <Field label="Objetivo"     value={lead.main_goal} />
+            <Field label="Resultado esp." value={lead.expected_result} />
+          </Section>
+
+          <Section label="Marca">
+            <Field label="Estilo visual"   value={lead.visual_style} />
+            <Field label="Referencias"     value={lead.reference_websites} />
+            <Field label="Cliente ideal"   value={lead.ideal_client} />
+            <Field label="Notas"           value={lead.additional_notes} />
+          </Section>
+
+          <p style={{ margin: 0, fontSize: 9, color: "rgba(212,175,55,0.15)", letterSpacing: "0.1em" }}>
+            {new Date(lead.created_at).toLocaleString("es-MX")}
+          </p>
+        </div>
+      </aside>
+    </>
+  );
+}
+
+// ── Small components ──────────────────────────────────────────────────────────
+
+function StatPill({ label, value, color = "#D4AF37" }: { label: string; value: number; color?: string }) {
+  return (
+    <div style={{ display: "flex", alignItems: "baseline", gap: 5 }}>
+      <span style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(212,175,55,0.3)" }}>{label}</span>
+      <span style={{ fontSize: 14, fontWeight: 600, color, lineHeight: 1 }}>{value}</span>
+    </div>
+  );
+}
+
+function Section({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <p style={{ margin: "0 0 8px", fontSize: 9, letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(212,175,55,0.25)" }}>{label}</p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function Field({ label, value }: { label: string; value: unknown }) {
+  if (!value) return null;
+  return (
+    <div>
+      <span style={{ fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(212,175,55,0.3)" }}>{label} </span>
+      <span style={{ fontSize: 12, color: "rgba(212,175,55,0.75)", fontWeight: 300 }}>{String(value)}</span>
+    </div>
+  );
 }
 
 // ── Styles ────────────────────────────────────────────────────────────────────
 
-const td: React.CSSProperties = { padding: "12px 10px", color: "#D4AF37", verticalAlign: "middle" };
-
 const btnGhost: React.CSSProperties = {
-  padding: "7px 14px", background: "transparent", border: "1px solid rgba(212,175,55,0.2)",
-  color: "rgba(212,175,55,0.6)", fontSize: 11, letterSpacing: "0.1em", cursor: "pointer", fontFamily: "inherit",
-};
-
-const selectStyle: React.CSSProperties = {
-  padding: "7px 12px", background: "rgba(212,175,55,0.04)", border: "1px solid rgba(212,175,55,0.15)",
-  color: "#D4AF37", fontSize: 12, fontFamily: "inherit", cursor: "pointer",
+  padding: "6px 14px", background: "transparent", border: "1px solid rgba(212,175,55,0.15)",
+  color: "rgba(212,175,55,0.5)", fontSize: 11, letterSpacing: "0.1em", cursor: "pointer",
+  fontFamily: "inherit",
 };
