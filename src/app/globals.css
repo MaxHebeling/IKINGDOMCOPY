@@ -17,6 +17,13 @@
 * { cursor: none !important; }
 html { scroll-behavior: smooth; }
 
+h1, h2, h3, h4 {
+  letter-spacing: -0.04em;
+  font-weight: 600;
+  line-height: 1.1;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
 body {
   background: #000000;
   color: #D4AF37;
