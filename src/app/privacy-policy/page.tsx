@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Política de Privacidad — iKingdom",
+  title: "Política de Privacidad",
   description: "Política de privacidad y tratamiento de datos personales de iKingdom.",
+  alternates: { canonical: "https://www.ikingdom.org/privacy-policy" },
+  robots: { index: false, follow: false },
 };
 
 export default function PrivacyPolicy() {
