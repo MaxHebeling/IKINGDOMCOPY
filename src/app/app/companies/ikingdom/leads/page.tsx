@@ -51,6 +51,7 @@ export default function LeadsPage() {
       if (filterSource) params.set("source", filterSource);
       const res = await fetch(`/api/app/leads?${params}`);
       if (res.status === 401) { router.push("/app/login"); return; }
+      if (res.status === 403) throw new Error("Sin acceso — tu cuenta no tiene rol de staff en este sistema.");
       if (!res.ok) throw new Error("Error al cargar leads");
       const data = await res.json();
       setLeads(data.leads ?? []);
