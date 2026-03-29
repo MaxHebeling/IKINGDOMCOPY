@@ -1418,7 +1418,7 @@ export function Process() {
             </Reveal>
             <Reveal delay={0.2}>
               <p className="mt-5 text-secondary text-[14px] leading-[1.9] font-light">
-                Un proceso de transformación en cuatro fases.
+                Cuatro fases. Cero improvisación.
               </p>
             </Reveal>
 
