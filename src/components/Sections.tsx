@@ -1716,7 +1716,7 @@ export function Engagement() {
       <section
         id="engagement"
         className="relative py-[100px] md:py-[180px] px-8 overflow-hidden"
-        style={{ background: "#000000" }}
+        style={{ background: "#041E39" }}
       >
         {/* Animated blueprint background */}
         <div className="absolute inset-0 pointer-events-none select-none">
