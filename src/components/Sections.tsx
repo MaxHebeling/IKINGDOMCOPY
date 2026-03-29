@@ -588,7 +588,6 @@ const C_SIZE      = 660;          // square container side length
 const CENTER      = C_SIZE / 2;   // 330 — geometric center
 const NODE        = 112;          // logo node diameter
 const TICK_N      = 36;           // tick marks (every 10°)
-const SWEEP_DUR   = 150;          // seconds per light-sweep revolution — very infrequent pass
 
 // Pre-computed node positions — calculated once at module level
 const ORRERY_POSITIONS = Array.from({ length: 10 }, (_, i) => {
