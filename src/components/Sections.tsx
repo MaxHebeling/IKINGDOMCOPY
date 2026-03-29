@@ -1482,12 +1482,12 @@ export function Process() {
             <Reveal><Label>Metodología</Label></Reveal>
             <Reveal delay={0.1}>
               <h2 className="mt-5 text-ink leading-[1.06]" style={{ fontSize: "clamp(32px, 6vw, 48px)", letterSpacing: "-0.03em" }}>
-                Cómo trabajamos.
+                Un método. Sin improvisación.
               </h2>
             </Reveal>
             <Reveal delay={0.2}>
               <p className="mt-5 text-secondary text-[14px] leading-[1.9] font-light">
-                Cuatro fases. Cero improvisación.
+                Cuatro fases. Cada entregable, en tiempo.
               </p>
             </Reveal>
 
