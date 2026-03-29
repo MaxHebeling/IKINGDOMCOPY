@@ -205,6 +205,9 @@ export function Capabilities() {
             <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-white/60 md:text-lg">
               No vendemos páginas web. Construimos sistemas que convierten, posicionan y sostienen crecimiento real.
             </p>
+            <p className="mt-5 text-[11px] tracking-[0.32em] uppercase" style={{ color: "rgba(201,168,92,0.55)" }}>
+              Seleccionamos el nivel según tu estructura actual y objetivos.
+            </p>
           </motion.div>
 
           {/* Cards */}
