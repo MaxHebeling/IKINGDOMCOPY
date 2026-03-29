@@ -35,7 +35,7 @@ export function buildFromContact(body: ContactBody, ip: string): InsertLeadInput
     gclid:       body.gclid,
     fbclid:      body.fbclid,
     ip_hash:     hashIp(ip),
-    raw_payload: body as Record<string, unknown>,
+    raw_payload: (body as unknown) as Record<string, unknown>,
   };
   data.score     = scoreLead(data);
   data.qualified = isQualified(data.score);
@@ -87,7 +87,7 @@ export function buildFromFit(body: FitBody, ip: string): InsertLeadInput {
     notes:               body.notes,
     consent:             body.consent === true,
     ip_hash:             hashIp(ip),
-    raw_payload:         body as Record<string, unknown>,
+    raw_payload:         (body as unknown) as Record<string, unknown>,
   };
   data.score     = scoreLead(data);
   data.qualified = isQualified(data.score);
@@ -120,7 +120,7 @@ export function buildFromSubmit(body: SubmitBody, ip: string): InsertLeadInput {
     gclid:       body.gclid,
     fbclid:      body.fbclid,
     ip_hash:     hashIp(ip),
-    raw_payload: body as Record<string, unknown>,
+    raw_payload: (body as unknown) as Record<string, unknown>,
   };
   data.score     = scoreLead(data);
   data.qualified = isQualified(data.score);
