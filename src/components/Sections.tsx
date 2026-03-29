@@ -1835,19 +1835,19 @@ function playKeySound() {
 }
 
 const CONTACT_FIELDS = [
-  { id: "name",    n: "01", label: "Nombre",              type: "text"     as const },
-  { id: "company", n: "02", label: "Empresa / Proyecto",  type: "text"     as const },
-  { id: "email",   n: "03", label: "Email",               type: "email"    as const },
-  { id: "needs",   n: "04", label: "¿Qué necesitas?",     type: "textarea" as const },
-  { id: "budget",  n: "05", label: "Presupuesto",         type: "select"   as const },
+  { id: "name",    n: "01", label: "Nombre completo",          type: "text"     as const },
+  { id: "email",   n: "02", label: "Email corporativo",        type: "email"    as const },
+  { id: "company", n: "03", label: "Empresa",                  type: "text"     as const },
+  { id: "budget",  n: "04", label: "Revenue anual aproximado", type: "select"   as const },
+  { id: "needs",   n: "05", label: "¿Qué quieres resolver?",   type: "textarea" as const },
 ] as const;
 
 const BUDGET_OPTS = [
-  "< $5,000 USD",
-  "$5,000 – $15,000 USD",
-  "$15,000 – $50,000 USD",
-  "$50,000+ USD",
-  "Por definir",
+  "Menos de $500K USD",
+  "$500K – $2M USD",
+  "$2M – $10M USD",
+  "$10M – $50M USD",
+  "$50M+ USD",
 ];
 
 type ContactKey = "name" | "company" | "email" | "needs" | "budget";
