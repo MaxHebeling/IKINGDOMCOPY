@@ -569,8 +569,8 @@ export function Marquee() {
         className="text-[clamp(22px,3.5vw,44px)] font-light leading-[1.3] tracking-[-0.01em]"
         style={{}}
       >
-        El problema no es tener web.<br />
-        ES TENER UNA QUE NO AYUDA A VENDER.
+        El problema no es tener presencia digital.<br />
+        Es no tener un sistema que venda.
       </motion.h2>
     </div>
   );
