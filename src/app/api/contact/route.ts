@@ -169,11 +169,20 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Non-blocking DB insert — never fails the response
+  // Non-blocking DB insert into canonical Supabase leads table
   (async () => {
     try {
-      const leadData = buildFromContact(safe, ip);
-      await insertLead(leadData);
+      await createLead({
+        full_name:           safe.name,
+        company_name:        safe.company || undefined,
+        email:               safe.email,
+        project_description: safe.needs || undefined,
+        budget_range:        safe.budget || undefined,
+        source:              "contact-form",
+        brand:               "ikingdom",
+        origin_page:         "/",
+        form_type:           "contact",
+      });
     } catch (err) {
       console.error("[iKingdom] DB insert failed (contact):", err);
     }
