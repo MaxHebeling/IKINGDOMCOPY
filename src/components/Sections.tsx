@@ -832,7 +832,7 @@ export function Contact() {
             <div className="lg:sticky lg:top-[120px] lg:self-start">
               <Reveal><Label>{t("contact.label")}</Label></Reveal>
               <Reveal delay={0.1}>
-                <h2 className="mt-5 text-ink leading-[1.08]" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 700 }}>
+                <h2 className="mt-5 text-ink leading-[1.08]" style={{ fontSize: "clamp(28px, 3.5vw, 44px)" }}>
                   {t("contact.heading")}
                 </h2>
               </Reveal>
