@@ -2054,6 +2054,7 @@ const FOOTER_SERVICES = [
   "Automatización de operaciones",
   "Estrategia y narrativa de marca",
   "Implementación y escalamiento",
+  "Diseño web Premium",
 ];
 
 const FOOTER_LEGAL = [
