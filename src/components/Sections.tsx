@@ -1809,6 +1809,7 @@ export function DisqualificationSection() {
               <a
                 href="#contact"
                 data-hover
+                onClick={() => trackCTAClick("disqualification")}
                 className="group relative inline-flex items-center gap-3 px-8 py-[13px] text-[12px] font-semibold tracking-[0.18em] uppercase text-ink border border-ink/20 overflow-hidden transition-all duration-500 hover:text-bg hover:border-ink"
               >
                 <div className="absolute inset-0 bg-ink origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
