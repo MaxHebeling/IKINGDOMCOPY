@@ -77,3 +77,7 @@ body {
   58%      { opacity: 1; }
   88%      { opacity: 0.40; }
 }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
