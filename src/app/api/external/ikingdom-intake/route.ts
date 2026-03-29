@@ -8,20 +8,31 @@ import { createLead } from "@/lib/leads/helpers";
 
 export const dynamic = "force-dynamic";
 
-function isAuthorized(request: NextRequest): boolean {
+type AuthResult =
+  | { ok: true }
+  | { ok: false; status: 401 | 503; error: string };
+
+function checkAuth(request: NextRequest): AuthResult {
   const configuredSecret = process.env.INTAKE_API_KEY?.trim();
-  if (!configuredSecret) return true; // unconfigured = open (dev mode)
+  if (!configuredSecret) {
+    // Key not configured — reject unconditionally so the endpoint is never silently open
+    console.warn("[iKingdom/external] INTAKE_API_KEY is not set; rejecting request.");
+    return { ok: false, status: 503, error: "Endpoint not configured" };
+  }
   const provided = request.headers.get("x-ikingdom-secret")?.trim();
-  if (!provided) return false;
+  if (!provided) return { ok: false, status: 401, error: "Unauthorized" };
   const a = Buffer.from(configuredSecret, "utf8");
   const b = Buffer.from(provided, "utf8");
-  if (a.length !== b.length) return false;
-  return timingSafeEqual(a, b);
+  if (a.length !== b.length || !timingSafeEqual(a, b)) {
+    return { ok: false, status: 401, error: "Unauthorized" };
+  }
+  return { ok: true };
 }
 
 export async function POST(req: NextRequest) {
-  if (!isAuthorized(req)) {
-    return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+  const auth = checkAuth(req);
+  if (!auth.ok) {
+    return NextResponse.json({ success: false, error: auth.error }, { status: auth.status });
   }
 
   const contentLength = Number(req.headers.get("content-length") ?? 0);
