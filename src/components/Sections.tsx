@@ -497,7 +497,7 @@ export function WhatWeDo() {
   return (
     <>
       <Divider />
-      <section className="relative py-[140px] md:py-[160px] px-8 overflow-hidden">
+      <section className="relative py-[90px] md:py-[160px] px-8 overflow-hidden">
         <DigitalArchBg />
         <div className="relative z-10 max-w-[1280px] mx-auto">
 
