@@ -20,7 +20,10 @@
       "Read(//Users/maxhebeling/Downloads/**)",
       "Bash(ls -1d /Users/maxhebeling/Downloads/*/)",
       "Read(//Users/maxhebeling/**)",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "Bash(wc -l /Users/maxhebeling/Downloads/IKINGDOMCOPY-main/src/components/*.tsx)",
+      "WebFetch(domain:ikingdom.org)",
+      "WebFetch(domain:www.ikingdom.org)"
     ],
     "additionalDirectories": [
       "/Users/maxhebeling/Downloads/IKINGDOMCOPY-main/src/lib"
