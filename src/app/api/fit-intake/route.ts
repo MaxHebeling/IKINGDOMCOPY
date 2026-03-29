@@ -232,5 +232,15 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // Non-blocking DB insert — never fails the response
+  (async () => {
+    try {
+      const leadData = buildFromFit(safe, ip);
+      await insertLead(leadData);
+    } catch (err) {
+      console.error("[iKingdom/fit] DB insert failed:", err);
+    }
+  })();
+
   return NextResponse.json({ success: true }, { status: 200 });
 }
