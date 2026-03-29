@@ -18,7 +18,13 @@ function Reveal({ children, delay = 0, className = "" }: { children: React.React
 }
 
 function Label({ children }: { children: string }) {
-  return <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-secondary">{children}</p>;
+  return (
+    <div className="inline-flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.38em] text-[#C9A85C]">
+      <span className="h-px w-6 bg-[#C9A85C]/50" />
+      {children}
+      <span className="h-px w-6 bg-[#C9A85C]/50" />
+    </div>
+  );
 }
 
 function Divider() {
