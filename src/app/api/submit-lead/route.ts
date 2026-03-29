@@ -72,5 +72,16 @@ export async function POST(req: NextRequest) {
     },
   });
 
+  // Non-blocking DB insert — never fails the response
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
+  (async () => {
+    try {
+      const leadData = buildFromSubmit(body, ip);
+      await insertLead(leadData);
+    } catch (err) {
+      console.error("[iKingdom] DB insert failed (submit-lead):", err);
+    }
+  })();
+
   return NextResponse.json({ success: true }, { status: 200 });
 }
