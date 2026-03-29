@@ -54,3 +54,26 @@ body {
   0%, 100% { opacity: 0.1; }
   50% { opacity: 0.4; }
 }
+
+/* ── Ambient cabin-light animations ─────────────────────────
+   Three slow, non-synchronized cycles for organic variation.
+   These modulate the opacity of each light point.
+   Base opacity is baked into each point's fill — these just breathe it. */
+
+@keyframes al-a {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.22; }
+}
+
+@keyframes al-b {
+  0%, 35%, 100% { opacity: 1; }
+  68%            { opacity: 0.18; }
+  82%            { opacity: 0.55; }
+}
+
+@keyframes al-c {
+  0%, 100% { opacity: 0.82; }
+  22%      { opacity: 0.12; }
+  58%      { opacity: 1; }
+  88%      { opacity: 0.40; }
+}
