@@ -524,7 +524,7 @@ export function WhatWeDo() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-[80px]">
             {WWD_CARDS.map((card, i) => (
               <Reveal key={card.title} delay={0.1 + i * 0.08}>
-                <div className="group h-full p-7 md:p-8 bg-[#0A0A08] border border-[#1C1A10] rounded-sm hover:border-ink/15 transition-colors duration-500 flex flex-col gap-5">
+                <div className="group h-full p-7 md:p-8 bg-[#06162A] border border-white/5 rounded-sm hover:border-ink/20 transition-colors duration-500 flex flex-col gap-5">
                   {/* Icon box */}
                   <div className="w-8 h-8 flex items-center justify-center border border-[#1C1A10] rounded-sm text-secondary group-hover:text-ink group-hover:border-ink/20 transition-colors duration-500">
                     {card.icon}
