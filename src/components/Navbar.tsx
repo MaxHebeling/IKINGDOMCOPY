@@ -55,7 +55,7 @@ export default function Navbar() {
 
           <div className="hidden lg:flex items-center gap-6">
             <a
-              href="#contact"
+              href="/fit"
               data-hover
               className="group relative text-[13px] font-semibold tracking-[0.14em] uppercase text-ink border border-ink/25 px-7 py-[9px] overflow-hidden transition-all duration-500 hover:text-[#000000] hover:border-ink"
             >
