@@ -1775,7 +1775,7 @@ export function Engagement() {
                       <span className="text-[11px] font-semibold tracking-[0.22em] flex-shrink-0 mt-[4px]" style={{ color: "rgba(212,175,55,0.50)" }}>
                         {item.n}
                       </span>
-                      <p className="text-[15px] font-light leading-[1.82]" style={{ color: "rgba(212,175,55,0.65)" }}>{item.text}</p>
+                      <p className="text-[15px] font-light leading-[1.82]" style={{ color: "rgba(201,209,217,0.78)" }}>{item.text}</p>
                     </div>
                   ))}
                 </div>
