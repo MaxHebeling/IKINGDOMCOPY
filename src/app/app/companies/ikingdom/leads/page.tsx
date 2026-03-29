@@ -36,7 +36,7 @@ export default function LeadsKanban() {
     setError("");
     try {
       const res = await fetch("/api/app/leads?limit=200");
-      if (res.status === 401) { router.push("/app/login"); return; }
+      if (res.status === 401) { router.push("/login"); return; }
       if (res.status === 403) { setError("Sin acceso — tu cuenta no tiene rol de staff en este sistema."); return; }
       if (!res.ok) throw new Error("Error al cargar leads");
       const data = await res.json();
