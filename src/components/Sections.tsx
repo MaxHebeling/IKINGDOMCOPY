@@ -852,48 +852,43 @@ export function Clients() {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   PROCESS — spacecraft control panel, site palette (black/gold)
+   PROCESS — Galactic Architecture
    ═══════════════════════════════════════════════════════════ */
 
-const PROCESS_STAGES = [
-  {
-    n: "01",
-    week: "Semana 1",
-    title: "Diagnóstico estratégico",
-    desc: "Analizamos tu negocio, mercado y objetivos. Primero entendemos, después construimos.",
-  },
-  {
-    n: "02",
-    week: "Semana 2",
-    title: "Definición narrativa",
-    desc: "Desarrollamos el mensaje que posiciona tu marca y conecta con tu cliente ideal.",
-  },
-  {
-    n: "03",
-    week: "Semana 3–4",
-    title: "Arquitectura de conversión",
-    desc: "Diseñamos la estructura que guía al visitante hacia la acción correcta.",
-  },
-  {
-    n: "04",
-    week: "Semana 5–6",
-    title: "Implementación digital",
-    desc: "Construimos, integramos y dejamos todo listo para operar y escalar.",
-  },
+const GC_W = 580;
+const GC_H = 500;
+const GCX = GC_W / 2;  // 290
+const GCY = GC_H / 2;  // 250
+
+const GALAXY_NODES = [
+  { n: "01", week: "Semana 1",   title: "Diagnóstico estratégico",   desc: "Analizamos tu negocio, mercado y objetivos. Primero entendemos, después construimos.", r: 72,  angle: 325 },
+  { n: "02", week: "Semana 2",   title: "Definición narrativa",       desc: "Desarrollamos el mensaje que posiciona tu marca y conecta con tu cliente ideal.",      r: 140, angle: 58  },
+  { n: "03", week: "Semana 3–4", title: "Arquitectura de conversión", desc: "Diseñamos la estructura que guía al visitante hacia la acción correcta.",             r: 200, angle: 212 },
+  { n: "04", week: "Semana 5–6", title: "Implementación digital",     desc: "Construimos, integramos y dejamos todo listo para operar y escalar.",                  r: 252, angle: 128 },
 ];
 
-/* Corner brackets — spacecraft HUD reticle detail */
-function HudBrackets({ opacity = "0.20" }: { opacity?: string }) {
-  const s = `rgba(212,175,55,${opacity})`;
-  const sz = "10px";
-  return (
-    <>
-      <span className="absolute top-0 left-0 pointer-events-none" style={{ width: sz, height: sz, borderTop: `1px solid ${s}`, borderLeft: `1px solid ${s}` }} />
-      <span className="absolute top-0 right-0 pointer-events-none" style={{ width: sz, height: sz, borderTop: `1px solid ${s}`, borderRight: `1px solid ${s}` }} />
-      <span className="absolute bottom-0 left-0 pointer-events-none" style={{ width: sz, height: sz, borderBottom: `1px solid ${s}`, borderLeft: `1px solid ${s}` }} />
-      <span className="absolute bottom-0 right-0 pointer-events-none" style={{ width: sz, height: sz, borderBottom: `1px solid ${s}`, borderRight: `1px solid ${s}` }} />
-    </>
-  );
+// Fixed stars — no Math.random to avoid SSR hydration mismatch
+const GALAXY_STARS = [
+  { cx: 42,  cy: 18,  r: 0.8, o: 0.35 }, { cx: 510, cy: 44,  r: 0.6, o: 0.25 },
+  { cx: 78,  cy: 380, r: 0.7, o: 0.30 }, { cx: 520, cy: 420, r: 0.9, o: 0.40 },
+  { cx: 145, cy: 60,  r: 0.5, o: 0.20 }, { cx: 440, cy: 80,  r: 0.6, o: 0.28 },
+  { cx: 30,  cy: 220, r: 0.7, o: 0.22 }, { cx: 555, cy: 185, r: 0.5, o: 0.18 },
+  { cx: 200, cy: 470, r: 0.8, o: 0.32 }, { cx: 385, cy: 462, r: 0.6, o: 0.24 },
+  { cx: 95,  cy: 140, r: 0.4, o: 0.16 }, { cx: 490, cy: 330, r: 0.7, o: 0.30 },
+  { cx: 162, cy: 320, r: 0.5, o: 0.20 }, { cx: 422, cy: 148, r: 0.6, o: 0.26 },
+  { cx: 312, cy: 32,  r: 0.4, o: 0.18 }, { cx: 58,  cy: 462, r: 0.8, o: 0.34 },
+  { cx: 540, cy: 262, r: 0.5, o: 0.22 }, { cx: 252, cy: 490, r: 0.7, o: 0.28 },
+];
+
+function gToXY(cx: number, cy: number, r: number, angleDeg: number) {
+  const rad = (angleDeg - 90) * (Math.PI / 180);
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+}
+
+function gCurvePath(x1: number, y1: number, x2: number, y2: number, cx: number, cy: number) {
+  const qx = (x1 + x2) / 2 + (cx - (x1 + x2) / 2) * 0.40;
+  const qy = (y1 + y2) / 2 + (cy - (y1 + y2) / 2) * 0.40;
+  return `M ${x1} ${y1} Q ${qx} ${qy} ${x2} ${y2}`;
 }
 
 export function Process() {
