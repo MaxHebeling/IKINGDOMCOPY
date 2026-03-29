@@ -7,8 +7,12 @@ import type { Lead } from "@/lib/leads/helpers";
 export async function GET(req: NextRequest) {
   try {
     await requireStaff();
-  } catch {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  } catch (e) {
+    const forbidden = e instanceof Error && e.message === "FORBIDDEN";
+    return NextResponse.json(
+      { error: forbidden ? "Forbidden" : "Unauthorized" },
+      { status: forbidden ? 403 : 401 }
+    );
   }
 
   const sp     = req.nextUrl.searchParams;
