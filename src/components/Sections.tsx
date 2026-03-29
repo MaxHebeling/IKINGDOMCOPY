@@ -634,7 +634,7 @@ export function Proof() {
 
 const CLIENTS = [
   { name: "Reino Editorial",            logo: "/clients/Reino%20Editorial.png" },
-  { name: "Distinct Construction",      logo: "/clients/DCS.png" },
+  { name: "Distinct Construction",      logo: "/clients/Dcs.png" },
   { name: "Max Hebeling",               logo: "/clients/Max_Hebeling.png" },
   { name: "DyT Comunicaciones",         logo: "/clients/DyT_%20Comunicaciones.png" },
   { name: "Imperium Group",             logo: "/clients/Imperium_group.png" },
