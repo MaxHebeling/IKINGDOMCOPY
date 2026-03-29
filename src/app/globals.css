@@ -1,17 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  /* Black ground, gold text */
-  --color-bg: #000000;
-  --color-bg-raised: #0A0A08;
-  --color-ink: #D4AF37;
-  --color-secondary: #9A7E28;
-  --color-tertiary: #6B5820;
-  --color-divider: #1C1A10;
-  --color-grid: rgba(212, 175, 55, 0.02);
+  /* ── Core surfaces ─────────────────────────────── */
+  --color-bg:        #041E39;               /* deep navy — primary background   */
+  --color-bg-deep:   #06162A;               /* deeper navy — footer, dark panels */
+  --color-bg-raised: #072038;               /* raised surface — cards, panels    */
+
+  /* ── Text hierarchy ────────────────────────────── */
+  --color-ink:       #D4AF37;               /* accent gold — headlines, CTAs, key numbers */
+  --color-soft:      #F8F6F1;               /* soft cream — main body copy       */
+  --color-secondary: #C9D1D9;               /* cool gray — supporting copy        */
+  --color-muted:     #8B98A5;               /* muted — microcopy, labels          */
+  --color-tertiary:  #6B5820;               /* deep gold — legacy / decorative    */
+
+  /* ── Structure ─────────────────────────────────── */
+  --color-divider:    rgba(248,246,241,0.07);  /* cream divider on navy           */
+  --color-grid:       rgba(212,175,55,0.025);  /* gold grid — decorative          */
   --color-hover-fill: #D4AF37;
+
+  /* ── Typography ────────────────────────────────── */
   --font-serif: "Cormorant Garamond", "Georgia", serif;
-  --font-sans: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-sans:  "Space Grotesk", "Inter", system-ui, sans-serif;
 }
 
 * { cursor: none !important; }
@@ -25,8 +34,8 @@ h1, h2, h3, h4 {
 }
 
 body {
-  background: #000000;
-  color: #D4AF37;
+  background: #041E39;
+  color: #F8F6F1;
   font-family: "Space Grotesk", "Inter", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -34,7 +43,7 @@ body {
   letter-spacing: 0.01em;
 }
 
-::selection { background: rgba(212,175,55,0.15); }
+::selection { background: rgba(212,175,55,0.18); }
 
 .grid-overlay {
   background-image:
@@ -51,14 +60,9 @@ body {
 }
 
 @keyframes pulseGlow {
-  0%, 100% { opacity: 0.1; }
-  50% { opacity: 0.4; }
+  0%, 100% { opacity: 0.15; }
+  50%       { opacity: 0.55; }
 }
-
-/* ── Ambient cabin-light animations ─────────────────────────
-   Three slow, non-synchronized cycles for organic variation.
-   These modulate the opacity of each light point.
-   Base opacity is baked into each point's fill — these just breathe it. */
 
 @keyframes al-a {
   0%, 100% { opacity: 1; }
