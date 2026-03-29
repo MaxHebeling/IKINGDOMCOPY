@@ -81,7 +81,7 @@ export function ClarityStrip() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.85, delay: 0.12, ease: [0.08, 0.82, 0.17, 1] }}
           >
-            Diseñamos sistemas digitales que convierten tráfico en clientes.
+            La mayoría tiene presencia digital. Pocos tienen un sistema que vende.
           </motion.p>
 
           <motion.p
@@ -91,7 +91,7 @@ export function ClarityStrip() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.85, delay: 0.22, ease: [0.08, 0.82, 0.17, 1] }}
           >
-            Sin desperdiciar inversión en diseño o desarrollo innecesario.
+            Diseñamos la infraestructura que convierte visibilidad en clientes de alto valor.
           </motion.p>
 
           <motion.p
@@ -101,7 +101,7 @@ export function ClarityStrip() {
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.36 }}
           >
-            Estrategia → estructura → implementación
+            Estrategia · Arquitectura · Implementación
           </motion.p>
         </motion.div>
       </div>
