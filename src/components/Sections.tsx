@@ -222,7 +222,7 @@ export function Capabilities() {
                 whileHover={{ y: -8, scale: 1.01 }}
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                 className={[
-                  "group relative flex h-full flex-col overflow-hidden rounded-[32px] border backdrop-blur-xl",
+                  "group relative flex h-full flex-col overflow-hidden rounded-[4px] border backdrop-blur-xl",
                   "bg-[linear-gradient(180deg,rgba(255,255,255,0.03)_0%,rgba(255,255,255,0.015)_100%)]",
                   plan.highlighted
                     ? "border-[#C9A85C]/35 shadow-[0_0_0_1px_rgba(201,168,92,0.08),0_30px_80px_rgba(0,0,0,0.45),0_0_80px_rgba(201,168,92,0.08)]"
