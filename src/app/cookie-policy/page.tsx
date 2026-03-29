@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Política de Cookies — iKingdom",
+  title: "Política de Cookies",
   description: "Política de cookies de iKingdom. Qué cookies utilizamos y cómo gestionarlas.",
+  alternates: { canonical: "https://www.ikingdom.org/cookie-policy" },
+  robots: { index: false, follow: false },
 };
 
 const COOKIE_TYPES = [
