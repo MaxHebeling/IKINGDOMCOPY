@@ -3,7 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://ikingdom.agency"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ikingdom.org"),
   title: "iKingdom — Arquitectura de Ecosistemas Digitales con IA",
   description: "Construimos la infraestructura digital que opera tu negocio. Estrategia, arquitectura e ingeniería unificadas en sistemas con IA que captan clientes y multiplican ingresos.",
   openGraph: {
