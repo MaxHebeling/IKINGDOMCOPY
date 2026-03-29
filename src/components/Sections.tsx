@@ -2175,7 +2175,7 @@ export function DisqualificationSection() {
                 <span className="relative z-10 transition-colors duration-500">Solicitar diagnóstico estratégico →</span>
               </a>
               <p className="mt-5 text-[10px] tracking-[0.28em] uppercase" style={{ color: "rgba(212,175,55,0.28)" }}>
-                Solo aceptamos 4–6 alianzas por trimestre.
+                Solo aceptamos 4–6 proyectos por trimestre.
               </p>
             </div>
           </Reveal>
