@@ -2087,7 +2087,7 @@ export function Footer() {
 
             {/* ── Col 1 · Brand ── */}
             <div>
-              <img src="/clients/Hebeling_Imperium.png" alt="iKingdom" className="h-12 w-auto mb-7" />
+              <img src="/logo.png" alt="iKingdom" className="h-14 w-auto mb-7" />
               <p className="text-[13px] leading-[1.78] font-light max-w-[280px] mb-9" style={{ color: "rgba(212,175,55,0.52)" }}>
                 Arquitectura de ecosistemas digitales con IA. Estrategia, diseño e ingeniería unificados en sistemas que operan tu negocio.
               </p>
