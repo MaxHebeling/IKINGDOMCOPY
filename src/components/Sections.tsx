@@ -213,7 +213,7 @@ export function Capabilities() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.2 }}
-            className="mt-16 grid gap-6 lg:mt-20 lg:grid-cols-3 xl:gap-8"
+            className="mt-16 grid gap-5 lg:mt-20 lg:grid-cols-3 xl:gap-6"
           >
             {plans.map((plan, index) => (
               <motion.article
