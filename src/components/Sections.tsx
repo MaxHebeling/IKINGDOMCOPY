@@ -2084,7 +2084,7 @@ export function Contact() {
                           </>
                         ) : (
                           <>
-                            INICIAR DIAGNÓSTICO
+                            SOLICITAR DIAGNÓSTICO ESTRATÉGICO
                             <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
                               <path d="M2 6.5h9M8 3l3.5 3.5L8 10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
@@ -2092,7 +2092,7 @@ export function Contact() {
                         )}
                       </button>
                       <p className="text-[9px] tracking-[0.22em] uppercase" style={{ color: "rgba(212,175,55,0.55)" }}>
-                        Primero analizamos. Luego respondemos.
+                        Aceptamos 4–6 nuevas alianzas por trimestre.
                       </p>
                     </div>
                   </div>
