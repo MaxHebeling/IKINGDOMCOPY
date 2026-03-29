@@ -522,16 +522,16 @@ export function Proof() {
    ═══════════════════════════════════════════════════════════ */
 
 const CLIENTS = [
-  { name: "Reino Editorial",        logo: "/clients/Reino_Editorial.png" },
-  { name: "Distinct Construction",  logo: "/clients/DCS.png" },
-  { name: "Max Hebeling",           logo: "/clients/Max_Hebeling.png" },
-  { name: "DyT Comunicaciones",     logo: "/clients/dyt_comunicacones.png" },
-  { name: "Imperium Group",         logo: "/clients/Imperium_group.png" },
-  { name: "RAF",                    logo: "/clients/LOGO%20RAF%20Blanco%20SIN%20FONDO.png" },
-  { name: "Fuente de Vida",         logo: "/clients/LOGO%20FUENTE%20DE%20VIDA%202.png" },
-  { name: "Inversionistas del Reino", logo: "/clients/Inversionistas_del_Reino.png" },
-  { name: "Hebeling Imperium",      logo: "/clients/Hebeling_Imperium.png" },
-  { name: "Pérgolas Zolutions",     logo: "/clients/Pergolas_Zolutions.jpg" },
+  { name: "Reino Editorial",              logo: "/clients/Reino%20Editorial.png" },
+  { name: "Distinct Construction",        logo: "/clients/Dcs.png" },
+  { name: "Max Hebeling",                 logo: "/clients/Max_Hebeling.png" },
+  { name: "DyT Comunicaciones",           logo: "/clients/DyT_%20Comunicaciones.png" },
+  { name: "Imperium Group",               logo: "/clients/Imperium_group.png" },
+  { name: "RAF Conference",               logo: "/clients/RAF%20Conference.png" },
+  { name: "Fuente de Vida",               logo: "/clients/Ministerio%20Internacional%20Fuente%20de%20Vida.png" },
+  { name: "Inversionistas del Reino",     logo: "/clients/Inversionistas_del_Reino.png" },
+  { name: "Hebeling OS",                  logo: "/clients/Hebeling_OS.png" },
+  { name: "Pérgolas Zolutions",           logo: "/clients/P%C3%A9rgolas_zolutions.png" },
 ];
 
 // Constellation positions: [x%, y%] relative to container
