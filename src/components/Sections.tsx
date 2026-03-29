@@ -445,7 +445,7 @@ export function WhatWeDo() {
               </p>
             </Reveal>
             <Reveal delay={0.1}>
-              <h2 className="text-white mb-5 leading-[1.06]" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(36px, 5vw, 60px)", fontWeight: 700 }}>
+              <h2 className="text-white mb-5 leading-[1.06]" style={{ fontSize: "clamp(36px, 5vw, 60px)" }}>
                 No solo diseñamos websites.
               </h2>
             </Reveal>
