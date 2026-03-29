@@ -16,6 +16,7 @@ export default function Home() {
     <LangProvider>
       <Cursor />
       <WhatsAppButton />
+      <SpaceShipPass />
       <AmbientLight />
       <PixelBrain />
       <motion.div
