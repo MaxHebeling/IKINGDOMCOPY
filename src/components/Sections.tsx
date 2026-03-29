@@ -2133,7 +2133,7 @@ export function DisqualificationSection() {
               className="mt-5 text-ink leading-[1.06]"
               style={{ fontSize: "clamp(36px, 4.5vw, 58px)", letterSpacing: "-0.03em" }}
             >
-              Esto no es para todos.
+              Si estás listo para operar a otro nivel.
             </h2>
           </Reveal>
 
