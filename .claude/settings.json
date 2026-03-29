@@ -15,7 +15,12 @@
       "Skill(update-config)",
       "Skill(update-config:*)",
       "Bash(jq -e '.hooks.PostToolUse[] | select\\(.matcher == \"\"Write|Edit|NotebookEdit\"\"\\) | .hooks[] | .command' /Users/maxhebeling/Downloads/IKINGDOMCOPY-main/.claude/settings.json)",
-      "Bash(ls -la /Users/maxhebeling/Downloads/IKINGDOMCOPY-main/.env*)"
+      "Bash(ls -la /Users/maxhebeling/Downloads/IKINGDOMCOPY-main/.env*)",
+      "Bash(git checkout:*)",
+      "Read(//Users/maxhebeling/Downloads/**)",
+      "Bash(ls -1d /Users/maxhebeling/Downloads/*/)",
+      "Read(//Users/maxhebeling/**)",
+      "Bash(npm uninstall:*)"
     ],
     "additionalDirectories": [
       "/Users/maxhebeling/Downloads/IKINGDOMCOPY-main/src/lib"
