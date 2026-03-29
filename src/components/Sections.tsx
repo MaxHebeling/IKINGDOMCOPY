@@ -2368,9 +2368,9 @@ export function Footer() {
               {FOOTER_LEGAL.map((l) => (
                 <a key={l.href} href={l.href} data-hover
                   className="text-[10px] tracking-[0.22em] uppercase font-light transition-colors duration-300"
-                  style={{ color: "rgba(212,175,55,0.30)" }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(212,175,55,0.65)"; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(212,175,55,0.30)"; }}
+                  style={{ color: "rgba(212,175,55,0.52)" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(212,175,55,1)"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(212,175,55,0.52)"; }}
                 >{l.label}</a>
               ))}
             </div>
