@@ -1,45 +1,93 @@
-// iKingdom brand & service configuration
+// Canonical brand config — mirrored from hebeling-imperium-hub/lib/leads/brand-config.ts
+// Do NOT modify. Source of truth is in hebeling-imperium-hub.
 
-export const BRAND = {
-  name: "iKingdom",
-  companyId: "ikingdom",
-  email: "executive@ikingdom.org",
-} as const;
+export type LeadBrand =
+  | "ikingdom"
+  | "editorial-reino"
+  | "lead_hunter"
+  | "imperium"
+  | "max-hebeling";
 
-export const SERVICES = [
-  { id: "branding",       label: "Branding & Identidad",    baseScore: 15 },
-  { id: "web",            label: "Web & Digital",           baseScore: 10 },
-  { id: "ads",            label: "Ads & Performance",       baseScore: 20 },
-  { id: "full-service",   label: "Full Service",            baseScore: 25 },
-  { id: "consulting",     label: "Consultoría Estratégica", baseScore: 18 },
-  { id: "content",        label: "Contenido & Social",      baseScore: 12 },
-] as const;
+export interface LeadBrandProfile {
+  value: LeadBrand;
+  label: string;
+  codePrefix: string;
+  pipeline: string;
+  dealLabel: string;
+  formPath: string;
+  companyPath: string;
+}
 
-export type ServiceId = (typeof SERVICES)[number]["id"];
+export const DEFAULT_LEAD_BRAND: LeadBrand = "ikingdom";
 
-// Budget tiers → score weight
-export const BUDGET_WEIGHTS: Record<string, number> = {
-  "menos de $2k":   0,
-  "$2k-$5k":        5,
-  "$5k-$10k":      15,
-  "$10k-$25k":     25,
-  "$25k-$50k":     35,
-  "$50k+":         45,
-  "más de $50k":   45,
+export const LEAD_BRAND_PROFILES: Record<LeadBrand, LeadBrandProfile> = {
+  ikingdom: {
+    value: "ikingdom",
+    label: "iKingdom",
+    codePrefix: "IK",
+    pipeline: "ikingdom",
+    dealLabel: "Landing Page",
+    formPath: "/apply/ikingdom-diagnosis",
+    companyPath: "/app/companies/ikingdom",
+  },
+  "editorial-reino": {
+    value: "editorial-reino",
+    label: "Reino Editorial",
+    codePrefix: "RE",
+    pipeline: "editorial-reino",
+    dealLabel: "Editorial Opportunity",
+    formPath: "/apply?brand=editorialreino",
+    companyPath: "/app/editorial",
+  },
+  lead_hunter: {
+    value: "lead_hunter",
+    label: "Lead Hunter",
+    codePrefix: "LH",
+    pipeline: "lead_hunter",
+    dealLabel: "Construction Lead",
+    formPath: "/apply/lead-hunter",
+    companyPath: "/app/companies/lead-hunter",
+  },
+  imperium: {
+    value: "imperium",
+    label: "Imperium Group",
+    codePrefix: "IG",
+    pipeline: "imperium",
+    dealLabel: "Investor Opportunity",
+    formPath: "/apply?brand=imperium",
+    companyPath: "/app/companies/imperium",
+  },
+  "max-hebeling": {
+    value: "max-hebeling",
+    label: "Max Hebeling",
+    codePrefix: "MH",
+    pipeline: "max-hebeling",
+    dealLabel: "Brand Inquiry",
+    formPath: "/apply?brand=maxhebeling",
+    companyPath: "/app/companies/max-hebeling",
+  },
 };
 
-// Timeline tiers → score weight
-export const TIMELINE_WEIGHTS: Record<string, number> = {
-  "inmediato":      20,
-  "immediate":      20,
-  "1-3 meses":      15,
-  "1-3 months":     15,
-  "3-6 meses":      10,
-  "3-6 months":     10,
-  "6-12 meses":      5,
-  "6-12 months":     5,
-  "más de 1 año":    2,
-  "más de un año":   2,
+const LEAD_BRAND_ALIASES: Record<string, LeadBrand> = {
+  ikingdom: "ikingdom",
+  "editorial-reino": "editorial-reino",
+  editorialreino: "editorial-reino",
+  lead_hunter: "lead_hunter",
+  "lead-hunter": "lead_hunter",
+  leadhunter: "lead_hunter",
+  imperium: "imperium",
+  "max-hebeling": "max-hebeling",
+  maxhebeling: "max-hebeling",
 };
 
-export const QUALIFIED_THRESHOLD = 35;
+export function normalizeLeadBrand(input?: string | null): LeadBrand {
+  if (!input) return DEFAULT_LEAD_BRAND;
+  return LEAD_BRAND_ALIASES[input] || DEFAULT_LEAD_BRAND;
+}
+
+export function getLeadBrandProfile(input?: string | null): LeadBrandProfile {
+  const normalized = normalizeLeadBrand(input);
+  return LEAD_BRAND_PROFILES[normalized];
+}
+
+export const LEAD_BRAND_OPTIONS = Object.values(LEAD_BRAND_PROFILES);
