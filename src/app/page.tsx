@@ -14,6 +14,7 @@ export default function Home() {
   return (
     <LangProvider>
       <Cursor />
+      <WhatsAppButton />
       <AmbientLight />
       <PixelBrain />
       <motion.div
