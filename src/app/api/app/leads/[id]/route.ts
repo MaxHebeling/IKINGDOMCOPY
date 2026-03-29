@@ -11,7 +11,13 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try { await requireStaff(); }
-  catch { return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); }
+  catch (e) {
+    const forbidden = e instanceof Error && e.message === "FORBIDDEN";
+    return NextResponse.json(
+      { error: forbidden ? "Forbidden" : "Unauthorized" },
+      { status: forbidden ? 403 : 401 }
+    );
+  }
 
   const { id } = await params;
   const supabase = getAdminClient();
