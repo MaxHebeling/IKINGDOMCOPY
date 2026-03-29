@@ -2095,7 +2095,7 @@ export function Contact() {
                         )}
                       </button>
                       <p className="text-[9px] tracking-[0.22em] uppercase" style={{ color: "rgba(212,175,55,0.55)" }}>
-                        Aceptamos 4–6 nuevas alianzas por trimestre.
+                        Solo aceptamos 4–6 proyectos por trimestre.
                       </p>
                     </div>
                   </div>
