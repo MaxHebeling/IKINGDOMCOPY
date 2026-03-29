@@ -1230,12 +1230,12 @@ export function Process() {
               <Reveal><Label>Metodología</Label></Reveal>
               <Reveal delay={0.1}>
                 <h2 className="mt-5 text-ink leading-[1.06]" style={{ fontSize: "clamp(32px, 4vw, 56px)", letterSpacing: "-0.03em" }}>
-                  Cómo trabajamos.
+                  Un método.<br />Sin improvisación.
                 </h2>
               </Reveal>
               <Reveal delay={0.2}>
                 <p className="mt-5 text-secondary text-[14px] leading-[1.9] font-light max-w-[340px]">
-                  Cuatro fases. Cero improvisación. Cada decisión orienta tu inversión hacia resultados medibles.
+                  Cuatro fases estructuradas. Cada semana tiene un entregable. Cada decisión tiene un impacto medible en tu negocio.
                 </p>
               </Reveal>
 
