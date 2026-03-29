@@ -1908,7 +1908,7 @@ export function Contact() {
                 </h2>
               </Reveal>
               <Reveal delay={0.2}>
-                <p className="mt-5 text-[15px] font-light leading-[1.85] text-justify" style={{ color: "rgba(212,175,55,0.55)" }}>
+                <p className="mt-5 text-[15px] font-light leading-[1.85] text-justify" style={{ color: "rgba(201,209,217,0.75)" }}>
                   Nuestro equipo revisará tu caso y te contactará si hay ajuste estratégico.
                 </p>
               </Reveal>
