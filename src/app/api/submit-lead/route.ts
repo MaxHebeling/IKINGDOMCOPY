@@ -34,24 +34,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Name and organization are required" }, { status: 400 });
   }
 
-  // ── Destination integration ───────────────────────────────────────────────
-  // Replace this block with your preferred CRM / email service:
-  //
-  // Resend (email notification):
-  //   import { Resend } from "resend";
-  //   const resend = new Resend(process.env.RESEND_API_KEY);
-  //   await resend.emails.send({ from: "...", to: "...", subject: "New Lead", ... });
-  //
-  // HubSpot CRM:
-  //   await fetch("https://api.hubapi.com/crm/v3/objects/contacts", { method: "POST", ... });
-  //
-  // Notion database:
-  //   await notion.pages.create({ parent: { database_id: "..." }, properties: { ... } });
-  //
-  // Google Sheets (via Apps Script webhook):
-  //   await fetch(process.env.SHEETS_WEBHOOK_URL, { method: "POST", body: JSON.stringify(body) });
-  // ─────────────────────────────────────────────────────────────────────────
-
   // Structured log — visible in Vercel Function logs immediately
   console.log("[iKingdom] New lead submission", {
     timestamp: new Date().toISOString(),
