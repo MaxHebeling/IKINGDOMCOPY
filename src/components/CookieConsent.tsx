@@ -27,14 +27,17 @@ export default function CookieConsent() {
     localStorage.setItem(STORAGE_KEY, "accepted");
     setVisible(false);
     // Fire GTM consent update
-    if (typeof window !== "undefined" && Array.isArray((window as any).dataLayer)) {
-      (window as any).dataLayer.push({
-        event: "consent_update",
-        analytics_storage: "granted",
-        ad_storage: "granted",
-        ad_user_data: "granted",
-        ad_personalization: "granted",
-      });
+    if (typeof window !== "undefined") {
+      if (Array.isArray((window as any).dataLayer)) {
+        (window as any).dataLayer.push({
+          event: "consent_update",
+          analytics_storage: "granted",
+          ad_storage: "granted",
+          ad_user_data: "granted",
+          ad_personalization: "granted",
+        });
+      }
+      window.dispatchEvent(new Event("ikd_consent_accepted"));
     }
   }
 
