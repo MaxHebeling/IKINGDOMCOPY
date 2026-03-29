@@ -71,12 +71,19 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  // Non-blocking DB insert — never fails the response
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
+  // Non-blocking DB insert into canonical Supabase leads table
   (async () => {
     try {
-      const leadData = buildFromSubmit(body, ip);
-      await insertLead(leadData);
+      await createLead({
+        full_name:           String(body.name).slice(0, 200),
+        company_name:        body.organization ? String(body.organization).slice(0, 200) : undefined,
+        website_url:         body.website  ? String(body.website).slice(0, 300)   : undefined,
+        budget_range:        body.revenue  ? String(body.revenue).slice(0, 200)   : undefined,
+        project_description: body.challenge ? String(body.challenge).slice(0, 2000) : undefined,
+        source:              "submit-lead",
+        brand:               "ikingdom",
+        form_type:           "submit_lead",
+      });
     } catch (err) {
       console.error("[iKingdom] DB insert failed (submit-lead):", err);
     }
