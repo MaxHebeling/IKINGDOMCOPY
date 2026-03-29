@@ -1904,10 +1904,10 @@ export function Contact() {
 
             {/* ── Left — context ── */}
             <div className="lg:sticky lg:top-[120px] lg:self-start">
-              <Reveal><Label>Contacto</Label></Reveal>
+              <Reveal><Label>Evaluación Estratégica</Label></Reveal>
               <Reveal delay={0.1}>
                 <h2 className="mt-5 text-ink leading-[1.08]" style={{ fontSize: "clamp(28px,3.5vw,44px)" }}>
-                  Solicita tu diagnóstico estratégico.
+                  Aplicación para evaluación estratégica.
                 </h2>
               </Reveal>
               <Reveal delay={0.2}>
