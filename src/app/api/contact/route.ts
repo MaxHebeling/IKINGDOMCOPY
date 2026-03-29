@@ -92,6 +92,13 @@ function buildHtml(b: ContactPayload): string {
 }
 
 export async function POST(req: NextRequest) {
+  // Rate limit: 5 requests per minute per IP
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
+  const { ok } = rateLimit(ip, 5, 60_000);
+  if (!ok) {
+    return NextResponse.json({ error: "Demasiadas solicitudes. Intenta en un minuto." }, { status: 429 });
+  }
+
   // Basic size guard
   const contentLength = Number(req.headers.get("content-length") ?? 0);
   if (contentLength > 20_000) {
