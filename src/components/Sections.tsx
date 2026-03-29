@@ -2281,7 +2281,7 @@ export function Footer() {
               {/* System status */}
               <div className="flex items-center gap-2.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-ink" style={{ animation: "pulseGlow 2.4s ease-in-out infinite" }} />
-                <span className="text-[9px] tracking-[0.34em] uppercase" style={{ color: "rgba(212,175,55,0.28)" }}>Sistema operativo</span>
+                <span className="text-[9px] tracking-[0.34em] uppercase" style={{ color: "rgba(212,175,55,0.55)" }}>Sistema operativo</span>
               </div>
             </div>
 
