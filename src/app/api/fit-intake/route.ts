@@ -231,11 +231,31 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Non-blocking DB insert — never fails the response
+  // Non-blocking DB insert into canonical Supabase leads table
   (async () => {
     try {
-      const leadData = buildFromFit(safe, ip);
-      await insertLead(leadData);
+      await createLead({
+        full_name:           safe.fullName,
+        company_name:        safe.company || undefined,
+        email:               safe.email,
+        whatsapp:            safe.phone || undefined,
+        city:                safe.location || undefined,
+        website_url:         safe.website || undefined,
+        social_links:        safe.instagram || undefined,
+        project_description: [safe.businessDescription, safe.mainChallenge].filter(Boolean).join("\n\n") || undefined,
+        main_service:        safe.serviceInterest || safe.currentOffer || undefined,
+        ideal_client:        safe.targetClient || undefined,
+        main_goal:           safe.goals90Days || undefined,
+        visual_style:        safe.brandFeeling || undefined,
+        reference_websites:  [safe.visualReferences, safe.inspirationLinks].filter(Boolean).join(", ") || undefined,
+        budget_range:        safe.budget || undefined,
+        timeline:            safe.timeline || undefined,
+        additional_notes:    safe.notes || undefined,
+        source:              "fit-intake",
+        brand:               "ikingdom",
+        origin_page:         "/fit",
+        form_type:           "fit_intake",
+      });
     } catch (err) {
       console.error("[iKingdom/fit] DB insert failed:", err);
     }
