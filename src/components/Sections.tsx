@@ -1749,6 +1749,82 @@ export function Contact() {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   DISQUALIFICATION — selective / exclusive positioning
+   ═══════════════════════════════════════════════════════════ */
+
+export function DisqualificationSection() {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-10%" });
+
+  const lines = [
+    "No trabajamos con proyectos sin dirección.",
+    "No diseñamos por estética.",
+    "Trabajamos con quienes buscan construir sistemas que convierten.",
+  ];
+
+  return (
+    <>
+      <Divider />
+      <section ref={ref} className="py-[100px] md:py-[120px] px-8">
+        <div className="max-w-[760px] mx-auto">
+
+          <Reveal><Label>Selección</Label></Reveal>
+
+          <Reveal delay={0.1}>
+            <h2
+              className="mt-5 text-ink leading-[1.06]"
+              style={{ fontSize: "clamp(36px, 4.5vw, 58px)", letterSpacing: "-0.03em" }}
+            >
+              Esto no es para todos.
+            </h2>
+          </Reveal>
+
+          <div className="mt-12 pt-10" style={{ borderTop: "1px solid rgba(212,175,55,0.07)" }}>
+            {lines.map((line, i) => (
+              <motion.div
+                key={i}
+                className="flex items-start gap-5 mb-7 last:mb-0"
+                initial={{ opacity: 0, x: -10 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.75, delay: 0.2 + i * 0.12, ease: [0.08, 0.82, 0.17, 1] }}
+              >
+                <span
+                  className="flex-shrink-0 mt-[10px]"
+                  style={{ width: "20px", height: "1px", background: "rgba(212,175,55,0.22)" }}
+                />
+                <p
+                  className="text-secondary font-light leading-[1.85]"
+                  style={{ fontSize: "clamp(15px, 1.3vw, 17px)" }}
+                >
+                  {line}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+
+          <Reveal delay={0.58}>
+            <div className="mt-14">
+              <a
+                href="#contact"
+                data-hover
+                className="group relative inline-flex items-center gap-3 px-8 py-[13px] text-[12px] font-semibold tracking-[0.18em] uppercase text-ink border border-ink/20 overflow-hidden transition-all duration-500 hover:text-bg hover:border-ink"
+              >
+                <div className="absolute inset-0 bg-ink origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                <span className="relative z-10 transition-colors duration-500">Solicita tu diagnóstico estratégico →</span>
+              </a>
+              <p className="mt-5 text-[10px] tracking-[0.28em] uppercase" style={{ color: "rgba(212,175,55,0.28)" }}>
+                Primero entendemos. Luego decides.
+              </p>
+            </div>
+          </Reveal>
+
+        </div>
+      </section>
+    </>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
    FOOTER
    ═══════════════════════════════════════════════════════════ */
 
