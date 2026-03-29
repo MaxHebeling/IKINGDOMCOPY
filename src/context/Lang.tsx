@@ -9,7 +9,7 @@ const T: Record<string, { en: string; es: string }> = {
   "nav.capabilities": { en: "Solutions", es: "Soluciones" },
   "nav.proof": { en: "Proof", es: "Resultados" },
   "nav.process": { en: "Process", es: "Proceso" },
-  "nav.engagement": { en: "Engagement", es: "Alianza" },
+  "nav.engagement": { en: "Fit", es: "Fit" },
   "nav.contact": { en: "Contact", es: "Contacto" },
 
   // Hero
