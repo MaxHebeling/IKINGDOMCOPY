@@ -1166,7 +1166,7 @@ export function Process() {
               </Reveal>
               <Reveal delay={0.2}>
                 <p className="mt-5 text-secondary text-[14px] leading-[1.9] font-light max-w-[340px]">
-                  Un proceso de transformación en cuatro fases. Cada etapa orbita alrededor de un objetivo central: tu crecimiento.
+                  Cuatro fases. Cero improvisación. Cada decisión orienta tu inversión hacia resultados medibles.
                 </p>
               </Reveal>
 
