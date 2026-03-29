@@ -82,6 +82,16 @@ export default function Navbar() {
                 {l.label}
               </motion.a>
             ))}
+            <motion.a
+              href="/fit"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: LINKS.length * 0.06 + 0.06 }}
+              onClick={() => setOpen(false)}
+              className="mt-2 px-8 py-3 text-[12px] font-semibold tracking-[0.22em] uppercase text-bg bg-ink"
+            >
+              Solicitar diagnóstico
+            </motion.a>
           </motion.div>
         )}
       </AnimatePresence>
