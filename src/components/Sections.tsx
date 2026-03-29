@@ -48,6 +48,68 @@ function CTA({ href, children }: { href: string; children: string }) {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   CLARITY STRIP — value proposition bridge after hero
+   ═══════════════════════════════════════════════════════════ */
+
+export function ClarityStrip() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-6%" });
+
+  return (
+    <div ref={ref} className="px-8 py-14 md:py-18">
+      <div className="max-w-[1280px] mx-auto">
+        <motion.div
+          className="relative px-8 md:px-14 py-10 md:py-12 text-center"
+          style={{
+            background: "rgba(212,175,55,0.016)",
+            border: "1px solid rgba(212,175,55,0.07)",
+          }}
+          initial={{ opacity: 0, y: 14 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.95, ease: [0.08, 0.82, 0.17, 1] }}
+        >
+          {/* Corner marks */}
+          <span className="absolute top-0 left-0 w-3 h-3 pointer-events-none" style={{ borderTop: "1px solid rgba(212,175,55,0.20)", borderLeft: "1px solid rgba(212,175,55,0.20)" }} />
+          <span className="absolute top-0 right-0 w-3 h-3 pointer-events-none" style={{ borderTop: "1px solid rgba(212,175,55,0.20)", borderRight: "1px solid rgba(212,175,55,0.20)" }} />
+          <span className="absolute bottom-0 left-0 w-3 h-3 pointer-events-none" style={{ borderBottom: "1px solid rgba(212,175,55,0.20)", borderLeft: "1px solid rgba(212,175,55,0.20)" }} />
+          <span className="absolute bottom-0 right-0 w-3 h-3 pointer-events-none" style={{ borderBottom: "1px solid rgba(212,175,55,0.20)", borderRight: "1px solid rgba(212,175,55,0.20)" }} />
+
+          <motion.p
+            className="text-ink font-light leading-[1.45] tracking-[-0.025em] mb-4"
+            style={{ fontSize: "clamp(18px, 2.2vw, 26px)" }}
+            initial={{ opacity: 0, y: 8 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.85, delay: 0.12, ease: [0.08, 0.82, 0.17, 1] }}
+          >
+            Diseñamos sistemas digitales que convierten tráfico en clientes.
+          </motion.p>
+
+          <motion.p
+            className="text-secondary font-light leading-[1.75] mb-7"
+            style={{ fontSize: "clamp(13px, 1.2vw, 15px)" }}
+            initial={{ opacity: 0, y: 6 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.85, delay: 0.22, ease: [0.08, 0.82, 0.17, 1] }}
+          >
+            Sin desperdiciar inversión en diseño o desarrollo innecesario.
+          </motion.p>
+
+          <motion.p
+            className="text-[10px] tracking-[0.36em] uppercase"
+            style={{ color: "rgba(212,175,55,0.32)" }}
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.36 }}
+          >
+            Estrategia → estructura → implementación
+          </motion.p>
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
    CAPABILITIES
    ═══════════════════════════════════════════════════════════ */
 
