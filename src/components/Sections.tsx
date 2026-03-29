@@ -280,6 +280,7 @@ export function Capabilities() {
                     <motion.a
                       href="#contact"
                       whileTap={{ scale: 0.985 }}
+                      onClick={() => trackCTAClick("capabilities-plan")}
                       className={[
                         "inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-4 text-sm font-medium uppercase tracking-[0.16em] transition-all duration-300",
                         plan.highlighted
