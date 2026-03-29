@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { rateLimit } from "@/lib/rateLimit";
 
 const TO_EMAIL   = "executive@ikingdom.org";
 const FROM_EMAIL = "iKingdom Sistema <noreply@ikingdom.org>";
