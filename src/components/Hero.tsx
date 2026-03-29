@@ -75,20 +75,31 @@ export default function Hero() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 2.2 }}
-              className="mt-9 flex flex-wrap items-center gap-5"
+              className="mt-9 space-y-4"
             >
-              <a
-                href="#contact"
-                data-hover
-                className="group relative inline-flex items-center gap-3 px-8 py-[14px] text-[13px] font-semibold tracking-[0.14em] uppercase text-bg bg-ink overflow-hidden transition-all duration-500"
-              >
-                <div className="absolute inset-0 bg-secondary origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
-                <span className="relative z-10">{t("hero.cta")}</span>
-                <svg className="relative z-10 w-3.5 h-3.5 transition-transform duration-500 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-              </a>
-              <span className="text-[11px] tracking-[0.2em] text-secondary font-semibold">
+              <div className="flex flex-wrap items-center gap-5">
+                <Link
+                  href="/fit"
+                  data-hover
+                  className="group relative inline-flex items-center gap-3 px-8 py-[14px] text-[13px] font-semibold tracking-[0.14em] uppercase text-bg bg-ink overflow-hidden transition-all duration-500"
+                >
+                  <div className="absolute inset-0 bg-secondary origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                  <span className="relative z-10">{t("hero.cta")}</span>
+                  <svg className="relative z-10 w-3.5 h-3.5 transition-transform duration-500 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                </Link>
+                <a
+                  href="#process"
+                  className="text-[12px] tracking-[0.18em] uppercase font-medium text-secondary hover:text-ink transition-colors duration-300"
+                >
+                  {t("hero.cta2")}
+                </a>
+              </div>
+              <p className="text-[11px] tracking-[0.2em] uppercase text-secondary font-semibold">
                 {t("hero.fine")}
-              </span>
+              </p>
+              <p className="text-[12px] leading-[1.7] font-light" style={{ color: "rgba(212,175,55,0.45)" }}>
+                {t("hero.trust")}
+              </p>
             </motion.div>
           </div>
 
