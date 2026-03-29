@@ -629,90 +629,243 @@ const CARDINALS = [0, 9, 18, 27].map((ti, li) => {
 });
 
 export function Clients() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(sectionRef, { once: true, margin: "-12%" });
+
+  // ── Mouse parallax (low-intensity, desktop only) ──────────────────────────
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 35, damping: 22 });
+  const springY = useSpring(mouseY, { stiffness: 35, damping: 22 });
+
+  function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const r = e.currentTarget.getBoundingClientRect();
+    mouseX.set(((e.clientX - r.left) / r.width  - 0.5) * 14);
+    mouseY.set(((e.clientY - r.top)  / r.height - 0.5) * 14);
+  }
+  function onMouseLeave() { mouseX.set(0); mouseY.set(0); }
+
+  // ── Shared transition for ring-group and every counter-rotation ───────────
+  const orbitT = { duration: 120, repeat: Infinity, ease: "linear" as const };
+
   return (
     <>
       <Divider />
-      <section className="py-[100px] md:py-[130px] px-8">
+      <section ref={sectionRef} className="py-[100px] md:py-[130px] px-8">
         <div className="max-w-[1280px] mx-auto">
-          <Reveal className="mb-16">
+          <Reveal className="mb-10 md:mb-20">
             <Label>Empresas que confían en nosotros</Label>
           </Reveal>
 
-          {/* SVG constellation lines */}
-          <div className="relative w-full" style={{ height: "420px" }}>
-            <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-              {CLIENTS.map((_, i) =>
-                CLIENTS.slice(i + 1).map((__, j) => {
-                  const a = CONSTELLATION_POSITIONS[i];
-                  const b = CONSTELLATION_POSITIONS[i + 1 + j];
-                  return (
-                    <motion.line
-                      key={`${i}-${j}`}
-                      x1={`${a.x}%`} y1={`${a.y}%`}
-                      x2={`${b.x}%`} y2={`${b.y}%`}
-                      stroke="#D4AF37"
-                      strokeWidth="0.5"
-                      strokeOpacity="0.12"
-                      initial={{ pathLength: 0, opacity: 0 }}
-                      animate={{ pathLength: 1, opacity: 1 }}
-                      transition={{ duration: 2, delay: i * 0.3 + j * 0.2 }}
-                    />
-                  );
-                })
-              )}
-            </svg>
+          {/* ── Desktop: Orrery ────────────────────────────────────────────── */}
+          <div
+            className="relative hidden md:flex items-center justify-center"
+            style={{ height: C_SIZE }}
+            onMouseMove={onMouseMove}
+            onMouseLeave={onMouseLeave}
+          >
+            {/* Parallax wrapper */}
+            <motion.div
+              style={{ width: C_SIZE, height: C_SIZE, position: "relative", x: springX, y: springY }}
+            >
 
-            {CLIENTS.map((c, i) => {
-              const pos = CONSTELLATION_POSITIONS[i];
-              return (
-                <motion.div
-                  key={c.name}
-                  className="absolute group"
-                  style={{ left: `${pos.x}%`, top: `${pos.y}%`, transform: "translate(-50%, -50%)" }}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 1, delay: 0.3 + i * 0.2 }}
+              {/* ── Center pulsar ─────────────────────────────────────── */}
+              <div
+                className="absolute pointer-events-none"
+                style={{ left: CENTER - 28, top: CENTER - 28, width: 56, height: 56 }}
+              >
+                {/* Three staggered pulse rings */}
+                {[0, 1.1, 2.2].map((delay, pi) => (
+                  <motion.div
+                    key={pi}
+                    className="absolute inset-0 rounded-full border border-[#D4AF37]"
+                    initial={{ scale: 1, opacity: 0 }}
+                    animate={inView ? { scale: [1, 4], opacity: [0.14, 0] } : {}}
+                    transition={{ duration: 4, delay, repeat: Infinity, ease: "easeOut" }}
+                  />
+                ))}
+                {/* Center crosshair */}
+                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 56 56">
+                  <line x1="28" y1="6"  x2="28" y2="18" stroke="#D4AF37" strokeWidth="0.6" strokeOpacity="0.28"/>
+                  <line x1="28" y1="38" x2="28" y2="50" stroke="#D4AF37" strokeWidth="0.6" strokeOpacity="0.28"/>
+                  <line x1="6"  y1="28" x2="18" y2="28" stroke="#D4AF37" strokeWidth="0.6" strokeOpacity="0.28"/>
+                  <line x1="38" y1="28" x2="50" y2="28" stroke="#D4AF37" strokeWidth="0.6" strokeOpacity="0.28"/>
+                  <circle cx="28" cy="28" r="2.5" fill="#D4AF37" fillOpacity="0.4"/>
+                  <circle cx="28" cy="28" r="6" fill="none" stroke="#D4AF37" strokeWidth="0.5" strokeOpacity="0.15"/>
+                </svg>
+              </div>
+
+              {/* ── SVG layer: ring + ticks + cardinals ──────────────── */}
+              <svg
+                className="absolute inset-0 w-full h-full pointer-events-none"
+                viewBox={`0 0 ${C_SIZE} ${C_SIZE}`}
+              >
+                {/* Main ring — draws in on enter */}
+                <motion.circle
+                  cx={CENTER} cy={CENTER} r={RING_R}
+                  fill="none"
+                  stroke="#D4AF37"
+                  strokeWidth="0.8"
+                  strokeOpacity="0.18"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={inView ? { pathLength: 1, opacity: 1 } : {}}
+                  transition={{ duration: 2.8, ease: [0.08, 0.82, 0.17, 1] }}
+                />
+                {/* Outer guide ring — very faint */}
+                <motion.circle
+                  cx={CENTER} cy={CENTER} r={RING_R + 18}
+                  fill="none"
+                  stroke="#D4AF37"
+                  strokeWidth="0.4"
+                  strokeOpacity="0.05"
+                  strokeDasharray="3 9"
+                  initial={{ opacity: 0 }}
+                  animate={inView ? { opacity: 1 } : {}}
+                  transition={{ duration: 1, delay: 2.6 }}
+                />
+
+                {/* Tick marks — appear as a group after ring draws */}
+                <motion.g
+                  initial={{ opacity: 0 }}
+                  animate={inView ? { opacity: 1 } : {}}
+                  transition={{ duration: 0.8, delay: 2.4 }}
                 >
-                  {/* Pulse ring */}
-                  <motion.div
-                    className="absolute inset-0 rounded-full border border-ink/20"
-                    animate={{ scale: [1, 1.4], opacity: [0.3, 0] }}
-                    transition={{ duration: 3, delay: i * 0.7, repeat: Infinity, ease: "easeOut" }}
-                    style={{ borderRadius: "50%" }}
-                  />
+                  {TICKS.map((t, i) => (
+                    <line
+                      key={i}
+                      x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2}
+                      stroke="#D4AF37"
+                      strokeWidth={t.strokeWidth}
+                      strokeOpacity={t.strokeOpacity}
+                    />
+                  ))}
+                </motion.g>
 
-                  {/* Node */}
-                  <div className="w-[130px] h-[130px] rounded-full border border-ink/15 bg-[#0A0A08] group-hover:border-ink/35 transition-all duration-700 flex flex-col items-center justify-center gap-2 relative overflow-hidden cursor-default">
-                    {/* Inner glow on hover */}
-                    <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ background: "radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 70%)" }} />
-                    {/* Scan line */}
+                {/* Cardinal degree labels */}
+                <motion.g
+                  initial={{ opacity: 0 }}
+                  animate={inView ? { opacity: 1 } : {}}
+                  transition={{ duration: 0.8, delay: 2.8 }}
+                >
+                  {CARDINALS.map((c) => (
+                    <text
+                      key={c.label}
+                      x={c.x} y={c.y}
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      fill="#D4AF37"
+                      fillOpacity="0.22"
+                      fontSize="7.5"
+                      letterSpacing="1.5"
+                      fontFamily='"Space Grotesk", sans-serif'
+                    >
+                      {c.label}
+                    </text>
+                  ))}
+                </motion.g>
+              </svg>
+
+              {/* ── Light sweep (pulsar-inspired) ────────────────────── */}
+              {/* A conic-gradient wedge that rotates slowly — like a radar arm */}
+              <motion.div
+                className="absolute rounded-full pointer-events-none"
+                style={{
+                  left:   CENTER - RING_R - 22,
+                  top:    CENTER - RING_R - 22,
+                  width:  (RING_R + 22) * 2,
+                  height: (RING_R + 22) * 2,
+                  background: [
+                    "conic-gradient(from 0deg,",
+                    "  transparent 345deg,",
+                    "  rgba(212,175,55,0.025) 352deg,",
+                    "  rgba(212,175,55,0.055) 358deg,",
+                    "  rgba(212,175,55,0.025) 360deg)",
+                  ].join(""),
+                }}
+                initial={{ opacity: 0 }}
+                animate={inView ? { opacity: 1, rotate: 360 } : {}}
+                transition={{
+                  opacity: { duration: 1, delay: 3 },
+                  rotate:  { duration: SWEEP_DUR, repeat: Infinity, ease: "linear", delay: 3 },
+                }}
+              />
+
+              {/* ── Rotating ring group — carries all logo nodes ──────── */}
+              <motion.div
+                className="absolute inset-0"
+                animate={{ rotate: 360 }}
+                transition={orbitT}
+              >
+                {CLIENTS.map((c, i) => {
+                  const pos = ORRERY_POSITIONS[i];
+                  return (
+                    /* Counter-rotation: cancels the ring rotation so logos stay upright */
                     <motion.div
-                      className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-ink/20 to-transparent"
-                      animate={{ top: ["-5%", "105%"] }}
-                      transition={{ duration: 4, delay: i * 1.1, repeat: Infinity, ease: "linear" }}
-                    />
-                    <img
-                      src={c.logo!}
-                      alt={c.name}
-                      className="max-h-[60px] max-w-[85px] w-auto object-contain opacity-35 group-hover:opacity-70 transition-opacity duration-700 filter grayscale brightness-150"
-                    />
-                  </div>
+                      key={c.name}
+                      className="absolute"
+                      style={{ left: pos.left, top: pos.top, width: NODE, height: NODE }}
+                      animate={{ rotate: -360 }}
+                      transition={orbitT}
+                    >
+                      {/* Entrance animation — separate from rotation */}
+                      <motion.div
+                        className="w-full h-full"
+                        initial={{ opacity: 0, scale: 0.65 }}
+                        animate={inView ? { opacity: 1, scale: 1 } : {}}
+                        transition={{
+                          duration: 0.9,
+                          delay: 2.9 + i * 0.09,
+                          ease: [0.08, 0.82, 0.17, 1],
+                        }}
+                      >
+                        {/* Logo node */}
+                        <div className="group w-full h-full rounded-full border border-[#D4AF37]/[0.13] bg-[#0A0A08] hover:border-[#D4AF37]/30 transition-all duration-700 flex items-center justify-center relative overflow-hidden cursor-default">
+                          {/* Hover glow */}
+                          <div
+                            className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                            style={{ background: "radial-gradient(circle, rgba(212,175,55,0.07) 0%, transparent 70%)" }}
+                          />
+                          {/* Slow scan line */}
+                          <motion.div
+                            className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/[0.12] to-transparent"
+                            animate={{ top: ["-5%", "105%"] }}
+                            transition={{ duration: 6 + i * 0.4, delay: i * 1.4, repeat: Infinity, ease: "linear" }}
+                          />
+                          <img
+                            src={c.logo}
+                            alt={c.name}
+                            className="max-h-[56px] max-w-[76px] w-auto object-contain opacity-30 group-hover:opacity-65 transition-opacity duration-700 filter grayscale brightness-150"
+                          />
+                        </div>
+                        {/* Name label */}
+                        <p className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[8px] tracking-[0.22em] uppercase text-[#D4AF37]/22 group-hover:text-[#D4AF37]/50 transition-colors duration-500">
+                          {c.name}
+                        </p>
+                      </motion.div>
+                    </motion.div>
+                  );
+                })}
+              </motion.div>
 
-                  {/* Dot */}
-                  <motion.div
-                    className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-ink/40"
-                    animate={{ opacity: [0.4, 1, 0.4] }}
-                    transition={{ duration: 2.5, delay: i * 0.5, repeat: Infinity }}
-                  />
-
-                  {/* Label */}
-                  <p className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] tracking-[0.22em] uppercase text-secondary/25 group-hover:text-secondary/55 transition-colors duration-500">
-                    {c.name}
-                  </p>
-                </motion.div>
-              );
-            })}
+            </motion.div>
           </div>
+
+          {/* ── Mobile: 2-col grid fallback ───────────────────────────────── */}
+          <div className="grid grid-cols-2 gap-6 md:hidden">
+            {CLIENTS.map((c) => (
+              <div key={c.name} className="flex flex-col items-center gap-3">
+                <div className="w-[88px] h-[88px] rounded-full border border-[#D4AF37]/[0.12] bg-[#0A0A08] flex items-center justify-center">
+                  <img
+                    src={c.logo}
+                    alt={c.name}
+                    className="max-h-[48px] max-w-[62px] w-auto object-contain opacity-32 filter grayscale brightness-150"
+                  />
+                </div>
+                <p className="text-[8px] tracking-[0.2em] uppercase text-[#D4AF37]/25 text-center">{c.name}</p>
+              </div>
+            ))}
+          </div>
+
         </div>
       </section>
     </>
