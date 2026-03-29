@@ -893,7 +893,19 @@ function gCurvePath(x1: number, y1: number, x2: number, y2: number, cx: number, 
 
 export function Process() {
   const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-12%" });
+  const inView = useInView(ref, { once: true, margin: "-10%" });
+  const [hovered, setHovered] = useState<string | null>(null);
+
+  const nodePositions = GALAXY_NODES.map((node) => {
+    const pos = gToXY(GCX, GCY, node.r, node.angle);
+    const rightSide = pos.x > GCX;
+    return {
+      ...node,
+      ...pos,
+      tipAnchor: rightSide ? ("start" as const) : ("end" as const),
+      tipX: rightSide ? pos.x + 16 : pos.x - 16,
+    };
+  });
 
   return (
     <>
@@ -903,250 +915,318 @@ export function Process() {
         id="process"
         className="relative py-[120px] md:py-[160px] px-8 overflow-hidden"
       >
-        {/* Precision grid — spacecraft instrument feel */}
+        {/* Subtle grid */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            backgroundImage: "linear-gradient(rgba(212,175,55,0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.018) 1px, transparent 1px)",
-            backgroundSize: "64px 64px",
+            backgroundImage: "linear-gradient(rgba(212,175,55,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.015) 1px, transparent 1px)",
+            backgroundSize: "80px 80px",
           }}
         />
 
         <div className="max-w-[1280px] mx-auto relative z-10">
 
-          {/* ── Header ──────────────────────────────────────────── */}
-          <div className="mb-20 md:mb-28">
+          {/* ── Desktop: two-column galactic layout ─────────────── */}
+          <div className="hidden md:grid md:grid-cols-[400px_1fr] gap-16 lg:gap-24 items-start">
+
+            {/* Left: sticky header + stage list */}
+            <div className="lg:sticky lg:top-[120px] lg:self-start">
+              <Reveal><Label>Metodología</Label></Reveal>
+              <Reveal delay={0.1}>
+                <h2 className="mt-5 text-ink leading-[1.06]" style={{ fontSize: "clamp(32px, 4vw, 56px)", letterSpacing: "-0.03em" }}>
+                  Cómo trabajamos.
+                </h2>
+              </Reveal>
+              <Reveal delay={0.2}>
+                <p className="mt-5 text-secondary text-[14px] leading-[1.9] font-light max-w-[340px]">
+                  Un proceso de transformación en cuatro fases. Cada etapa orbita alrededor de un objetivo central: tu crecimiento.
+                </p>
+              </Reveal>
+
+              {/* Stage list */}
+              <div className="mt-14">
+                {nodePositions.map((node, i) => (
+                  <motion.div
+                    key={node.n}
+                    className="relative py-5 cursor-default"
+                    style={{ borderTop: "1px solid rgba(212,175,55,0.07)" }}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={inView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ duration: 0.7, delay: 0.3 + i * 0.1, ease: [0.08, 0.82, 0.17, 1] }}
+                    onMouseEnter={() => setHovered(node.n)}
+                    onMouseLeave={() => setHovered(null)}
+                  >
+                    {/* Active indicator line */}
+                    <motion.div
+                      className="absolute left-0 top-0 bottom-0 w-px"
+                      style={{ background: "#D4AF37" }}
+                      animate={{ opacity: hovered === node.n ? 0.85 : 0 }}
+                      transition={{ duration: 0.25 }}
+                    />
+                    <div className="pl-5">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span
+                          className="text-[9px] tracking-[0.32em] uppercase font-medium transition-colors duration-300"
+                          style={{ color: hovered === node.n ? "rgba(212,175,55,0.65)" : "rgba(212,175,55,0.28)" }}
+                        >
+                          {node.n} · {node.week}
+                        </span>
+                      </div>
+                      <h3
+                        className="font-medium leading-[1.3] transition-colors duration-300"
+                        style={{
+                          fontSize: "15px",
+                          letterSpacing: "-0.02em",
+                          color: hovered === node.n ? "#D4AF37" : "rgba(255,255,255,0.52)",
+                        }}
+                      >
+                        {node.title}
+                      </h3>
+                      <motion.div
+                        style={{ overflow: "hidden" }}
+                        animate={{
+                          height: hovered === node.n ? "auto" : 0,
+                          opacity: hovered === node.n ? 1 : 0,
+                          marginTop: hovered === node.n ? "10px" : "0px",
+                        }}
+                        transition={{ duration: 0.32, ease: [0.08, 0.82, 0.17, 1] }}
+                      >
+                        <p className="text-secondary text-[12px] leading-[1.85] font-light">
+                          {node.desc}
+                        </p>
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                ))}
+                <div style={{ borderTop: "1px solid rgba(212,175,55,0.07)" }} />
+              </div>
+            </div>
+
+            {/* Right: Galactic SVG */}
+            <motion.div
+              className="relative flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={inView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 1.3, delay: 0.12, ease: [0.08, 0.82, 0.17, 1] }}
+            >
+              <svg
+                viewBox={`0 0 ${GC_W} ${GC_H}`}
+                className="w-full max-w-[560px]"
+                style={{ overflow: "visible" }}
+              >
+                <defs>
+                  <radialGradient id="gcCoreGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%"   stopColor="#D4AF37" stopOpacity="0.20" />
+                    <stop offset="45%"  stopColor="#D4AF37" stopOpacity="0.05" />
+                    <stop offset="100%" stopColor="#D4AF37" stopOpacity="0"    />
+                  </radialGradient>
+                </defs>
+
+                {/* Star field */}
+                {GALAXY_STARS.map((s, i) => (
+                  <circle key={i} cx={s.cx} cy={s.cy} r={s.r} fill="#D4AF37" opacity={s.o} />
+                ))}
+
+                {/* Orbital rings */}
+                {nodePositions.map((node) => (
+                  <motion.circle
+                    key={`ring-${node.n}`}
+                    cx={GCX}
+                    cy={GCY}
+                    r={node.r}
+                    fill="none"
+                    stroke="#D4AF37"
+                    strokeDasharray="3 14"
+                    animate={{
+                      strokeOpacity: hovered === node.n ? 0.28 : 0.07,
+                      strokeWidth:   hovered === node.n ? 0.7  : 0.35,
+                    }}
+                    transition={{ duration: 0.4 }}
+                  />
+                ))}
+
+                {/* Connection curves: center → node */}
+                {nodePositions.map((node, i) => {
+                  const pathD = gCurvePath(GCX, GCY, node.x, node.y, GCX, GCY);
+                  const isActive = hovered === node.n;
+                  return (
+                    <g key={`conn-${node.n}`}>
+                      {/* Base path — entrance draw */}
+                      <motion.path
+                        d={pathD}
+                        fill="none"
+                        stroke="#D4AF37"
+                        strokeWidth={isActive ? 0.8 : 0.45}
+                        strokeOpacity={isActive ? 0.35 : 0.10}
+                        initial={{ pathLength: 0 }}
+                        animate={inView ? { pathLength: 1 } : {}}
+                        transition={{ duration: 1.5, delay: 0.45 + i * 0.18, ease: [0.08, 0.82, 0.17, 1] }}
+                      />
+                      {/* Energy flow particle */}
+                      <motion.path
+                        d={pathD}
+                        fill="none"
+                        stroke="#D4AF37"
+                        strokeWidth={isActive ? 1.4 : 0.9}
+                        strokeOpacity={isActive ? 0.70 : 0.28}
+                        strokeDasharray="5 110"
+                        animate={{ strokeDashoffset: [0, -115] }}
+                        transition={{
+                          strokeDashoffset: { duration: 3.2 + i * 0.8, repeat: Infinity, ease: "linear", delay: i * 0.9 },
+                        }}
+                      />
+                    </g>
+                  );
+                })}
+
+                {/* Central glow halo */}
+                <circle cx={GCX} cy={GCY} r={60} fill="url(#gcCoreGlow)" />
+
+                {/* Central core */}
+                <circle cx={GCX} cy={GCY} r={16} fill="none" stroke="#D4AF37" strokeWidth={0.3} strokeOpacity={0.10} strokeDasharray="2 8" />
+                <circle cx={GCX} cy={GCY} r={9}  fill="none" stroke="#D4AF37" strokeWidth={0.5} strokeOpacity={0.20} />
+                <circle cx={GCX} cy={GCY} r={4}  fill="#D4AF37" fillOpacity={0.80} />
+
+                {/* Nodes */}
+                {nodePositions.map((node, i) => {
+                  const isActive = hovered === node.n;
+                  return (
+                    <motion.g
+                      key={`node-${node.n}`}
+                      onMouseEnter={() => setHovered(node.n)}
+                      onMouseLeave={() => setHovered(null)}
+                      style={{ cursor: "default" }}
+                      initial={{ opacity: 0 }}
+                      animate={inView ? { opacity: 1 } : {}}
+                      transition={{ duration: 0.9, delay: 0.65 + i * 0.2 }}
+                    >
+                      {/* Glow halo */}
+                      <motion.circle
+                        cx={node.x} cy={node.y} r={24}
+                        fill="#D4AF37"
+                        animate={{ opacity: isActive ? 0.09 : 0 }}
+                        transition={{ duration: 0.4 }}
+                      />
+                      {/* Breathing pulse ring */}
+                      <motion.circle
+                        cx={node.x} cy={node.y}
+                        fill="none"
+                        stroke="#D4AF37"
+                        strokeWidth={0.5}
+                        animate={{ r: [10, 15, 10], opacity: [0.18, 0.04, 0.18] }}
+                        transition={{ duration: 4.5 + i * 0.6, repeat: Infinity, ease: "easeInOut", delay: i * 1.2 }}
+                      />
+                      {/* Node circle */}
+                      <motion.circle
+                        cx={node.x} cy={node.y}
+                        fill="#000000"
+                        stroke="#D4AF37"
+                        animate={{
+                          r:            isActive ? 8 : 6,
+                          strokeWidth:  isActive ? 1.0 : 0.55,
+                          strokeOpacity: isActive ? 0.80 : 0.32,
+                        }}
+                        initial={{ r: 6, strokeWidth: 0.55, strokeOpacity: 0.32 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                      {/* Node number */}
+                      <motion.text
+                        x={node.x} y={node.y + 0.5}
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                        fontSize={5.5}
+                        fontFamily="Space Grotesk, Inter, sans-serif"
+                        letterSpacing="0.08em"
+                        animate={{
+                          fill: isActive ? "#D4AF37" : "rgba(212,175,55,0.55)",
+                        }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {node.n}
+                      </motion.text>
+
+                      {/* Tooltip — always in DOM, animated opacity */}
+                      <motion.g
+                        pointerEvents="none"
+                        animate={{ opacity: isActive ? 1 : 0 }}
+                        initial={{ opacity: 0 }}
+                        transition={{ duration: 0.28 }}
+                      >
+                        <text
+                          x={node.tipX} y={node.y - 6}
+                          textAnchor={node.tipAnchor}
+                          fontSize={5.5}
+                          fontFamily="Space Grotesk, Inter, sans-serif"
+                          letterSpacing="0.22em"
+                          fill="rgba(212,175,55,0.50)"
+                        >
+                          {node.week.toUpperCase()}
+                        </text>
+                        <text
+                          x={node.tipX} y={node.y + 7}
+                          textAnchor={node.tipAnchor}
+                          fontSize={7}
+                          fontFamily="Space Grotesk, Inter, sans-serif"
+                          letterSpacing="-0.01em"
+                          fill="#D4AF37"
+                          fontWeight="500"
+                        >
+                          {node.title}
+                        </text>
+                      </motion.g>
+                    </motion.g>
+                  );
+                })}
+              </svg>
+            </motion.div>
+          </div>
+
+          {/* ── Mobile: vertical stack ───────────────────────────── */}
+          <div className="md:hidden">
             <Reveal><Label>Metodología</Label></Reveal>
             <Reveal delay={0.1}>
-              <h2 className="mt-5 text-ink leading-[1.06]" style={{ fontSize: "clamp(36px, 5vw, 62px)", letterSpacing: "-0.03em" }}>
+              <h2 className="mt-5 text-ink leading-[1.06]" style={{ fontSize: "clamp(32px, 6vw, 48px)", letterSpacing: "-0.03em" }}>
                 Cómo trabajamos.
               </h2>
             </Reveal>
             <Reveal delay={0.2}>
-              <p className="mt-5 text-secondary text-[15px] leading-[1.85] font-light max-w-[480px]">
-                Un proceso claro, breve y orientado a que tomes decisiones correctas antes de invertir.
+              <p className="mt-5 text-secondary text-[14px] leading-[1.9] font-light">
+                Un proceso de transformación en cuatro fases.
               </p>
             </Reveal>
-          </div>
 
-          {/* ── Desktop: horizontal node pipeline ───────────────── */}
-          <div className="hidden md:block">
-
-            {/* HUD status bar */}
-            <motion.div
-              className="flex items-center justify-between mb-10 px-1"
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.8, delay: 0.1 }}
-            >
-              <div className="flex items-center gap-3">
-                {/* Live status dot */}
-                <motion.div
-                  className="w-[5px] h-[5px] rounded-full"
-                  style={{ background: "#D4AF37" }}
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 2.2, repeat: Infinity }}
-                />
-                <span className="text-[9px] tracking-[0.35em] uppercase" style={{ color: "rgba(212,175,55,0.45)" }}>
-                  Sistema activo
-                </span>
-              </div>
-              <span className="text-[9px] tracking-[0.25em] uppercase" style={{ color: "rgba(212,175,55,0.25)" }}>
-                04 etapas · 5–6 semanas
-              </span>
-            </motion.div>
-
-            {/* Connector + node row */}
-            <div className="relative mb-10">
-
-              {/* Dashed base rail */}
-              <div
-                className="absolute pointer-events-none"
-                style={{
-                  top: "27px",
-                  left: "calc(100% / 8)",
-                  right: "calc(100% / 8)",
-                  height: "1px",
-                  background: "repeating-linear-gradient(to right, rgba(212,175,55,0.12) 0, rgba(212,175,55,0.12) 5px, transparent 5px, transparent 14px)",
-                }}
-              />
-
-              {/* Animated solid fill — powers up left to right */}
-              <motion.div
-                className="absolute pointer-events-none origin-left"
-                style={{
-                  top: "27px",
-                  left: "calc(100% / 8)",
-                  right: "calc(100% / 8)",
-                  height: "1px",
-                  background: "linear-gradient(to right, rgba(212,175,55,0.55), rgba(212,175,55,0.20), rgba(212,175,55,0.06))",
-                }}
-                initial={{ scaleX: 0 }}
-                animate={inView ? { scaleX: 1 } : {}}
-                transition={{ duration: 2.0, delay: 0.25, ease: [0.08, 0.82, 0.17, 1] }}
-              />
-
-              {/* Data pulse — glowing orb travels the rail once on enter */}
-              <motion.div
-                className="absolute pointer-events-none"
-                style={{
-                  top: "22px",
-                  left: "calc(100% / 8)",
-                  width: "9px",
-                  height: "9px",
-                  borderRadius: "50%",
-                  background: "#D4AF37",
-                  boxShadow: "0 0 14px 4px rgba(212,175,55,0.5), 0 0 30px 8px rgba(212,175,55,0.15)",
-                }}
-                initial={{ x: "0%", opacity: 0 }}
-                animate={inView ? { x: "calc(75vw - 80px)", opacity: [0, 1, 1, 0] } : {}}
-                transition={{ duration: 2.0, delay: 0.25, ease: [0.08, 0.82, 0.17, 1] }}
-              />
-
-              {/* Node circles */}
-              <div className="grid grid-cols-4">
-                {PROCESS_STAGES.map((s, i) => (
-                  <div key={s.n} className="group flex flex-col items-center">
-                    <motion.div
-                      className="relative w-[54px] h-[54px] rounded-full flex items-center justify-center cursor-default"
-                      style={{ border: "1px solid rgba(212,175,55,0.22)", background: "rgba(212,175,55,0.03)" }}
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={inView ? { opacity: 1, scale: 1 } : {}}
-                      transition={{ duration: 0.6, delay: 0.3 + i * 0.15, ease: [0.08, 0.82, 0.17, 1] }}
-                    >
-                      {/* Inner glow on hover */}
+            <div className="mt-12">
+              {GALAXY_NODES.map((node, i) => (
+                <Reveal key={node.n} delay={0.08 + i * 0.1}>
+                  <div className="relative flex gap-6 py-8" style={{ borderTop: "1px solid rgba(212,175,55,0.08)" }}>
+                    <div className="flex flex-col items-center flex-shrink-0 pt-1">
                       <div
-                        className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                        style={{ background: "radial-gradient(circle, rgba(212,175,55,0.14) 0%, transparent 70%)" }}
-                      />
-                      {/* Outer pulse ring on hover */}
-                      <div
-                        className="absolute rounded-full opacity-0 group-hover:opacity-25 transition-all duration-700"
-                        style={{ inset: "-8px", border: "1px solid #D4AF37", borderRadius: "50%" }}
-                      />
-                      {/* Number */}
-                      <span className="relative z-10 text-[11px] font-light tracking-[0.08em]" style={{ color: "rgba(212,175,55,0.70)" }}>
-                        {s.n}
-                      </span>
-                      {/* Status dot — top right of node */}
-                      <motion.div
-                        className="absolute rounded-full"
-                        style={{ top: "4px", right: "4px", width: "4px", height: "4px", background: "#D4AF37" }}
-                        animate={{ opacity: [0.25, 0.9, 0.25] }}
-                        transition={{ duration: 2.5, delay: i * 0.6, repeat: Infinity }}
-                      />
-                    </motion.div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Data panels below nodes */}
-            <div className="grid grid-cols-4 gap-4">
-              {PROCESS_STAGES.map((s, i) => (
-                <motion.div
-                  key={s.n}
-                  className="group relative overflow-hidden"
-                  style={{
-                    padding: "20px 20px 22px",
-                    background: "rgba(212,175,55,0.022)",
-                    border: "1px solid rgba(212,175,55,0.09)",
-                  }}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.7, delay: 0.55 + i * 0.12, ease: [0.08, 0.82, 0.17, 1] }}
-                  whileHover={{ borderColor: "rgba(212,175,55,0.22)", background: "rgba(212,175,55,0.035)" } as never}
-                >
-                  {/* HUD corner brackets */}
-                  <HudBrackets />
-
-                  {/* Slow scan line — reads like active telemetry */}
-                  <motion.div
-                    className="absolute left-0 right-0 h-px pointer-events-none"
-                    style={{ background: "linear-gradient(to right, transparent, rgba(212,175,55,0.10), transparent)" }}
-                    animate={{ top: ["-2%", "104%"] }}
-                    transition={{ duration: 9 + i * 1.5, delay: i * 2.2, repeat: Infinity, ease: "linear" }}
-                  />
-
-                  {/* Week readout — telemetry style */}
-                  <p className="text-[9px] tracking-[0.30em] uppercase mb-4" style={{ color: "rgba(212,175,55,0.38)" }}>
-                    {s.week}
-                  </p>
-
-                  {/* Title */}
-                  <h3 className="text-ink font-semibold leading-[1.25] mb-4" style={{ fontSize: "14px", letterSpacing: "-0.02em" }}>
-                    {s.title}
-                  </h3>
-
-                  {/* Gold separator */}
-                  <div className="mb-4 w-6 h-px" style={{ background: "rgba(212,175,55,0.25)" }} />
-
-                  {/* Description */}
-                  <p className="text-secondary text-[12px] leading-[1.9] font-light">
-                    {s.desc}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* ── Mobile: vertical pipeline ────────────────────────── */}
-          <div className="md:hidden">
-
-            {/* Mobile HUD status */}
-            <div className="flex items-center gap-3 mb-10">
-              <motion.div
-                className="w-[5px] h-[5px] rounded-full"
-                style={{ background: "#D4AF37" }}
-                animate={{ opacity: [0.3, 1, 0.3] }}
-                transition={{ duration: 2.2, repeat: Infinity }}
-              />
-              <span className="text-[9px] tracking-[0.32em] uppercase" style={{ color: "rgba(212,175,55,0.40)" }}>
-                Sistema activo · 04 etapas
-              </span>
-            </div>
-
-            {PROCESS_STAGES.map((s, i) => (
-              <Reveal key={s.n} delay={0.08 + i * 0.1}>
-                <div className="relative flex gap-6 pb-12 last:pb-0">
-
-                  {/* Node + vertical line */}
-                  <div className="flex flex-col items-center flex-shrink-0">
-                    <div
-                      className="relative w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0"
-                      style={{ border: "1px solid rgba(212,175,55,0.22)", background: "rgba(212,175,55,0.03)" }}
-                    >
-                      <span className="text-[10px] font-light" style={{ color: "rgba(212,175,55,0.65)" }}>{s.n}</span>
-                      <motion.div
-                        className="absolute rounded-full"
-                        style={{ top: "3px", right: "3px", width: "4px", height: "4px", background: "#D4AF37" }}
-                        animate={{ opacity: [0.2, 0.9, 0.2] }}
-                        transition={{ duration: 2.5, delay: i * 0.5, repeat: Infinity }}
-                      />
+                        className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
+                        style={{ border: "1px solid rgba(212,175,55,0.25)", background: "rgba(212,175,55,0.03)" }}
+                      >
+                        <span className="text-[9px] font-light" style={{ color: "rgba(212,175,55,0.60)" }}>{node.n}</span>
+                      </div>
+                      {i < GALAXY_NODES.length - 1 && (
+                        <div
+                          className="mt-3 w-px flex-1"
+                          style={{
+                            background: "repeating-linear-gradient(to bottom, rgba(212,175,55,0.12) 0, rgba(212,175,55,0.12) 3px, transparent 3px, transparent 9px)",
+                            minHeight: "40px",
+                          }}
+                        />
+                      )}
                     </div>
-                    {i < PROCESS_STAGES.length - 1 && (
-                      <div
-                        className="mt-3 w-px flex-1"
-                        style={{
-                          background: "repeating-linear-gradient(to bottom, rgba(212,175,55,0.15) 0, rgba(212,175,55,0.15) 4px, transparent 4px, transparent 10px)",
-                          minHeight: "48px",
-                        }}
-                      />
-                    )}
+                    <div className="flex-1 pt-1">
+                      <p className="text-[9px] tracking-[0.30em] uppercase mb-2" style={{ color: "rgba(212,175,55,0.35)" }}>{node.week}</p>
+                      <h3 className="text-ink font-semibold leading-[1.25] mb-3" style={{ fontSize: "16px", letterSpacing: "-0.02em" }}>{node.title}</h3>
+                      <div className="w-5 h-px mb-3" style={{ background: "rgba(212,175,55,0.20)" }} />
+                      <p className="text-secondary text-[13px] leading-[1.85] font-light">{node.desc}</p>
+                    </div>
                   </div>
-
-                  {/* Content */}
-                  <div className="relative pt-1 pb-2 flex-1 overflow-hidden" style={{ padding: "4px 16px 16px", background: "rgba(212,175,55,0.018)", border: "1px solid rgba(212,175,55,0.08)" }}>
-                    <HudBrackets />
-                    <p className="text-[9px] tracking-[0.28em] uppercase mb-2 mt-2" style={{ color: "rgba(212,175,55,0.38)" }}>{s.week}</p>
-                    <h3 className="text-ink font-semibold leading-[1.25] mb-3" style={{ fontSize: "16px", letterSpacing: "-0.02em" }}>{s.title}</h3>
-                    <div className="w-5 h-px mb-3" style={{ background: "rgba(212,175,55,0.22)" }} />
-                    <p className="text-secondary text-[13px] leading-[1.85] font-light">{s.desc}</p>
-                  </div>
-
-                </div>
-              </Reveal>
-            ))}
+                </Reveal>
+              ))}
+              <div style={{ borderTop: "1px solid rgba(212,175,55,0.08)" }} />
+            </div>
           </div>
 
         </div>
