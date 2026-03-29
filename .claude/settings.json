@@ -23,10 +23,14 @@
       "Bash(npm uninstall:*)",
       "Bash(wc -l /Users/maxhebeling/Downloads/IKINGDOMCOPY-main/src/components/*.tsx)",
       "WebFetch(domain:ikingdom.org)",
-      "WebFetch(domain:www.ikingdom.org)"
+      "WebFetch(domain:www.ikingdom.org)",
+      "Bash(ls -la ~/Downloads/*.jpg ~/Downloads/*.jpeg ~/Downloads/*.png)",
+      "Bash(sort -k6,7)",
+      "Bash(sips -g pixelWidth -g pixelHeight ~/Downloads/ikingdom-og.jpg ~/Downloads/og-image.png)"
     ],
     "additionalDirectories": [
-      "/Users/maxhebeling/Downloads/IKINGDOMCOPY-main/src/lib"
+      "/Users/maxhebeling/Downloads/IKINGDOMCOPY-main/src/lib",
+      "/Users/maxhebeling/Downloads"
     ]
   },
   "hooks": {
