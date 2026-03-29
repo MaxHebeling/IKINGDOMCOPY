@@ -1547,10 +1547,10 @@ const FIT_IDEAL = [
 ];
 
 const FIT_NOT = [
-  { n: "01", text: "Quien solo compara opciones baratas y decide por precio." },
-  { n: "02", text: "Quien necesita publicar mañana sin haber definido su oferta." },
-  { n: "03", text: "Quien quiere una web decorativa sin objetivo comercial claro." },
-  { n: "04", text: "Quien no tiene margen para ejecutar una solución seria." },
+  { n: "01", text: "Negocios en etapa inicial sin modelo de negocio validado." },
+  { n: "02", text: "Quienes buscan soluciones rápidas, económicas o de bajo compromiso." },
+  { n: "03", text: "Quienes necesitan presencia sin objetivo comercial definido." },
+  { n: "04", text: "Quienes no están listos para invertir en arquitectura seria." },
 ];
 
 // Precomputed ring tick marks — deterministic trig, SSR-safe
