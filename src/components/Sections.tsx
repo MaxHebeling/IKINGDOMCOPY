@@ -852,66 +852,268 @@ export function Clients() {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   PROCESS — timeline with vertical line
+   PROCESS — premium navy pipeline, horizontal node system
    ═══════════════════════════════════════════════════════════ */
 
+const PROCESS_STAGES = [
+  {
+    n: "01",
+    week: "Semana 1",
+    title: "Diagnóstico estratégico",
+    desc: "Analizamos tu negocio, mercado y objetivos. Primero entendemos, después construimos.",
+  },
+  {
+    n: "02",
+    week: "Semana 2",
+    title: "Definición narrativa",
+    desc: "Desarrollamos el mensaje que posiciona tu marca y conecta con tu cliente ideal.",
+  },
+  {
+    n: "03",
+    week: "Semana 3–4",
+    title: "Arquitectura de conversión",
+    desc: "Diseñamos la estructura que guía al visitante hacia la acción correcta.",
+  },
+  {
+    n: "04",
+    week: "Semana 5–6",
+    title: "Implementación digital",
+    desc: "Construimos, integramos y dejamos todo listo para operar y escalar.",
+  },
+];
+
 export function Process() {
-  const { t } = useLang();
-  const PHASES = [
-    { n: "01", title: t("proc.1.title"), duration: t("proc.1.dur"), desc: t("proc.1.desc") },
-    { n: "02", title: t("proc.2.title"), duration: t("proc.2.dur"), desc: t("proc.2.desc") },
-    { n: "03", title: t("proc.3.title"), duration: t("proc.3.dur"), desc: t("proc.3.desc") },
-    { n: "04", title: t("proc.4.title"), duration: t("proc.4.dur"), desc: t("proc.4.desc") },
-  ];
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-12%" });
 
   return (
-    <>
-      <Divider />
-      <section id="process" className="py-[120px] md:py-[140px] px-8">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-16 lg:gap-24">
-            <div className="lg:sticky lg:top-[120px] lg:self-start">
-              <Reveal><Label>{t("proc.label")}</Label></Reveal>
-              <Reveal delay={0.1}>
-                <h2 className="mt-5 text-ink leading-[1.08]" style={{ fontSize: "clamp(32px, 4vw, 48px)" }}>
-                  {t("proc.heading")}
-                </h2>
-              </Reveal>
-              <Reveal delay={0.2}>
-                <p className="mt-5 text-secondary text-[15px] leading-[1.8] font-light text-justify">{t("proc.sub")}</p>
-              </Reveal>
+    <section
+      ref={ref}
+      id="process"
+      className="relative py-[120px] md:py-[160px] px-8 overflow-hidden"
+      style={{ background: "#041E39" }}
+    >
+      {/* ── Top / bottom blends into surrounding black ── */}
+      <div className="absolute inset-x-0 top-0 h-28 pointer-events-none"
+        style={{ background: "linear-gradient(to bottom, #000000, transparent)" }} />
+      <div className="absolute inset-x-0 bottom-0 h-28 pointer-events-none"
+        style={{ background: "linear-gradient(to top, #000000, transparent)" }} />
+
+      {/* ── Subtle precision grid ── */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        backgroundImage: "linear-gradient(rgba(212,175,55,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.025) 1px, transparent 1px)",
+        backgroundSize: "72px 72px",
+      }} />
+
+      <div className="max-w-[1280px] mx-auto relative z-10">
+
+        {/* ── Header ─────────────────────────────────────────── */}
+        <div className="mb-20 md:mb-28">
+          <Reveal>
+            <div className="inline-flex items-center gap-3 mb-7">
+              <span className="h-px w-6" style={{ background: "rgba(212,175,55,0.5)" }} />
+              <span className="text-[11px] font-medium uppercase tracking-[0.38em]" style={{ color: "#D4AF37" }}>
+                Metodología
+              </span>
+              <span className="h-px w-6" style={{ background: "rgba(212,175,55,0.5)" }} />
             </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <h2
+              className="font-semibold"
+              style={{
+                fontSize: "clamp(36px, 5vw, 62px)",
+                letterSpacing: "-0.03em",
+                lineHeight: 1.06,
+                color: "#F0EDE4",
+              }}
+            >
+              Cómo trabajamos.
+            </h2>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <p className="mt-5 text-[15px] leading-[1.85] font-light max-w-[480px]" style={{ color: "#5E7A96" }}>
+              Un proceso claro, breve y orientado a que tomes decisiones correctas antes de invertir.
+            </p>
+          </Reveal>
+        </div>
 
-            {/* Timeline */}
-            <div className="relative">
-              {/* Vertical line */}
-              <div className="absolute left-[18px] top-4 bottom-4 w-px bg-divider hidden md:block" />
+        {/* ── Desktop: horizontal node pipeline ─────────────── */}
+        <div className="hidden md:block">
 
-              <div className="space-y-0">
-                {PHASES.map((p, i) => (
-                  <Reveal key={p.n} delay={0.1 + i * 0.08}>
-                    <div className="group relative grid grid-cols-1 md:grid-cols-[40px_1fr] gap-4 md:gap-8 py-10 border-b border-divider last:border-b-0">
-                      {/* Timeline dot */}
-                      <div className="hidden md:flex items-start justify-center pt-1.5">
-                        <div className="w-[7px] h-[7px] rounded-full border border-ink/25 bg-bg group-hover:bg-ink group-hover:border-ink transition-colors duration-500 relative z-10" />
-                      </div>
-                      <div>
-                        <div className="flex items-baseline gap-4 mb-2">
-                          <span className="text-[11px] font-semibold tracking-[0.25em] text-secondary/50">{p.n}</span>
-                          <h3 className="text-[17px] font-semibold text-ink">{p.title}</h3>
-                          <span className="text-[11px] tracking-[0.1em] uppercase text-secondary/40 ml-auto hidden sm:block">{p.duration}</span>
-                        </div>
-                        <p className="text-[14px] leading-[1.8] text-secondary font-light text-justify">{p.desc}</p>
-                      </div>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
+          {/* Connector + node row */}
+          <div className="relative mb-14">
+
+            {/* Base connector (always visible, very faint) */}
+            <div
+              className="absolute h-px pointer-events-none"
+              style={{
+                top: "24px",
+                left: "calc(100% / 8)",
+                right: "calc(100% / 8)",
+                background: "rgba(212,175,55,0.08)",
+              }}
+            />
+
+            {/* Animated fill connector — draws left to right on enter */}
+            <motion.div
+              className="absolute h-px origin-left pointer-events-none"
+              style={{
+                top: "24px",
+                left: "calc(100% / 8)",
+                right: "calc(100% / 8)",
+                background: "linear-gradient(to right, rgba(212,175,55,0.40), rgba(212,175,55,0.18), rgba(212,175,55,0.08))",
+              }}
+              initial={{ scaleX: 0 }}
+              animate={inView ? { scaleX: 1 } : {}}
+              transition={{ duration: 1.8, delay: 0.2, ease: [0.08, 0.82, 0.17, 1] }}
+            />
+
+            {/* Glowing dot that slides along the connector */}
+            <motion.div
+              className="absolute pointer-events-none"
+              style={{
+                top: "20px",
+                width: "8px",
+                height: "8px",
+                borderRadius: "50%",
+                background: "#D4AF37",
+                boxShadow: "0 0 10px 3px rgba(212,175,55,0.35)",
+                left: "calc(100% / 8)",
+              }}
+              initial={{ x: 0, opacity: 0 }}
+              animate={inView ? {
+                x: ["0%", "calc((100vw - 16px) * 0.75)"],
+                opacity: [0, 1, 1, 0],
+              } : {}}
+              transition={{ duration: 1.8, delay: 0.2, ease: [0.08, 0.82, 0.17, 1] }}
+            />
+
+            {/* Node circles */}
+            <div className="grid grid-cols-4">
+              {PROCESS_STAGES.map((s, i) => (
+                <div key={s.n} className="group flex flex-col items-center">
+                  <motion.div
+                    className="relative w-12 h-12 rounded-full flex items-center justify-center cursor-default"
+                    style={{ border: "1px solid rgba(212,175,55,0.25)" }}
+                    initial={{ opacity: 0, scale: 0.6 }}
+                    animate={inView ? { opacity: 1, scale: 1 } : {}}
+                    transition={{ duration: 0.65, delay: 0.28 + i * 0.14, ease: [0.08, 0.82, 0.17, 1] }}
+                  >
+                    {/* Hover: inner glow */}
+                    <div
+                      className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                      style={{ background: "radial-gradient(circle, rgba(212,175,55,0.13) 0%, transparent 70%)" }}
+                    />
+                    {/* Hover: outer ring */}
+                    <div
+                      className="absolute inset-0 rounded-full border opacity-0 group-hover:opacity-30 transition-opacity duration-500"
+                      style={{ border: "1px solid #D4AF37", transform: "scale(1.35)" }}
+                    />
+                    <span
+                      className="relative z-10 text-[12px] font-light tracking-[0.06em]"
+                      style={{ color: "rgba(212,175,55,0.65)" }}
+                    >
+                      {s.n}
+                    </span>
+                  </motion.div>
+                </div>
+              ))}
             </div>
           </div>
+
+          {/* Content cards below nodes */}
+          <div className="grid grid-cols-4 gap-5">
+            {PROCESS_STAGES.map((s, i) => (
+              <motion.div
+                key={s.n}
+                className="group relative p-5 rounded-[2px]"
+                style={{
+                  background: "rgba(255,255,255,0.018)",
+                  border: "1px solid rgba(212,175,55,0.07)",
+                  backdropFilter: "blur(4px)",
+                }}
+                initial={{ opacity: 0, y: 18 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.75, delay: 0.5 + i * 0.13, ease: [0.08, 0.82, 0.17, 1] }}
+                whileHover={{ borderColor: "rgba(212,175,55,0.18)" }}
+              >
+                {/* Week label */}
+                <p
+                  className="text-[9px] tracking-[0.28em] uppercase mb-4"
+                  style={{ color: "rgba(212,175,55,0.4)" }}
+                >
+                  {s.week}
+                </p>
+                {/* Title */}
+                <h3
+                  className="font-semibold leading-[1.25] mb-4"
+                  style={{ fontSize: "15px", letterSpacing: "-0.02em", color: "#E8E4DA" }}
+                >
+                  {s.title}
+                </h3>
+                {/* Gold rule */}
+                <div
+                  className="mb-4 w-7 h-px"
+                  style={{ background: "rgba(212,175,55,0.22)" }}
+                />
+                {/* Description */}
+                <p
+                  className="text-[13px] leading-[1.9] font-light"
+                  style={{ color: "#4E6880" }}
+                >
+                  {s.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </section>
-    </>
+
+        {/* ── Mobile: vertical pipeline ──────────────────────── */}
+        <div className="md:hidden">
+          {PROCESS_STAGES.map((s, i) => (
+            <Reveal key={s.n} delay={0.08 + i * 0.1}>
+              <div className="relative flex gap-7 pb-12 last:pb-0">
+
+                {/* Left column: node + vertical connector */}
+                <div className="flex flex-col items-center flex-shrink-0">
+                  <div
+                    className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0"
+                    style={{ border: "1px solid rgba(212,175,55,0.25)" }}
+                  >
+                    <span className="text-[11px] font-light tracking-[0.06em]" style={{ color: "rgba(212,175,55,0.65)" }}>
+                      {s.n}
+                    </span>
+                  </div>
+                  {i < PROCESS_STAGES.length - 1 && (
+                    <div className="mt-3 flex-1 w-px" style={{ background: "rgba(212,175,55,0.10)", minHeight: "48px" }} />
+                  )}
+                </div>
+
+                {/* Right column: content */}
+                <div className="pt-1 pb-2">
+                  <p className="text-[9px] tracking-[0.28em] uppercase mb-2" style={{ color: "rgba(212,175,55,0.4)" }}>
+                    {s.week}
+                  </p>
+                  <h3
+                    className="font-semibold leading-[1.25] mb-3"
+                    style={{ fontSize: "17px", letterSpacing: "-0.02em", color: "#E8E4DA" }}
+                  >
+                    {s.title}
+                  </h3>
+                  <div className="w-6 h-px mb-3" style={{ background: "rgba(212,175,55,0.22)" }} />
+                  <p className="text-[13px] leading-[1.9] font-light" style={{ color: "#4E6880" }}>
+                    {s.desc}
+                  </p>
+                </div>
+
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+      </div>
+    </section>
   );
 }
 
