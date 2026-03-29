@@ -2107,7 +2107,7 @@ export function Footer() {
                   </svg>
                 </a>
                 {/* Instagram */}
-                <a href="https://instagram.com/ikingdom.agency" target="_blank" rel="noopener noreferrer" data-hover aria-label="Instagram"
+                <a href="https://www.instagram.com/ikingdomok" target="_blank" rel="noopener noreferrer" data-hover aria-label="Instagram"
                   className="flex items-center justify-center w-9 h-9 rounded-full transition-all duration-300"
                   style={{ border: "1px solid rgba(212,175,55,0.2)", color: "rgba(212,175,55,0.5)" }}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(212,175,55,0.6)"; (e.currentTarget as HTMLElement).style.color = "rgba(212,175,55,1)"; }}
