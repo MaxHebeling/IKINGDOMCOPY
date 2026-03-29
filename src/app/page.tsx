@@ -33,6 +33,7 @@ export default function Home() {
         <Process />
         <Engagement />
         <Contact />
+        <DisqualificationSection />
         <Footer />
       </main>
     </LangProvider>
