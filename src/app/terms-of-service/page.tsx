@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Términos de Servicio — iKingdom",
+  title: "Términos de Servicio",
   description: "Términos y condiciones de uso de los servicios de iKingdom.",
+  alternates: { canonical: "https://www.ikingdom.org/terms-of-service" },
+  robots: { index: false, follow: false },
 };
 
 export default function TermsOfService() {
