@@ -19,8 +19,8 @@ const T: Record<string, { en: string; es: string }> = {
     es: "Arquitectura de crecimiento para empresas que no juegan a ser promedio.",
   },
   "hero.sub": {
-    en: "We design acquisition, conversion and scaling systems for companies ready to operate at a high level.",
-    es: "Diseñamos sistemas de captación, conversión y escalamiento para compañías que están listas para operar a alto nivel.",
+    en: "Systems that convert traffic into real clients, predictably.",
+    es: "Sistemas que convierten tráfico en clientes reales, de forma predecible.",
   },
   "hero.cta": { en: "Request strategic diagnosis", es: "Solicitar diagnóstico estratégico" },
   "hero.cta2": { en: "See how it works", es: "Ver cómo funciona" },
