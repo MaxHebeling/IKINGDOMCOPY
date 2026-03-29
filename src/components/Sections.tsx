@@ -2091,7 +2091,7 @@ export function Contact() {
                           </>
                         )}
                       </button>
-                      <p className="text-[9px] tracking-[0.22em] uppercase" style={{ color: "rgba(212,175,55,0.22)" }}>
+                      <p className="text-[9px] tracking-[0.22em] uppercase" style={{ color: "rgba(212,175,55,0.55)" }}>
                         Primero analizamos. Luego respondemos.
                       </p>
                     </div>
