@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     title: "iKingdom — Agencia de crecimiento digital",
     description:
       "Creamos sistemas de captación, conversión y escalamiento digital de alto nivel.",
-    images: ["/og-image.jpg", "https://www.ikingdom.org/og-image.jpg"],
+    images: ["/og-image.jpg"],
   },
 };
 
