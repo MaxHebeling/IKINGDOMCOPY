@@ -1785,9 +1785,9 @@ export function Engagement() {
 
           <Reveal delay={0.35}>
             <div className="mt-14 flex flex-col sm:flex-row items-start sm:items-center gap-6">
-              <CTA href="#contact" onClick={() => trackCTAClick("engagement")}>Solicita tu diagnóstico estratégico</CTA>
+              <CTA href="/fit" onClick={() => trackCTAClick("engagement")}>Solicitar diagnóstico estratégico</CTA>
               <p className="text-[10px] tracking-[0.28em] uppercase" style={{ color: "rgba(212,175,55,0.55)" }}>
-                Primero entendemos. Luego decides.
+                Solo aceptamos 4–6 alianzas por trimestre.
               </p>
             </div>
           </Reveal>
