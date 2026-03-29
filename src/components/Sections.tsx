@@ -2168,12 +2168,12 @@ export function Footer() {
               <p className="text-[9px] tracking-[0.38em] uppercase mb-7" style={{ color: "rgba(212,175,55,0.32)" }}>Contacto</p>
               <ul className="space-y-4">
                 <li>
-                  <a href="mailto:hola@ikingdom.agency" data-hover
+                  <a href="mailto:executive@ikingdom.org" data-hover
                     className="text-[13px] font-light block transition-colors duration-300"
                     style={{ color: "rgba(212,175,55,0.52)" }}
                     onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(212,175,55,1)"; }}
                     onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(212,175,55,0.52)"; }}
-                  >hola@ikingdom.agency</a>
+                  >executive@ikingdom.org</a>
                 </li>
                 <li>
                   <a href="https://wa.me/19565095558" target="_blank" rel="noopener noreferrer" data-hover
@@ -2191,7 +2191,7 @@ export function Footer() {
                     onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(212,175,55,0.52)"; }}
                   >ikingdom.agency</a>
                 </li>
-                <li className="text-[13px] font-light" style={{ color: "rgba(212,175,55,0.32)" }}>México · EE.UU.</li>
+                <li className="text-[13px] font-light" style={{ color: "rgba(212,175,55,0.32)" }}>San Diego, California · EE.UU.</li>
               </ul>
 
               {/* CTA micro */}
