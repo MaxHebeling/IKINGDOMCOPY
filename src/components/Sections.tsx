@@ -985,8 +985,11 @@ export function Footer() {
           </div>
           {/* Right — links */}
           <div className="flex items-center gap-6">
-            {["Privacy", "Terms"].map((l) => (
-              <a key={l} href="#" data-hover className="text-[11px] tracking-[0.15em] uppercase text-secondary/40 hover:text-secondary transition-colors duration-300">{l}</a>
+            {[
+              { label: "Privacidad", href: "/privacy-policy" },
+              { label: "Términos", href: "/terms-of-service" },
+            ].map((l) => (
+              <a key={l.href} href={l.href} data-hover className="text-[11px] tracking-[0.15em] uppercase text-secondary/40 hover:text-secondary transition-colors duration-300">{l.label}</a>
             ))}
           </div>
         </div>
