@@ -749,8 +749,8 @@ export function Clients() {
                       textAnchor="middle"
                       dominantBaseline="middle"
                       fill="#D4AF37"
-                      fillOpacity="0.22"
-                      fontSize="7.5"
+                      fillOpacity="0.10"
+                      fontSize="7"
                       letterSpacing="1.5"
                       fontFamily='"Space Grotesk", sans-serif'
                     >
