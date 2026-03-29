@@ -2287,7 +2287,7 @@ export function Footer() {
 
             {/* ── Col 2 · Navegación ── */}
             <div>
-              <p className="text-[9px] tracking-[0.38em] uppercase mb-7" style={{ color: "rgba(212,175,55,0.32)" }}>Navegación</p>
+              <p className="text-[9px] tracking-[0.38em] uppercase mb-7" style={{ color: "rgba(212,175,55,0.55)" }}>Navegación</p>
               <ul className="space-y-3.5">
                 {FOOTER_NAV.map((l) => (
                   <li key={l.href}>
