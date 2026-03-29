@@ -81,7 +81,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 2.2 }}
-              className="mt-9 space-y-4"
+              className="mt-10"
             >
               <div className="flex flex-wrap items-center gap-5">
                 <Link
@@ -100,10 +100,10 @@ export default function Hero() {
                   {t("hero.cta2")}
                 </a>
               </div>
-              <p className="text-[11px] tracking-[0.2em] uppercase text-secondary font-semibold">
+              <p className="mt-4 text-[11px] tracking-[0.2em] uppercase font-semibold" style={{ color: "rgba(248,246,241,0.55)" }}>
                 {t("hero.fine")}
               </p>
-              <p className="text-[12px] leading-[1.7] font-light" style={{ color: "rgba(212,175,55,0.45)" }}>
+              <p className="mt-6 text-[12px] leading-[1.7] font-light" style={{ color: "rgba(212,175,55,0.5)" }}>
                 {t("hero.trust")}
               </p>
             </motion.div>
