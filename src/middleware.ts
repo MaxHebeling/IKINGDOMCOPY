@@ -1,4 +1,4 @@
-// Supabase SSR middleware — refreshes user session and protects /app/* routes.
+// Supabase SSR middleware — refreshes session and protects internal /companies/* (and /editorial/*) routes.
 // Pattern mirrors hebeling-imperium-hub canonical middleware.
 
 import { createServerClient } from "@supabase/ssr";
