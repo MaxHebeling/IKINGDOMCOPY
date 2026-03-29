@@ -566,66 +566,254 @@ export function Proof() {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   CLIENTS — logo slider
+   CLIENTS — Velocity Control Dashboard
    ═══════════════════════════════════════════════════════════ */
 
 const CLIENTS = [
-  { name: "Reino Editorial",              logo: "/clients/Reino%20Editorial.png" },
-  { name: "Distinct Construction",        logo: "/clients/DCS.png" },
-  { name: "Max Hebeling",                 logo: "/clients/Max_Hebeling.png" },
-  { name: "DyT Comunicaciones",           logo: "/clients/DyT_%20Comunicaciones.png" },
-  { name: "Imperium Group",               logo: "/clients/Imperium_group.png" },
-  { name: "RAF Conference",               logo: "/clients/RAF%20Conference.png" },
-  { name: "Fuente de Vida",               logo: "/clients/Ministerio%20Internacional%20Fuente%20de%20Vida.png" },
-  { name: "Inversionistas del Reino",     logo: "/clients/Inversionistas_del_Reino.png" },
-  { name: "Hebeling OS",                  logo: "/clients/Hebeling_OS.png" },
-  { name: "Pérgolas Zolutions",           logo: "/clients/P%C3%A9rgolas_zolutions.png" },
+  { name: "Reino Editorial",            logo: "/clients/Reino%20Editorial.png" },
+  { name: "Distinct Construction",      logo: "/clients/DCS.png" },
+  { name: "Max Hebeling",               logo: "/clients/Max_Hebeling.png" },
+  { name: "DyT Comunicaciones",         logo: "/clients/DyT_%20Comunicaciones.png" },
+  { name: "Imperium Group",             logo: "/clients/Imperium_group.png" },
+  { name: "RAF Conference",             logo: "/clients/RAF%20Conference.png" },
+  { name: "Fuente de Vida",             logo: "/clients/Ministerio%20Internacional%20Fuente%20de%20Vida.png" },
+  { name: "Inversionistas del Reino",   logo: "/clients/Inversionistas_del_Reino.png" },
+  { name: "Hebeling OS",                logo: "/clients/Hebeling_OS.png" },
+  { name: "Pérgolas Zolutions",         logo: "/clients/P%C3%A9rgolas_zolutions.png" },
 ];
 
-// ── Orrery ring configuration ─────────────────────────────────────────────────
-const RING_R      = 228;          // ring radius in px
-const C_SIZE      = 660;          // square container side length
-const CENTER      = C_SIZE / 2;   // 330 — geometric center
-const NODE        = 112;          // logo node diameter
-const TICK_N      = 36;           // tick marks (every 10°)
+// ── Velocity Dashboard geometry ───────────────────────────────────────────────
+const VD_SIZE     = 660;
+const VD_CX       = VD_SIZE / 2;   // 330
+const VD_CY       = VD_SIZE / 2;   // 330
+const VD_INNER_R  = 130;           // inner orbit radius (4 nodes)
+const VD_OUTER_R  = 255;           // outer orbit radius (6 nodes)
+const VD_NODE     = 96;            // node diameter (px)
+const VD_ARC_R    = VD_NODE / 2 - 7; // velocity arc radius = 41px
 
-// Pre-computed node positions — calculated once at module level
-const ORRERY_POSITIONS = Array.from({ length: 10 }, (_, i) => {
-  const θ = -Math.PI / 2 + (i / 10) * 2 * Math.PI; // start at 12-o'clock
+// Node precision tick marks — 16 marks at 22.5° intervals
+const VD_NODE_TICKS = Array.from({ length: 16 }, (_, k) => {
+  const θ     = (k / 16) * 2 * Math.PI - Math.PI / 2;
+  const R_out = VD_NODE / 2 - 3;   // 45
+  const isC   = k % 4 === 0;
+  const isM   = !isC && k % 2 === 0;
+  const len   = isC ? 5.5 : isM ? 3.5 : 2.0;
+  const R_in  = R_out - len;
+  const cx    = VD_NODE / 2;
+  const cy    = VD_NODE / 2;
   return {
-    left: CENTER + RING_R * Math.cos(θ) - NODE / 2,
-    top:  CENTER + RING_R * Math.sin(θ) - NODE / 2,
+    x1: parseFloat((cx + R_out * Math.cos(θ)).toFixed(2)),
+    y1: parseFloat((cy + R_out * Math.sin(θ)).toFixed(2)),
+    x2: parseFloat((cx + R_in  * Math.cos(θ)).toFixed(2)),
+    y2: parseFloat((cy + R_in  * Math.sin(θ)).toFixed(2)),
+    sw: isC ? 0.65 : 0.28,
+    so: isC ? 0.18 : isM ? 0.09 : 0.04,
   };
 });
 
-// Tick mark geometry — calculated once at module level
-const TICKS = Array.from({ length: TICK_N }, (_, i) => {
-  const θ    = (i / TICK_N) * 2 * Math.PI - Math.PI / 2;
-  const maj  = i % 9 === 0;               // cardinal: 0°/90°/180°/270°
-  const med  = !maj && i % 3 === 0;       // 30° intervals
-  const len  = maj ? 9 : med ? 5 : 3;    // shorter — recede behind logos
-  const r0   = RING_R;
-  const r1   = RING_R - len;
+// Velocity arc path (68° arc at 12-o'clock, leading edge dot)
+const VD_ARC_PATH = (() => {
+  const cx = VD_NODE / 2;
+  const cy = VD_NODE / 2;
+  const R  = VD_ARC_R;
+  const a1 = -Math.PI / 2;
+  const a2 = a1 + (68 * Math.PI / 180);
+  return `M ${(cx + R * Math.cos(a1)).toFixed(2)} ${(cy + R * Math.sin(a1)).toFixed(2)} A ${R} ${R} 0 0 1 ${(cx + R * Math.cos(a2)).toFixed(2)} ${(cy + R * Math.sin(a2)).toFixed(2)}`;
+})();
+
+const VD_ARC_DOT = (() => {
+  const a = -Math.PI / 2 + (68 * Math.PI / 180);
   return {
-    x1: CENTER + r0 * Math.cos(θ),
-    y1: CENTER + r0 * Math.sin(θ),
-    x2: CENTER + r1 * Math.cos(θ),
-    y2: CENTER + r1 * Math.sin(θ),
-    strokeWidth:   maj ? 0.8 : 0.4,
-    strokeOpacity: maj ? 0.22 : med ? 0.11 : 0.05,  // instrument-readable, not decorative
+    x: parseFloat((VD_NODE / 2 + VD_ARC_R * Math.cos(a)).toFixed(2)),
+    y: parseFloat((VD_NODE / 2 + VD_ARC_R * Math.sin(a)).toFixed(2)),
+  };
+})();
+
+// Orbital positions
+const VD_INNER_POS = Array.from({ length: 4 }, (_, i) => {
+  const θ  = -Math.PI / 2 + i * (Math.PI * 2 / 4) + 0.22;
+  const cx = VD_CX + VD_INNER_R * Math.cos(θ);
+  const cy = VD_CY + VD_INNER_R * Math.sin(θ);
+  return { cx, cy, left: cx - VD_NODE / 2, top: cy - VD_NODE / 2 };
+});
+
+const VD_OUTER_POS = Array.from({ length: 6 }, (_, i) => {
+  const θ  = -Math.PI / 2 + i * (Math.PI * 2 / 6) - 0.18;
+  const cx = VD_CX + VD_OUTER_R * Math.cos(θ);
+  const cy = VD_CY + VD_OUTER_R * Math.sin(θ);
+  return { cx, cy, left: cx - VD_NODE / 2, top: cy - VD_NODE / 2 };
+});
+
+// Velocity calibration arcs (between orbits, r=192, 8 × 35° segments)
+const VD_VEL_SEGS = Array.from({ length: 8 }, (_, i) => {
+  const a1 = (-90 + i * 45) * Math.PI / 180;
+  const a2 = (-90 + i * 45 + 35) * Math.PI / 180;
+  const R  = 192;
+  return `M ${(VD_CX + R * Math.cos(a1)).toFixed(2)} ${(VD_CY + R * Math.sin(a1)).toFixed(2)} A ${R} ${R} 0 0 1 ${(VD_CX + R * Math.cos(a2)).toFixed(2)} ${(VD_CY + R * Math.sin(a2)).toFixed(2)}`;
+});
+
+// Axis crosshair lines (from r=26 outward to r=284)
+const VD_AXIS = [0, 90, 180, 270].map(deg => {
+  const θ = deg * Math.PI / 180;
+  return {
+    x1: parseFloat((VD_CX + 26 * Math.cos(θ)).toFixed(2)),
+    y1: parseFloat((VD_CY + 26 * Math.sin(θ)).toFixed(2)),
+    x2: parseFloat((VD_CX + 284 * Math.cos(θ)).toFixed(2)),
+    y2: parseFloat((VD_CY + 284 * Math.sin(θ)).toFixed(2)),
   };
 });
 
-// Cardinal degree labels
-const CARDINALS = [0, 9, 18, 27].map((ti, li) => {
-  const θ = (ti / TICK_N) * 2 * Math.PI - Math.PI / 2;
-  const r = RING_R - 30;
-  return {
-    x:     CENTER + r * Math.cos(θ),
-    y:     CENTER + r * Math.sin(θ),
-    label: ["0°", "90°", "180°", "270°"][li],
-  };
-});
+// ── Velocity Node component ────────────────────────────────────────────────────
+function VelocityNode({
+  client,
+  index,
+  inView,
+  entranceDelay,
+}: {
+  client: { name: string; logo: string };
+  index: number;
+  inView: boolean;
+  entranceDelay: number;
+}) {
+  const [isHov, setIsHov] = useState(false);
+  const arcDir = index % 2 === 0 ? 360 : -360;
+  const arcDur = 28 + index * 3.8;
+
+  return (
+    <motion.div
+      className="relative cursor-default"
+      style={{ width: VD_NODE, height: VD_NODE }}
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={inView ? { opacity: 1, scale: 1 } : {}}
+      transition={{ duration: 0.9, delay: entranceDelay, ease: [0.08, 0.82, 0.17, 1] }}
+      onMouseEnter={() => setIsHov(true)}
+      onMouseLeave={() => setIsHov(false)}
+    >
+      {/* Precision SVG instrument layer */}
+      <svg
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        viewBox={`0 0 ${VD_NODE} ${VD_NODE}`}
+        style={{ overflow: "visible" }}
+      >
+        {/* Outer hover aura */}
+        <motion.circle
+          cx={VD_NODE / 2} cy={VD_NODE / 2} r={VD_NODE / 2 + 6}
+          fill="#D4AF37"
+          animate={{ opacity: isHov ? 0.055 : 0 }}
+          transition={{ duration: 0.7 }}
+        />
+
+        {/* Outer precision ring */}
+        <motion.circle
+          cx={VD_NODE / 2} cy={VD_NODE / 2} r={VD_NODE / 2 - 3}
+          fill="none" stroke="#D4AF37"
+          animate={{
+            strokeWidth:   isHov ? 0.75 : 0.40,
+            strokeOpacity: isHov ? 0.32 : 0.13,
+          }}
+          transition={{ duration: 0.6 }}
+        />
+
+        {/* Tick marks — calibration ring */}
+        {VD_NODE_TICKS.map((t, k) => (
+          <line
+            key={k}
+            x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2}
+            stroke="#D4AF37"
+            strokeWidth={t.sw}
+            strokeOpacity={t.so}
+          />
+        ))}
+
+        {/* Velocity arc — slow rotation, direction alternates per node */}
+        <motion.g
+          style={{ transformOrigin: "50% 50%" }}
+          animate={{ rotate: arcDir }}
+          transition={{ duration: arcDur, repeat: Infinity, ease: "linear" }}
+        >
+          <path
+            d={VD_ARC_PATH}
+            fill="none"
+            stroke="#D4AF37"
+            strokeWidth={isHov ? 0.95 : 0.65}
+            strokeOpacity={isHov ? 0.38 : 0.18}
+            strokeLinecap="round"
+          />
+          {/* Leading edge indicator dot */}
+          <circle
+            cx={VD_ARC_DOT.x} cy={VD_ARC_DOT.y} r={1.4}
+            fill="#D4AF37"
+            fillOpacity={isHov ? 0.60 : 0.28}
+          />
+        </motion.g>
+
+        {/* Inner measurement ring */}
+        <circle
+          cx={VD_NODE / 2} cy={VD_NODE / 2} r={VD_NODE / 2 - 14}
+          fill="none" stroke="#D4AF37"
+          strokeWidth={0.28} strokeOpacity={0.07}
+        />
+      </svg>
+
+      {/* Node housing — logo zone */}
+      <div
+        className="absolute rounded-full overflow-hidden flex items-center justify-center"
+        style={{ inset: "14px", background: "#0A0A08" }}
+      >
+        {/* Hover inner glow */}
+        <motion.div
+          className="absolute inset-0 rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(circle, rgba(212,175,55,0.11) 0%, transparent 68%)" }}
+          animate={{ opacity: isHov ? 1 : 0 }}
+          transition={{ duration: 0.65 }}
+        />
+        {/* Slow telemetry scan */}
+        <motion.div
+          className="absolute left-0 right-0 h-px pointer-events-none"
+          style={{ background: "linear-gradient(to right, transparent, rgba(212,175,55,0.14), transparent)" }}
+          animate={{ top: ["-5%", "105%"] }}
+          transition={{ duration: 7.5 + index * 0.55, delay: index * 1.9, repeat: Infinity, ease: "linear" }}
+        />
+        <img
+          src={client.logo}
+          alt={client.name}
+          className="relative z-10 w-auto object-contain grayscale brightness-150"
+          style={{
+            maxHeight: "46px",
+            maxWidth: "58px",
+            opacity: isHov ? 0.62 : 0.33,
+            transition: "opacity 0.65s ease",
+          }}
+        />
+      </div>
+
+      {/* Status indicator dot — upper-right quadrant */}
+      <motion.div
+        className="absolute rounded-full pointer-events-none"
+        style={{ top: "15px", right: "15px", width: "3px", height: "3px", background: "#D4AF37" }}
+        animate={{ opacity: [0.18, 0.80, 0.18] }}
+        transition={{ duration: 3.2 + index * 0.45, delay: index * 0.85, repeat: Infinity }}
+      />
+
+      {/* Name label */}
+      <p
+        className="absolute pointer-events-none whitespace-nowrap text-center"
+        style={{
+          bottom: "-22px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          fontSize: "7px",
+          letterSpacing: "0.24em",
+          textTransform: "uppercase",
+          color: isHov ? "rgba(212,175,55,0.48)" : "rgba(212,175,55,0.16)",
+          transition: "color 0.5s ease",
+        }}
+      >
+        {client.name}
+      </p>
+    </motion.div>
+  );
+}
 
 export function Clients() {
   const sectionRef = useRef<HTMLDivElement>(null);
