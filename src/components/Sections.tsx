@@ -1536,6 +1536,7 @@ export function Process() {
    ENGAGEMENT — two-column: narrative left, deliverables right
    ═══════════════════════════════════════════════════════════ */
 
+/* ── FIT DEL PROYECTO — data ────────────────────────────────────────────────*/
 const FIT_IDEAL = [
   { n: "01", text: "Negocios que venden servicios o tickets altos y necesitan un sistema que los soporte." },
   { n: "02", text: "Marcas que ya invierten en marketing pero no ven los resultados que esperaban." },
@@ -1550,37 +1551,209 @@ const FIT_NOT = [
   { n: "04", text: "Quien no tiene margen para ejecutar una solución seria." },
 ];
 
+// Precomputed ring tick marks — deterministic trig, SSR-safe
+const FIT_CX = 720; const FIT_CY = 400;
+function mkFitTicks(r: number, count: number, len: number) {
+  return Array.from({ length: count }, (_, i) => {
+    const a = (i * 2 * Math.PI) / count;
+    return { x1: FIT_CX + Math.cos(a) * r, y1: FIT_CY + Math.sin(a) * r, x2: FIT_CX + Math.cos(a) * (r + len), y2: FIT_CY + Math.sin(a) * (r + len) };
+  });
+}
+const FIT_TICKS_1 = mkFitTicks(220, 32, 4);
+const FIT_TICKS_2 = mkFitTicks(342, 24, 6);
+const FIT_TICKS_3 = mkFitTicks(464, 16, 9);
+
+// Fixed scattered micro-dots
+const FIT_DOTS = [
+  { x:145, y:92,  r:1.0, a:"al-a", o:0.55 }, { x:310, y:178, r:0.7, a:"al-b", o:0.40 },
+  { x:578, y:52,  r:1.2, a:"al-c", o:0.50 }, { x:722, y:126, r:0.8, a:"al-a", o:0.28 },
+  { x:894, y:70,  r:1.0, a:"al-b", o:0.45 }, { x:1104,y:156, r:0.6, a:"al-c", o:0.38 },
+  { x:1282,y:86,  r:1.1, a:"al-a", o:0.55 }, { x:198, y:646, r:0.9, a:"al-b", o:0.38 },
+  { x:464, y:704, r:0.7, a:"al-c", o:0.30 }, { x:684, y:716, r:1.0, a:"al-a", o:0.45 },
+  { x:952, y:684, r:0.8, a:"al-b", o:0.38 }, { x:1184,y:706, r:0.6, a:"al-c", o:0.28 },
+  { x:1354,y:636, r:1.2, a:"al-a", o:0.48 }, { x:58,  y:320, r:0.8, a:"al-b", o:0.35 },
+  { x:76,  y:482, r:1.0, a:"al-c", o:0.28 }, { x:1384,y:346, r:0.7, a:"al-a", o:0.38 },
+  { x:1364,y:526, r:0.9, a:"al-b", o:0.28 }, { x:400, y:400, r:0.6, a:"al-c", o:0.18 },
+  { x:1040,y:390, r:0.6, a:"al-a", o:0.18 }, { x:720, y:248, r:0.8, a:"al-b", o:0.22 },
+  { x:720, y:552, r:0.8, a:"al-c", o:0.22 },
+];
+
+function FitBG() {
+  return (
+    <svg
+      width="100%" height="100%"
+      viewBox="0 0 1440 800"
+      preserveAspectRatio="xMidYMid slice"
+      className="absolute inset-0"
+      aria-hidden="true"
+    >
+      <defs>
+        <pattern id="fit-grid-sm" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M40 0L0 0 0 40" fill="none" stroke="rgba(212,175,55,0.04)" strokeWidth="0.5" />
+        </pattern>
+        <pattern id="fit-grid-lg" width="200" height="200" patternUnits="userSpaceOnUse">
+          <path d="M200 0L0 0 0 200" fill="none" stroke="rgba(212,175,55,0.075)" strokeWidth="0.5" />
+        </pattern>
+        <radialGradient id="fit-center-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stopColor="rgba(212,175,55,0.09)" />
+          <stop offset="100%" stopColor="rgba(212,175,55,0)" />
+        </radialGradient>
+        <radialGradient id="fit-vignette" cx="50%" cy="50%" r="70%">
+          <stop offset="0%"   stopColor="rgba(0,0,0,0)" />
+          <stop offset="100%" stopColor="rgba(0,0,0,0.92)" />
+        </radialGradient>
+        <linearGradient id="fit-scan" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stopColor="rgba(212,175,55,0)" />
+          <stop offset="50%"  stopColor="rgba(212,175,55,0.13)" />
+          <stop offset="100%" stopColor="rgba(212,175,55,0)" />
+        </linearGradient>
+      </defs>
+
+      {/* Fine grid — slow drift */}
+      <motion.g animate={{ x: [0, 40], y: [0, 40] }} transition={{ duration: 6, repeat: Infinity, ease: "linear" }}>
+        <rect x="-40" y="-40" width="1520" height="880" fill="url(#fit-grid-sm)" />
+      </motion.g>
+
+      {/* Major grid — very slow drift */}
+      <motion.g animate={{ x: [0, 200], y: [0, 200] }} transition={{ duration: 48, repeat: Infinity, ease: "linear" }}>
+        <rect x="-200" y="-200" width="1840" height="1200" fill="url(#fit-grid-lg)" />
+      </motion.g>
+
+      {/* Central ambient glow */}
+      <ellipse cx={FIT_CX} cy={FIT_CY} rx="500" ry="340" fill="url(#fit-center-glow)" />
+
+      {/* Orbital ring 1 — r=220, CW, 108s */}
+      <motion.g
+        style={{ transformOrigin: `${FIT_CX}px ${FIT_CY}px` }}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 108, repeat: Infinity, ease: "linear" }}
+      >
+        <circle cx={FIT_CX} cy={FIT_CY} r="220" fill="none" stroke="rgba(212,175,55,0.07)" strokeWidth="0.5" strokeDasharray="3 12" />
+        {FIT_TICKS_1.map((t, i) => (
+          <line key={i} x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} stroke="rgba(212,175,55,0.13)" strokeWidth="0.5" />
+        ))}
+        <circle cx={FIT_CX + 220} cy={FIT_CY} r="4" fill="none" stroke="rgba(212,175,55,0.55)" strokeWidth="0.8" />
+        <circle cx={FIT_CX + 220} cy={FIT_CY} r="1.5" fill="rgba(212,175,55,0.75)" />
+      </motion.g>
+
+      {/* Orbital ring 2 — r=342, CCW, 162s */}
+      <motion.g
+        style={{ transformOrigin: `${FIT_CX}px ${FIT_CY}px` }}
+        animate={{ rotate: -360 }}
+        transition={{ duration: 162, repeat: Infinity, ease: "linear" }}
+      >
+        <circle cx={FIT_CX} cy={FIT_CY} r="342" fill="none" stroke="rgba(212,175,55,0.055)" strokeWidth="0.5" strokeDasharray="1 18" />
+        {FIT_TICKS_2.map((t, i) => (
+          <line key={i} x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} stroke="rgba(212,175,55,0.09)" strokeWidth="0.5" />
+        ))}
+        <circle cx={FIT_CX + 342} cy={FIT_CY} r="5" fill="none" stroke="rgba(212,175,55,0.42)" strokeWidth="0.8" />
+        <circle cx={FIT_CX + 342} cy={FIT_CY} r="2" fill="rgba(212,175,55,0.62)" />
+      </motion.g>
+
+      {/* Orbital ring 3 — r=464, CW, 225s */}
+      <motion.g
+        style={{ transformOrigin: `${FIT_CX}px ${FIT_CY}px` }}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 225, repeat: Infinity, ease: "linear" }}
+      >
+        <circle cx={FIT_CX} cy={FIT_CY} r="464" fill="none" stroke="rgba(212,175,55,0.038)" strokeWidth="0.5" strokeDasharray="6 28" />
+        {FIT_TICKS_3.map((t, i) => (
+          <line key={i} x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} stroke="rgba(212,175,55,0.07)" strokeWidth="0.5" />
+        ))}
+        <circle cx={FIT_CX + 464} cy={FIT_CY} r="5.5" fill="none" stroke="rgba(212,175,55,0.30)" strokeWidth="0.8" />
+        <circle cx={FIT_CX + 464} cy={FIT_CY} r="2.2" fill="rgba(212,175,55,0.50)" />
+      </motion.g>
+
+      {/* Central precision reticle */}
+      <g stroke="rgba(212,175,55,0.22)" strokeWidth="0.7" fill="none">
+        <circle cx={FIT_CX} cy={FIT_CY} r="14" />
+        <circle cx={FIT_CX} cy={FIT_CY} r="4.5" fill="rgba(212,175,55,0.28)" strokeWidth="0" />
+        <line x1={FIT_CX - 32} y1={FIT_CY} x2={FIT_CX - 16} y2={FIT_CY} />
+        <line x1={FIT_CX + 16} y1={FIT_CY} x2={FIT_CX + 32} y2={FIT_CY} />
+        <line x1={FIT_CX} y1={FIT_CY - 32} x2={FIT_CX} y2={FIT_CY - 16} />
+        <line x1={FIT_CX} y1={FIT_CY + 16} x2={FIT_CX} y2={FIT_CY + 32} />
+      </g>
+
+      {/* Scan line — sweeps full height with glowing trail */}
+      <motion.g
+        animate={{ y: [-80, 880] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "linear", repeatDelay: 10 }}
+      >
+        <rect x="0" y="-40" width="1440" height="80" fill="url(#fit-scan)" />
+        <line x1="0" y1="0" x2="1440" y2="0" stroke="rgba(212,175,55,0.2)" strokeWidth="0.8" />
+      </motion.g>
+
+      {/* Corner precision brackets */}
+      <g stroke="rgba(212,175,55,0.28)" strokeWidth="0.9" fill="none">
+        <path d="M 60 16 L 16 16 L 16 60" />
+        <path d="M 1380 16 L 1424 16 L 1424 60" />
+        <path d="M 60 784 L 16 784 L 16 740" />
+        <path d="M 1380 784 L 1424 784 L 1424 740" />
+      </g>
+
+      {/* Technical readout labels */}
+      <g fill="rgba(212,175,55,0.28)" fontSize="7.5" fontFamily="'Space Grotesk', monospace" letterSpacing="0.18em">
+        <text x="28" y="12">SYS.REF / 00°N</text>
+        <text x="28" y="793">FIT.MATRIX / v2.4</text>
+        <text x="1092" y="12">CAL.ΔSYS / 0.97</text>
+        <text x="1058" y="793">EXEC.LAYER / ACTIVE</text>
+      </g>
+
+      {/* Scattered precision micro-dots */}
+      {FIT_DOTS.map((d, i) => (
+        <circle key={i} cx={d.x} cy={d.y} r={d.r} fill={`rgba(212,175,55,${d.o})`} className={d.a} />
+      ))}
+
+      {/* Edge vignette */}
+      <rect width="1440" height="800" fill="url(#fit-vignette)" />
+    </svg>
+  );
+}
+
 export function Engagement() {
   return (
     <>
       <Divider />
-      <section id="engagement" className="py-[120px] md:py-[140px] px-8">
-        <div className="max-w-[1280px] mx-auto">
+      <section
+        id="engagement"
+        className="relative py-[140px] md:py-[180px] px-8 overflow-hidden"
+        style={{ background: "#000000" }}
+      >
+        {/* Animated blueprint background */}
+        <div className="absolute inset-0 pointer-events-none select-none">
+          <FitBG />
+        </div>
+
+        <div className="relative z-10 max-w-[1280px] mx-auto">
           <Reveal><Label>Fit del proyecto</Label></Reveal>
 
           <Reveal delay={0.1}>
-            <h2 className="mt-6 text-ink leading-[1.08]" style={{ fontSize: "clamp(32px, 4vw, 52px)" }}>
-              Para quién sí tiene sentido.
+            <h2
+              className="mt-6 text-ink leading-[1.06]"
+              style={{ fontSize: "clamp(38px, 5vw, 66px)" }}
+            >
+              Para quién sí<br className="hidden md:block" /> tiene sentido.
             </h2>
           </Reveal>
 
-          <div className="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-0 border border-divider">
+          <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 border border-divider">
             {/* IDEAL PARA */}
             <Reveal delay={0.15}>
-              <div className="p-10 md:p-12 border-b lg:border-b-0 lg:border-r border-divider">
-                <p className="text-[10px] font-semibold tracking-[0.35em] uppercase mb-8" style={{ color: "rgba(212,175,55,0.45)" }}>
+              <div
+                className="p-10 md:p-14 border-b lg:border-b-0 lg:border-r border-divider relative"
+                style={{ backdropFilter: "blur(2px)", background: "rgba(0,0,0,0.55)" }}
+              >
+                <div className="absolute top-0 left-0 w-2/3 h-[1px]" style={{ background: "linear-gradient(90deg, rgba(212,175,55,0.5) 0%, rgba(212,175,55,0) 100%)" }} />
+                <p className="text-[10px] font-semibold tracking-[0.42em] uppercase mb-10" style={{ color: "rgba(212,175,55,0.5)" }}>
                   Ideal para
                 </p>
-                <div className="space-y-8">
+                <div className="space-y-9">
                   {FIT_IDEAL.map((item) => (
-                    <div key={item.n} className="flex gap-5 items-start">
-                      <span
-                        className="text-[11px] font-semibold tracking-[0.2em] flex-shrink-0 mt-[3px]"
-                        style={{ color: "rgba(212,175,55,0.35)" }}
-                      >
+                    <div key={item.n} className="flex gap-6 items-start">
+                      <span className="text-[11px] font-semibold tracking-[0.22em] flex-shrink-0 mt-[4px]" style={{ color: "rgba(212,175,55,0.42)" }}>
                         {item.n}
                       </span>
-                      <p className="text-[15px] text-ink/80 font-light leading-[1.75]">{item.text}</p>
+                      <p className="text-[15px] text-ink/85 font-light leading-[1.82]">{item.text}</p>
                     </div>
                   ))}
                 </div>
@@ -1589,20 +1762,21 @@ export function Engagement() {
 
             {/* NO ES PARA */}
             <Reveal delay={0.25}>
-              <div className="p-10 md:p-12" style={{ background: "rgba(212,175,55,0.015)" }}>
-                <p className="text-[10px] font-semibold tracking-[0.35em] uppercase mb-8" style={{ color: "rgba(212,175,55,0.25)" }}>
+              <div
+                className="p-10 md:p-14 relative"
+                style={{ backdropFilter: "blur(2px)", background: "rgba(10,10,8,0.65)" }}
+              >
+                <div className="absolute top-0 left-1/4 right-1/4 h-[1px]" style={{ background: "linear-gradient(90deg, rgba(212,175,55,0) 0%, rgba(212,175,55,0.22) 50%, rgba(212,175,55,0) 100%)" }} />
+                <p className="text-[10px] font-semibold tracking-[0.42em] uppercase mb-10" style={{ color: "rgba(212,175,55,0.25)" }}>
                   No es para
                 </p>
-                <div className="space-y-8">
+                <div className="space-y-9">
                   {FIT_NOT.map((item) => (
-                    <div key={item.n} className="flex gap-5 items-start">
-                      <span
-                        className="text-[11px] font-semibold tracking-[0.2em] flex-shrink-0 mt-[3px]"
-                        style={{ color: "rgba(212,175,55,0.20)" }}
-                      >
+                    <div key={item.n} className="flex gap-6 items-start">
+                      <span className="text-[11px] font-semibold tracking-[0.22em] flex-shrink-0 mt-[4px]" style={{ color: "rgba(212,175,55,0.22)" }}>
                         {item.n}
                       </span>
-                      <p className="text-[15px] leading-[1.75] font-light" style={{ color: "rgba(212,175,55,0.40)" }}>{item.text}</p>
+                      <p className="text-[15px] font-light leading-[1.82]" style={{ color: "rgba(212,175,55,0.42)" }}>{item.text}</p>
                     </div>
                   ))}
                 </div>
@@ -1611,7 +1785,7 @@ export function Engagement() {
           </div>
 
           <Reveal delay={0.35}>
-            <div className="mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+            <div className="mt-14 flex flex-col sm:flex-row items-start sm:items-center gap-6">
               <CTA href="#contact" onClick={() => trackCTAClick("engagement")}>Solicita tu diagnóstico estratégico</CTA>
               <p className="text-[10px] tracking-[0.28em] uppercase" style={{ color: "rgba(212,175,55,0.28)" }}>
                 Primero entendemos. Luego decides.
