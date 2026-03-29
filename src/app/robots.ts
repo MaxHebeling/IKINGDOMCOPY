@@ -5,7 +5,15 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/"],
+      disallow: [
+        "/api/",
+        "/login",
+        "/companies/",
+        "/thank-you",
+        "/privacy-policy",
+        "/cookie-policy",
+        "/terms-of-service",
+      ],
     },
     sitemap: "https://www.ikingdom.org/sitemap.xml",
   };
