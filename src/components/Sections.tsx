@@ -91,7 +91,7 @@ export function ClarityStrip() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.85, delay: 0.22, ease: [0.08, 0.82, 0.17, 1] }}
           >
-            Diseñamos la infraestructura que convierte visibilidad en clientes de alto valor.
+            Diseñamos la infraestructura que transforma atención en oportunidad comercial.
           </motion.p>
 
           <motion.p
