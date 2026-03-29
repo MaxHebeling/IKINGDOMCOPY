@@ -813,15 +813,62 @@ export function Engagement() {
 
 export function Contact() {
   const { t } = useLang();
+  const router = useRouter();
+
+  // ── Form state ──────────────────────────────────────────────────────────
+  const [formData, setFormData] = useState({
+    name: "",
+    organization: "",
+    website: "",
+    revenue: "",
+    challenge: "",
+  });
+  const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  // ── Attribution capture — reads URL params once on mount ────────────────
+  // Populated automatically when traffic comes from Google Ads or Meta Ads.
+  // Params: utm_source, utm_medium, utm_campaign, utm_content, utm_term, gclid, fbclid
+  const [attribution, setAttribution] = useState<Record<string, string>>({});
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search);
+    const keys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "gclid", "fbclid"];
+    const attrs: Record<string, string> = {};
+    keys.forEach((k) => { const v = p.get(k); if (v) attrs[k] = v; });
+    if (Object.keys(attrs).length) setAttribution(attrs);
+  }, []);
+
   const fields = [
-    { n: "01", label: t("contact.f1"), type: "text" as const },
-    { n: "02", label: t("contact.f2"), type: "text" as const },
-    { n: "03", label: t("contact.f3"), type: "text" as const },
-    { n: "04", label: t("contact.f4"), type: "select" as const },
-    { n: "05", label: t("contact.f5"), type: "textarea" as const },
+    { n: "01", label: t("contact.f1"), type: "text" as const,     key: "name"         as const },
+    { n: "02", label: t("contact.f2"), type: "text" as const,     key: "organization" as const },
+    { n: "03", label: t("contact.f3"), type: "text" as const,     key: "website"      as const },
+    { n: "04", label: t("contact.f4"), type: "select" as const,   key: "revenue"      as const },
+    { n: "05", label: t("contact.f5"), type: "textarea" as const, key: "challenge"    as const },
   ];
 
   const ic = "w-full bg-transparent border-b border-divider py-3 text-[15px] text-ink font-light focus:outline-none focus:border-ink/30 transition-colors duration-300 placeholder:text-secondary/20";
+
+  function handleChange(key: keyof typeof formData, value: string) {
+    setFormData((prev) => ({ ...prev, [key]: value }));
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setStatus("loading");
+    setErrorMsg("");
+    try {
+      const res = await fetch("/api/submit-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, ...attribution }),
+      });
+      if (!res.ok) throw new Error("server_error");
+      router.push("/thank-you");
+    } catch {
+      setStatus("error");
+      setErrorMsg("Hubo un error al enviar tu solicitud. Por favor, intenta de nuevo.");
+    }
+  }
 
   return (
     <>
@@ -847,14 +894,19 @@ export function Contact() {
 
             {/* Right — form */}
             <Reveal delay={0.2}>
-              <form onSubmit={(e) => e.preventDefault()} className="space-y-10">
+              <form onSubmit={handleSubmit} className="space-y-10">
                 {fields.map((f) => (
                   <div key={f.n} className="grid grid-cols-[32px_1fr] gap-4 items-start">
                     <span className="text-[11px] font-semibold tracking-[0.2em] text-secondary/30 pt-3">{f.n}</span>
                     <div>
                       <label className="block text-[11px] font-semibold tracking-[0.2em] uppercase text-secondary mb-2">{f.label}</label>
                       {f.type === "select" ? (
-                        <select data-hover className={ic + " appearance-none bg-transparent"}>
+                        <select
+                          data-hover
+                          className={ic + " appearance-none bg-transparent"}
+                          value={formData[f.key]}
+                          onChange={(e) => handleChange(f.key, e.target.value)}
+                        >
                           <option value="" className="bg-bg">—</option>
                           <option value="under-1m" className="bg-bg">{t("contact.rev.1")}</option>
                           <option value="1-5m" className="bg-bg">{t("contact.rev.2")}</option>
@@ -863,17 +915,46 @@ export function Contact() {
                           <option value="100m+" className="bg-bg">{t("contact.rev.5")}</option>
                         </select>
                       ) : f.type === "textarea" ? (
-                        <textarea data-hover rows={3} className={ic + " resize-none"} placeholder="—" />
+                        <textarea
+                          data-hover
+                          rows={3}
+                          className={ic + " resize-none"}
+                          placeholder="—"
+                          value={formData[f.key]}
+                          onChange={(e) => handleChange(f.key, e.target.value)}
+                        />
                       ) : (
-                        <input data-hover type="text" className={ic} placeholder="—" />
+                        <input
+                          data-hover
+                          type="text"
+                          className={ic}
+                          placeholder="—"
+                          value={formData[f.key]}
+                          onChange={(e) => handleChange(f.key, e.target.value)}
+                        />
                       )}
                     </div>
                   </div>
                 ))}
+
+                {/* Error message — inline, no layout shift */}
+                {status === "error" && (
+                  <div className="pl-[48px]">
+                    <p className="text-[13px] text-red-400/80 font-light tracking-[0.02em]">{errorMsg}</p>
+                  </div>
+                )}
+
                 <div className="pl-[48px]">
-                  <button type="submit" data-hover className="group relative inline-flex items-center gap-3 px-8 py-[14px] text-[13px] font-semibold tracking-[0.14em] uppercase text-bg bg-ink overflow-hidden transition-all duration-500">
+                  <button
+                    type="submit"
+                    disabled={status === "loading"}
+                    data-hover
+                    className="group relative inline-flex items-center gap-3 px-8 py-[14px] text-[13px] font-semibold tracking-[0.14em] uppercase text-bg bg-ink overflow-hidden transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
                     <div className="absolute inset-0 bg-secondary origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
-                    <span className="relative z-10">{t("contact.cta")}</span>
+                    <span className="relative z-10">
+                      {status === "loading" ? "Enviando…" : t("contact.cta")}
+                    </span>
                   </button>
                 </div>
               </form>
