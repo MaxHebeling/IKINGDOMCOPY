@@ -101,7 +101,7 @@ export default function Hero() {
             <div className="space-y-8">
               {STATS.map((s, i) => (
                 <div key={s.label}>
-                  <p className="text-ink text-[32px] font-light tracking-[-0.02em]" style={{ fontFamily: "var(--font-serif)" }}>
+                  <p className="text-ink text-[32px] font-light tracking-[-0.02em]" style={{}}>
                     {s.value}
                   </p>
                   <p className="text-[11px] tracking-[0.1em] uppercase text-secondary mt-1">{s.label}</p>
