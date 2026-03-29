@@ -1801,154 +1801,303 @@ export function Engagement() {
    CONTACT — qualification application
    ═══════════════════════════════════════════════════════════ */
 
+// ── Web Audio sound engine — lazy init, SSR-safe ────────────────────────────
+let _audioCtx: AudioContext | null = null;
+function playKeySound() {
+  try {
+    if (typeof window === "undefined") return;
+    if (!_audioCtx) _audioCtx = new AudioContext();
+    const ctx = _audioCtx;
+    const t   = ctx.currentTime;
+    // Oscillator sweep
+    const osc  = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(1300, t);
+    osc.frequency.exponentialRampToValueAtTime(380, t + 0.042);
+    gain.gain.setValueAtTime(0.052, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.062);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(t); osc.stop(t + 0.08);
+    // Noise burst
+    const bufLen = Math.floor(ctx.sampleRate * 0.038);
+    const buf    = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+    const data   = buf.getChannelData(0);
+    for (let i = 0; i < bufLen; i++) data[i] = (Math.random() - 0.5) * 0.22;
+    const ns  = ctx.createBufferSource();
+    const ng  = ctx.createGain();
+    ns.buffer = buf;
+    ng.gain.setValueAtTime(0.028, t);
+    ng.gain.exponentialRampToValueAtTime(0.001, t + 0.038);
+    ns.connect(ng); ng.connect(ctx.destination);
+    ns.start(t); ns.stop(t + 0.04);
+  } catch {}
+}
+
+const CONTACT_FIELDS = [
+  { id: "name",    n: "01", label: "Nombre",              type: "text"     as const },
+  { id: "company", n: "02", label: "Empresa / Proyecto",  type: "text"     as const },
+  { id: "email",   n: "03", label: "Email",               type: "email"    as const },
+  { id: "needs",   n: "04", label: "¿Qué necesitas?",     type: "textarea" as const },
+  { id: "budget",  n: "05", label: "Presupuesto",         type: "select"   as const },
+] as const;
+
+const BUDGET_OPTS = [
+  "< $5,000 USD",
+  "$5,000 – $15,000 USD",
+  "$15,000 – $50,000 USD",
+  "$50,000+ USD",
+  "Por definir",
+];
+
+type ContactKey = "name" | "company" | "email" | "needs" | "budget";
+
 export function Contact() {
-  const { t } = useLang();
-  const router = useRouter();
-
-  // ── Form state ──────────────────────────────────────────────────────────
-  const [formData, setFormData] = useState({
-    name: "",
-    organization: "",
-    website: "",
-    revenue: "",
-    challenge: "",
+  const [formData, setFormData] = useState<Record<ContactKey, string>>({
+    name: "", company: "", email: "", needs: "", budget: "",
   });
-  const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
-  const [errorMsg, setErrorMsg] = useState("");
-
-  // ── Attribution capture — reads URL params once on mount ────────────────
-  // Populated automatically when traffic comes from Google Ads or Meta Ads.
-  // Params: utm_source, utm_medium, utm_campaign, utm_content, utm_term, gclid, fbclid
+  const [active,      setActive]      = useState<string | null>(null);
+  const [status,      setStatus]      = useState<"idle" | "loading" | "success" | "error">("idle");
   const [attribution, setAttribution] = useState<Record<string, string>>({});
+
   useEffect(() => {
-    const p = new URLSearchParams(window.location.search);
+    const p    = new URLSearchParams(window.location.search);
     const keys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "gclid", "fbclid"];
     const attrs: Record<string, string> = {};
     keys.forEach((k) => { const v = p.get(k); if (v) attrs[k] = v; });
     if (Object.keys(attrs).length) setAttribution(attrs);
   }, []);
 
-  const fields = [
-    { n: "01", label: t("contact.f1"), type: "text" as const,     key: "name"         as const },
-    { n: "02", label: t("contact.f2"), type: "text" as const,     key: "organization" as const },
-    { n: "03", label: t("contact.f3"), type: "text" as const,     key: "website"      as const },
-    { n: "04", label: t("contact.f4"), type: "select" as const,   key: "revenue"      as const },
-    { n: "05", label: t("contact.f5"), type: "textarea" as const, key: "challenge"    as const },
-  ];
-
-  const ic = "w-full bg-transparent border-b border-divider py-3 text-[15px] text-ink font-light focus:outline-none focus:border-ink/30 transition-colors duration-300 placeholder:text-secondary/20";
-
-  function handleChange(key: keyof typeof formData, value: string) {
+  function handleChange(key: ContactKey, value: string) {
     setFormData((prev) => ({ ...prev, [key]: value }));
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("loading");
-    setErrorMsg("");
     trackLeadIntent("contact-form");
     try {
-      const res = await fetch("/api/submit-lead", {
-        method: "POST",
+      const res = await fetch("/api/contact", {
+        method:  "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, ...attribution }),
+        body:    JSON.stringify({ ...formData, ...attribution }),
       });
-      if (!res.ok) throw new Error("server_error");
-      router.push("/thank-you");
+      if (!res.ok) throw new Error();
+      setStatus("success");
     } catch {
       setStatus("error");
-      setErrorMsg("Hubo un error al enviar tu solicitud. Por favor, intenta de nuevo.");
     }
   }
+
+  const inputCls = "w-full bg-transparent text-[14px] font-light focus:outline-none placeholder:opacity-20";
+  const inputStyle = { color: "rgba(212,175,55,0.88)", caretColor: "rgba(212,175,55,1)" } as React.CSSProperties;
 
   return (
     <>
       <Divider />
       <section id="contact" className="py-[120px] md:py-[140px] px-8">
         <div className="max-w-[1280px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-16 lg:gap-24">
-            {/* Left — context */}
+          <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-16 lg:gap-20">
+
+            {/* ── Left — context ── */}
             <div className="lg:sticky lg:top-[120px] lg:self-start">
-              <Reveal><Label>{t("contact.label")}</Label></Reveal>
+              <Reveal><Label>Contacto</Label></Reveal>
               <Reveal delay={0.1}>
-                <h2 className="mt-5 text-ink leading-[1.08]" style={{ fontSize: "clamp(28px, 3.5vw, 44px)" }}>
-                  {t("contact.heading")}
+                <h2 className="mt-5 text-ink leading-[1.08]" style={{ fontSize: "clamp(28px,3.5vw,44px)" }}>
+                  Empieza con un diagnóstico.
                 </h2>
               </Reveal>
               <Reveal delay={0.2}>
-                <p className="mt-5 text-secondary text-[15px] leading-[1.8] font-light text-justify">{t("contact.sub")}</p>
+                <p className="mt-5 text-[15px] font-light leading-[1.85] text-justify" style={{ color: "rgba(212,175,55,0.55)" }}>
+                  Completa los datos. Analizamos el contexto antes de responderte.
+                </p>
               </Reveal>
               <Reveal delay={0.3}>
-                <p className="mt-4 text-[12px] text-secondary/40 font-light tracking-[0.05em]">{t("contact.fine")}</p>
+                <div className="mt-10 space-y-3">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-ink" style={{ animation: "pulseGlow 2.2s ease-in-out infinite" }} />
+                    <span className="text-[9px] tracking-[0.32em] uppercase" style={{ color: "rgba(212,175,55,0.35)" }}>Canal seguro activo</span>
+                  </div>
+                  <p className="text-[11px] font-light pl-[18px]" style={{ color: "rgba(212,175,55,0.25)" }}>executive@ikingdom.org</p>
+                  <p className="text-[11px] font-light pl-[18px]" style={{ color: "rgba(212,175,55,0.25)" }}>San Diego, California · EE.UU.</p>
+                </div>
               </Reveal>
             </div>
 
-            {/* Right — form */}
-            <Reveal delay={0.2}>
-              <form onSubmit={handleSubmit} className="space-y-10">
-                {fields.map((f) => (
-                  <div key={f.n} className="grid grid-cols-[32px_1fr] gap-4 items-start">
-                    <span className="text-[11px] font-semibold tracking-[0.2em] text-secondary/30 pt-3">{f.n}</span>
-                    <div>
-                      <label className="block text-[11px] font-semibold tracking-[0.2em] uppercase text-secondary mb-2">{f.label}</label>
-                      {f.type === "select" ? (
-                        <select
-                          data-hover
-                          className={ic + " appearance-none bg-transparent"}
-                          value={formData[f.key]}
-                          onChange={(e) => handleChange(f.key, e.target.value)}
-                        >
-                          <option value="" className="bg-bg">—</option>
-                          <option value="under-1m" className="bg-bg">{t("contact.rev.1")}</option>
-                          <option value="1-5m" className="bg-bg">{t("contact.rev.2")}</option>
-                          <option value="5-20m" className="bg-bg">{t("contact.rev.3")}</option>
-                          <option value="20-100m" className="bg-bg">{t("contact.rev.4")}</option>
-                          <option value="100m+" className="bg-bg">{t("contact.rev.5")}</option>
-                        </select>
-                      ) : f.type === "textarea" ? (
-                        <textarea
-                          data-hover
-                          rows={3}
-                          className={ic + " resize-none"}
-                          placeholder="—"
-                          value={formData[f.key]}
-                          onChange={(e) => handleChange(f.key, e.target.value)}
-                        />
-                      ) : (
-                        <input
-                          data-hover
-                          type="text"
-                          className={ic}
-                          placeholder="—"
-                          value={formData[f.key]}
-                          onChange={(e) => handleChange(f.key, e.target.value)}
-                        />
-                      )}
+            {/* ── Right — table interface ── */}
+            <Reveal delay={0.15}>
+              {status === "success" ? (
+                /* ── Success — system terminal response ── */
+                <div style={{ border: "1px solid rgba(212,175,55,0.18)" }}>
+                  <div className="flex items-center justify-between px-5 py-3 border-b" style={{ borderColor: "rgba(212,175,55,0.12)", background: "rgba(212,175,55,0.012)" }}>
+                    <span className="text-[9px] tracking-[0.35em] uppercase" style={{ color: "rgba(212,175,55,0.35)" }}>DATA.INTAKE / RESPUESTA.SISTEMA</span>
+                    <div className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-ink" style={{ animation: "pulseGlow 1.8s ease-in-out infinite" }} />
+                      <span className="text-[9px] tracking-[0.28em] uppercase" style={{ color: "rgba(212,175,55,0.4)" }}>PROCESANDO</span>
                     </div>
                   </div>
-                ))}
-
-                {/* Error message — inline, no layout shift */}
-                {status === "error" && (
-                  <div className="pl-[48px]">
-                    <p className="text-[13px] text-red-400/80 font-light tracking-[0.02em]">{errorMsg}</p>
+                  <div className="p-8 md:p-10 space-y-5">
+                    <div className="flex items-center gap-3">
+                      <span className="w-2 h-2 rounded-full bg-ink flex-shrink-0" />
+                      <p className="text-[12px] tracking-[0.28em] uppercase font-semibold text-ink">DATOS RECIBIDOS</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: "rgba(212,175,55,0.5)" }} />
+                      <p className="text-[12px] tracking-[0.25em] uppercase font-light" style={{ color: "rgba(212,175,55,0.6)" }}>PROCESANDO DIAGNÓSTICO...</p>
+                    </div>
+                    {/* Progress bar */}
+                    <div className="relative h-px w-full overflow-hidden" style={{ background: "rgba(212,175,55,0.1)" }}>
+                      <motion.div
+                        className="absolute left-0 top-0 h-full"
+                        style={{ background: "rgba(212,175,55,0.65)" }}
+                        initial={{ width: "0%" }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 3, ease: [0.08, 0.82, 0.17, 1] }}
+                      />
+                    </div>
+                    <p className="text-[13px] font-light leading-[1.75]" style={{ color: "rgba(212,175,55,0.45)" }}>
+                      Responderemos dentro de las próximas 24 horas{formData.email ? <> a <span style={{ color: "rgba(212,175,55,0.75)" }}>{formData.email}</span></> : ""}.
+                    </p>
                   </div>
-                )}
-
-                <div className="pl-[48px]">
-                  <button
-                    type="submit"
-                    disabled={status === "loading"}
-                    data-hover
-                    className="group relative inline-flex items-center gap-3 px-8 py-[14px] text-[13px] font-semibold tracking-[0.14em] uppercase text-bg bg-ink overflow-hidden transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <div className="absolute inset-0 bg-secondary origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
-                    <span className="relative z-10">
-                      {status === "loading" ? "Enviando…" : t("contact.cta")}
-                    </span>
-                  </button>
                 </div>
-              </form>
+              ) : (
+                /* ── Form — digital table ── */
+                <form onSubmit={handleSubmit} noValidate>
+                  {/* Table header */}
+                  <div
+                    className="flex items-center justify-between px-5 py-3 border-t border-b"
+                    style={{ borderColor: "rgba(212,175,55,0.12)", background: "rgba(212,175,55,0.012)" }}
+                  >
+                    <span className="text-[9px] tracking-[0.35em] uppercase" style={{ color: "rgba(212,175,55,0.32)" }}>DATA.INTAKE / CANAL.ENTRADA</span>
+                    <div className="flex items-center gap-2">
+                      <span className="w-1 h-1 rounded-full bg-ink" style={{ animation: "pulseGlow 2s ease-in-out infinite" }} />
+                      <span className="text-[9px] tracking-[0.28em] uppercase" style={{ color: "rgba(212,175,55,0.28)" }}>CONEXIÓN SEGURA</span>
+                    </div>
+                  </div>
+
+                  {/* Rows */}
+                  {CONTACT_FIELDS.map((field) => {
+                    const isActive = active === field.id;
+                    return (
+                      <div
+                        key={field.id}
+                        className="relative flex border-b transition-colors duration-150"
+                        style={{
+                          borderColor: "rgba(212,175,55,0.10)",
+                          background: isActive ? "rgba(212,175,55,0.018)" : "transparent",
+                        }}
+                      >
+                        {/* Active left accent */}
+                        <div
+                          className="absolute left-0 top-0 bottom-0 w-[2px] transition-opacity duration-150"
+                          style={{ background: "rgba(212,175,55,0.55)", opacity: isActive ? 1 : 0 }}
+                        />
+                        {/* Row index */}
+                        <div className="w-[52px] flex-shrink-0 flex items-start justify-center pt-5">
+                          <span className="text-[9px] tracking-[0.18em] font-semibold" style={{ color: isActive ? "rgba(212,175,55,0.55)" : "rgba(212,175,55,0.18)" }}>
+                            {field.n}
+                          </span>
+                        </div>
+                        {/* Label + input */}
+                        <div className="flex-1 flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-5 py-4 pr-5">
+                          <label
+                            htmlFor={`cf-${field.id}`}
+                            className="text-[10px] tracking-[0.35em] uppercase font-semibold flex-shrink-0 sm:w-[148px] pt-[1px] transition-colors duration-150"
+                            style={{ color: isActive ? "rgba(212,175,55,0.65)" : "rgba(212,175,55,0.35)", cursor: "default" }}
+                          >
+                            {field.label}
+                          </label>
+                          <div className="flex-1">
+                            {field.type === "textarea" ? (
+                              <textarea
+                                id={`cf-${field.id}`}
+                                rows={3}
+                                value={formData[field.id]}
+                                onChange={(e) => handleChange(field.id, e.target.value)}
+                                onKeyDown={() => playKeySound()}
+                                onFocus={() => setActive(field.id)}
+                                onBlur={() => setActive(null)}
+                                className={inputCls + " resize-none"}
+                                style={inputStyle}
+                                placeholder="—"
+                              />
+                            ) : field.type === "select" ? (
+                              <select
+                                id={`cf-${field.id}`}
+                                value={formData[field.id]}
+                                onChange={(e) => { handleChange(field.id, e.target.value); playKeySound(); }}
+                                onFocus={() => setActive(field.id)}
+                                onBlur={() => setActive(null)}
+                                className={inputCls + " appearance-none"}
+                                style={{ ...inputStyle, color: formData[field.id] ? "rgba(212,175,55,0.88)" : "rgba(212,175,55,0.2)" }}
+                              >
+                                <option value="" className="bg-black">—</option>
+                                {BUDGET_OPTS.map((o) => (
+                                  <option key={o} value={o} className="bg-black">{o}</option>
+                                ))}
+                              </select>
+                            ) : (
+                              <input
+                                id={`cf-${field.id}`}
+                                type={field.type}
+                                value={formData[field.id]}
+                                onChange={(e) => handleChange(field.id, e.target.value)}
+                                onKeyDown={() => playKeySound()}
+                                onFocus={() => setActive(field.id)}
+                                onBlur={() => setActive(null)}
+                                className={inputCls}
+                                style={inputStyle}
+                                placeholder="—"
+                              />
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                  {/* CTA row */}
+                  <div
+                    className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 px-5 py-5 border-b"
+                    style={{ borderColor: "rgba(212,175,55,0.12)", background: "rgba(212,175,55,0.008)" }}
+                  >
+                    <div className="min-h-[20px]">
+                      {status === "error" && (
+                        <p className="text-[11px] font-light" style={{ color: "rgba(220,80,80,0.75)" }}>
+                          Error al enviar. Intenta de nuevo.
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex flex-col items-start sm:items-end gap-3">
+                      <button
+                        type="submit"
+                        disabled={status === "loading"}
+                        className="flex items-center gap-3 px-6 py-3 text-[11px] font-semibold tracking-[0.32em] uppercase transition-all duration-300 disabled:opacity-40"
+                        style={{ border: "1px solid rgba(212,175,55,0.38)", color: "rgba(212,175,55,0.85)", background: "transparent" }}
+                        onMouseEnter={(e) => { const el = e.currentTarget; el.style.background = "rgba(212,175,55,0.08)"; el.style.borderColor = "rgba(212,175,55,0.65)"; }}
+                        onMouseLeave={(e) => { const el = e.currentTarget; el.style.background = "transparent"; el.style.borderColor = "rgba(212,175,55,0.38)"; }}
+                      >
+                        {status === "loading" ? (
+                          <>
+                            <span className="inline-block w-3 h-3 border border-current border-t-transparent rounded-full" style={{ animation: "spin 0.8s linear infinite" }} />
+                            PROCESANDO
+                          </>
+                        ) : (
+                          <>
+                            INICIAR DIAGNÓSTICO
+                            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                              <path d="M2 6.5h9M8 3l3.5 3.5L8 10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          </>
+                        )}
+                      </button>
+                      <p className="text-[9px] tracking-[0.22em] uppercase" style={{ color: "rgba(212,175,55,0.22)" }}>
+                        Primero analizamos. Luego respondemos.
+                      </p>
+                    </div>
+                  </div>
+                </form>
+              )}
             </Reveal>
           </div>
         </div>
