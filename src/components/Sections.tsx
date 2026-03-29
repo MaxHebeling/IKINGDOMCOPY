@@ -44,147 +44,187 @@ function CTA({ href, children }: { href: string; children: string }) {
    CAPABILITIES
    ═══════════════════════════════════════════════════════════ */
 
-const PLANS = [
+const plans = [
   {
-    featured: false,
-    label: "Web Estratégica",
+    name: "Web Estratégica",
     price: "$3,500",
-    copy: "La base correcta para posicionar tu marca y empezar a convertir con claridad.",
+    currency: "USD",
+    description: "La base correcta para posicionar tu marca y empezar a convertir con claridad.",
     features: [
       "Diagnóstico estratégico",
-      "Estructura de mensaje",
-      "Diseño premium alineado",
-      "Desarrollo optimizado",
+      "Estructura de mensaje y copy base",
+      "Diseño premium alineado a tu marca",
+      "Desarrollo responsive optimizado",
       "Base de medición lista",
     ],
+    note: "La mejor relación entre claridad, velocidad de ejecución e inversión.",
+    highlighted: false,
   },
   {
-    featured: true,
-    label: "Sistema de Captación",
+    name: "Sistema de Captación",
     price: "$7,500",
-    copy: "Un sistema diseñado para captar, filtrar y convertir clientes de forma consistente.",
+    currency: "USD",
+    description: "Un sistema diseñado para captar, filtrar y convertir clientes de forma consistente.",
     features: [
-      "Todo lo anterior",
+      "Todo lo de Web Estratégica",
       "Páginas adicionales estratégicas",
       "Integraciones clave",
       "Automatización inicial",
       "Formularios avanzados",
       "Optimización de leads",
     ],
+    note: "Ideal para negocios que ya venden y necesitan una estructura más sólida para escalar.",
+    highlighted: true,
+    badge: "RECOMENDADO",
   },
   {
-    featured: false,
-    label: "Ecosistema Completo",
+    name: "Ecosistema Completo",
     price: "$25,000",
-    copy: "Infraestructura completa para operaciones que necesitan escalar con orden y automatización.",
+    currency: "USD",
+    description: "Infraestructura completa para operaciones que necesitan escalar con orden, control y automatización.",
     features: [
       "Arquitectura digital completa",
-      "CRM + procesos conectados",
+      "CRM y procesos conectados",
       "Automatizaciones avanzadas",
-      "Flujos internos",
+      "Flujos internos operativos",
       "Integraciones a medida",
-      "Base escalable",
+      "Base pensada para escalar",
     ],
+    note: "Pensado para operaciones que requieren una arquitectura robusta y conectada.",
+    highlighted: false,
   },
 ];
+
+const plansContainer = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.14, delayChildren: 0.1 } },
+};
+
+const planItem = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+};
 
 export function Capabilities() {
   return (
     <>
       <Divider />
-      <section id="capabilities" className="py-[140px] md:py-[180px] px-8">
-        <div className="max-w-[1200px] mx-auto">
+      <section id="capabilities" className="relative overflow-hidden px-6 py-24 text-white md:px-10 lg:px-16 lg:py-32">
+        {/* Ambient glow */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(201,168,92,0.1)_0%,rgba(201,168,92,0.03)_35%,transparent_70%)] blur-3xl" />
+          <div className="absolute inset-x-0 top-0 h-px bg-white/[0.06]" />
+        </div>
 
+        <div className="relative mx-auto max-w-7xl">
           {/* Header */}
-          <div className="text-center mb-[80px] md:mb-[100px]">
-            <Reveal>
-              <p className="text-[10px] font-semibold tracking-[0.4em] uppercase text-secondary mb-6">Soluciones</p>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <h2 className="text-white mb-6 leading-[1.06]" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(34px, 4.5vw, 58px)", fontWeight: 700 }}>
-                Arquitecturas diseñadas para escalar tu negocio
-              </h2>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <p className="text-secondary text-[16px] leading-[1.85] font-light max-w-[560px] mx-auto">
-                No vendemos páginas web. Construimos sistemas que convierten, posicionan y sostienen crecimiento real.
-              </p>
-            </Reveal>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto max-w-3xl text-center"
+          >
+            <div className="mb-5 inline-flex items-center justify-center gap-3 text-[11px] font-medium uppercase tracking-[0.38em] text-[#C9A85C]">
+              <span className="h-px w-8 bg-[#C9A85C]/50" />
+              Soluciones
+              <span className="h-px w-8 bg-[#C9A85C]/50" />
+            </div>
+            <h2 className="text-4xl font-semibold leading-tight tracking-[-0.04em] text-white md:text-5xl lg:text-6xl">
+              Arquitecturas diseñadas para escalar tu negocio.
+            </h2>
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-white/60 md:text-lg">
+              No vendemos páginas web. Construimos sistemas que convierten, posicionan y sostienen crecimiento real.
+            </p>
+          </motion.div>
 
-          {/* Plans grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 items-stretch">
-            {PLANS.map((plan, i) => (
-              <Reveal key={plan.label} delay={0.1 + i * 0.1}>
-                <div
-                  className={`group relative flex flex-col h-full rounded-sm transition-all duration-500 ${
-                    plan.featured
-                      ? "bg-[#0C0B09] border border-ink/30 md:-mt-6 md:-mb-6 md:py-14 py-10 px-8 md:px-10"
-                      : "bg-[#080807] border border-[#1C1A10] py-10 px-8 hover:border-ink/15"
-                  }`}
-                  style={plan.featured ? { boxShadow: "0 0 60px rgba(212,175,55,0.07), 0 0 120px rgba(212,175,55,0.03)" } : {}}
-                >
-                  {/* Featured glow ring */}
-                  {plan.featured && (
-                    <div className="absolute inset-0 rounded-sm pointer-events-none" style={{ boxShadow: "inset 0 0 0 1px rgba(212,175,55,0.18)" }} />
-                  )}
+          {/* Cards */}
+          <motion.div
+            variants={plansContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
+            className="mt-16 grid gap-6 lg:mt-20 lg:grid-cols-3 xl:gap-8"
+          >
+            {plans.map((plan, index) => (
+              <motion.article
+                key={plan.name}
+                variants={planItem}
+                whileHover={{ y: -8, scale: 1.01 }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                className={[
+                  "group relative flex h-full flex-col overflow-hidden rounded-[32px] border backdrop-blur-xl",
+                  "bg-[linear-gradient(180deg,rgba(255,255,255,0.03)_0%,rgba(255,255,255,0.015)_100%)]",
+                  plan.highlighted
+                    ? "border-[#C9A85C]/35 shadow-[0_0_0_1px_rgba(201,168,92,0.08),0_30px_80px_rgba(0,0,0,0.45),0_0_80px_rgba(201,168,92,0.08)]"
+                    : "border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.35)]",
+                  index === 1 ? "lg:-translate-y-4" : "",
+                ].join(" ")}
+              >
+                <div className="pointer-events-none absolute inset-0">
+                  <div className={[
+                    "absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100",
+                    plan.highlighted
+                      ? "bg-[radial-gradient(circle_at_top,rgba(201,168,92,0.16),transparent_42%)]"
+                      : "bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.07),transparent_42%)]",
+                  ].join(" ")} />
+                  <div className="absolute inset-x-0 top-0 h-px bg-white/[0.08]" />
+                </div>
 
-                  {/* Recommended pill */}
-                  {plan.featured && (
-                    <div className="absolute -top-[13px] left-1/2 -translate-x-1/2">
-                      <span className="inline-block px-4 py-[5px] text-[9px] font-semibold tracking-[0.3em] uppercase bg-ink text-bg rounded-full">
-                        Recomendado
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Price */}
-                  <div className="mb-6">
-                    <p className="text-ink text-[clamp(36px,4vw,48px)] font-light tracking-[-0.03em] leading-none" style={{ fontFamily: "var(--font-serif)" }}>
-                      {plan.price}
-                    </p>
+                <div className="relative flex h-full flex-col p-7 md:p-8">
+                  <div className="mb-8 min-h-[64px]">
+                    {plan.badge ? (
+                      <div className="mb-5 inline-flex rounded-full border border-[#C9A85C]/20 bg-[#C9A85C]/10 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.32em] text-[#D6B56A]">
+                        {plan.badge}
+                      </div>
+                    ) : (
+                      <div className="mb-5 h-[30px]" />
+                    )}
+                    <h3 className="text-3xl font-semibold tracking-[-0.04em] text-white">{plan.name}</h3>
                   </div>
 
-                  {/* Title + copy */}
-                  <h3 className={`font-semibold mb-3 tracking-[-0.01em] ${plan.featured ? "text-white text-[20px]" : "text-white/90 text-[18px]"}`}>
-                    {plan.label}
-                  </h3>
-                  <p className="text-secondary text-[14px] leading-[1.8] font-light mb-8">
-                    {plan.copy}
-                  </p>
+                  <div className="flex items-end gap-2 border-b border-white/[0.08] pb-6">
+                    <span className={["text-5xl font-semibold leading-none tracking-[-0.06em]", plan.highlighted ? "text-[#D5B368]" : "text-[#C9A85C]"].join(" ")}>
+                      {plan.price}
+                    </span>
+                    <span className="pb-1 text-sm uppercase tracking-[0.18em] text-white/45">{plan.currency}</span>
+                  </div>
 
-                  {/* Divider */}
-                  <div className="h-px bg-divider mb-7" />
+                  <p className="mt-7 text-base leading-8 text-white/64">{plan.description}</p>
 
-                  {/* Features */}
-                  <ul className="space-y-3 flex-grow mb-10">
-                    {plan.features.map((f) => (
-                      <li key={f} className="flex items-start gap-3 text-[13px] text-secondary/80 font-light leading-[1.6]">
-                        <span className="mt-[7px] w-[3px] h-[3px] rounded-full bg-ink/50 flex-shrink-0" />
-                        {f}
+                  <ul className="mt-8 space-y-4 text-[15px] leading-7 text-white/78">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-3">
+                        <span className="mt-1.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#C9A85C]/25 bg-[#C9A85C]/10 text-[#D6B56A]">
+                          <Check className="h-3.5 w-3.5" />
+                        </span>
+                        <span>{feature}</span>
                       </li>
                     ))}
                   </ul>
 
-                  {/* CTA */}
-                  <div className="mt-auto">
-                    {plan.featured ? (
-                      <a href="#contact" data-hover className="group/btn relative flex items-center justify-center w-full py-[14px] text-[12px] font-semibold tracking-[0.18em] uppercase bg-ink text-bg overflow-hidden transition-all duration-500 rounded-sm">
-                        <div className="absolute inset-0 bg-secondary origin-left scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
-                        <span className="relative z-10">Agendar llamada estratégica</span>
-                      </a>
-                    ) : (
-                      <a href="#contact" data-hover className="group/btn relative flex items-center justify-center w-full py-[13px] text-[12px] font-semibold tracking-[0.18em] uppercase text-ink border border-ink/25 overflow-hidden transition-all duration-500 rounded-sm hover:text-bg hover:border-ink">
-                        <div className="absolute inset-0 bg-ink origin-left scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
-                        <span className="relative z-10 transition-colors duration-500">Agendar llamada estratégica</span>
-                      </a>
-                    )}
+                  <div className="mt-auto pt-8">
+                    <div className="mb-7 border-t border-white/[0.08] pt-6 text-sm italic leading-6 text-white/35">
+                      {plan.note}
+                    </div>
+                    <motion.a
+                      href="#contact"
+                      whileTap={{ scale: 0.985 }}
+                      className={[
+                        "inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-4 text-sm font-medium uppercase tracking-[0.16em] transition-all duration-300",
+                        plan.highlighted
+                          ? "bg-[#D1B168] text-black shadow-[0_10px_35px_rgba(209,177,104,0.22)] hover:shadow-[0_18px_45px_rgba(209,177,104,0.32)]"
+                          : "border border-[#C9A85C]/30 bg-transparent text-[#D1B168] hover:border-[#D1B168]/60 hover:bg-[#C9A85C]/8",
+                      ].join(" ")}
+                    >
+                      Agendar llamada estratégica
+                      <ArrowRight className="h-4 w-4" />
+                    </motion.a>
                   </div>
                 </div>
-              </Reveal>
+              </motion.article>
             ))}
-          </div>
-
+          </motion.div>
         </div>
       </section>
     </>
