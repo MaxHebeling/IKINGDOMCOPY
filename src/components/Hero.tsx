@@ -119,10 +119,10 @@ export default function Hero() {
             <div className="space-y-8">
               {STATS.map((s, i) => (
                 <div key={s.label}>
-                  <p className="text-ink text-[32px] font-light tracking-[-0.02em]" style={{}}>
+                  <p className="text-[32px] font-light tracking-[-0.02em]" style={{ color: "#F8F6F1" }}>
                     {s.value}
                   </p>
-                  <p className="text-[11px] tracking-[0.1em] uppercase text-secondary mt-1">{s.label}</p>
+                  <p className="text-[11px] tracking-[0.1em] uppercase mt-1" style={{ color: "rgba(201,209,217,0.65)" }}>{s.label}</p>
                 </div>
               ))}
             </div>
