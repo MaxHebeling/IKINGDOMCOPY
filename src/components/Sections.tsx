@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { Check, ArrowRight } from "lucide-react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useLang } from "@/context/Lang";
 
