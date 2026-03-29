@@ -2238,7 +2238,7 @@ export function Footer() {
             <div>
               <img src="/logo.png" alt="iKingdom" className="h-14 w-auto mb-7" />
               <p className="text-[13px] leading-[1.78] font-light max-w-[280px] mb-9" style={{ color: "rgba(212,175,55,0.52)" }}>
-                Arquitectura de ecosistemas digitales con IA. Estrategia, diseño e ingeniería unificados en sistemas que operan tu negocio.
+                Sistemas de captación, conversión y escalamiento para empresas que operan a alto nivel. No ejecutamos tareas — construimos infraestructura que vende.
               </p>
 
               {/* Social icons */}
