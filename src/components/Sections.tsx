@@ -96,7 +96,7 @@ export function ClarityStrip() {
 
           <motion.p
             className="text-[10px] tracking-[0.36em] uppercase"
-            style={{ color: "rgba(212,175,55,0.32)" }}
+            style={{ color: "rgba(212,175,55,0.55)" }}
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.36 }}
