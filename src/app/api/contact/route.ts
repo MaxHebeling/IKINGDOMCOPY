@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { rateLimit } from "@/lib/rateLimit";
+import { insertLead } from "@/lib/db";
+import { buildFromContact } from "@/lib/leads/helpers";
 
 const TO_EMAIL   = "executive@ikingdom.org";
 const FROM_EMAIL = "iKingdom Sistema <noreply@ikingdom.org>";
