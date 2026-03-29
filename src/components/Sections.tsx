@@ -503,7 +503,7 @@ export function Marquee() {
         animate={{ color: ["#D4AF37", "#ffffff", "#D4AF37"] }}
         transition={{ duration: 3, ease: "easeInOut", repeat: Infinity }}
         className="text-[clamp(22px,3.5vw,44px)] font-light leading-[1.3] tracking-[-0.01em]"
-        style={{ fontFamily: "var(--font-serif)" }}
+        style={{}}
       >
         El problema no es tener web.<br />
         ES TENER UNA QUE NO AYUDA A VENDER.
@@ -546,7 +546,7 @@ export function Proof() {
                   <div className="flex gap-8 mb-6 pt-5 border-t border-divider">
                     {c.metrics.map((m) => (
                       <div key={m.label}>
-                        <p className="text-ink text-[24px] font-light tracking-[-0.02em]" style={{ fontFamily: "var(--font-serif)" }}>{m.value}</p>
+                        <p className="text-ink text-[24px] font-light tracking-[-0.02em]" style={{}}>{m.value}</p>
                         <p className="text-[10px] tracking-[0.08em] uppercase text-secondary mt-1">{m.label}</p>
                       </div>
                     ))}
@@ -779,7 +779,7 @@ export function Engagement() {
             <Reveal delay={0.2}>
               <div className="p-8 md:p-10 border border-divider">
                 <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-secondary/50 mb-3">Investment</p>
-                <p className="text-ink text-[clamp(28px,3.5vw,42px)] font-light tracking-[-0.02em] mb-2" style={{ fontFamily: "var(--font-serif)" }}>
+                <p className="text-ink text-[clamp(28px,3.5vw,42px)] font-light tracking-[-0.02em] mb-2" style={{}}>
                   {t("eng.price")}
                 </p>
                 <p className="text-[13px] text-secondary/50 font-light mb-8">{t("eng.scope")}</p>
