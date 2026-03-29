@@ -531,7 +531,7 @@ export function Proof() {
         <div className="max-w-[1280px] mx-auto">
           <Reveal><Label>{t("proof.label")}</Label></Reveal>
           <Reveal delay={0.1}>
-            <h2 className="mt-5 mb-16 text-ink leading-[1.08]" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 700 }}>
+            <h2 className="mt-5 mb-16 text-ink leading-[1.08]" style={{ fontSize: "clamp(32px, 4vw, 48px)" }}>
               {t("proof.heading")}
             </h2>
           </Reveal>
@@ -708,7 +708,7 @@ export function Process() {
             <div className="lg:sticky lg:top-[120px] lg:self-start">
               <Reveal><Label>{t("proc.label")}</Label></Reveal>
               <Reveal delay={0.1}>
-                <h2 className="mt-5 text-ink leading-[1.08]" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 700 }}>
+                <h2 className="mt-5 text-ink leading-[1.08]" style={{ fontSize: "clamp(32px, 4vw, 48px)" }}>
                   {t("proc.heading")}
                 </h2>
               </Reveal>
@@ -768,7 +768,7 @@ export function Engagement() {
           <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
             <Reveal delay={0.1}>
               <div>
-                <h2 className="text-ink leading-[1.08] mb-6" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 700 }}>
+                <h2 className="text-ink leading-[1.08] mb-6" style={{ fontSize: "clamp(32px, 4vw, 48px)" }}>
                   {t("eng.heading")}
                 </h2>
                 <p className="text-secondary text-[15px] leading-[1.8] font-light mb-6 text-justify">{t("eng.left.p1")}</p>
