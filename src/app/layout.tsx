@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import CookieConsent from "@/components/CookieConsent";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -62,6 +63,45 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {children}
 
+        {/* Cookie consent banner */}
+        <CookieConsent />
+
+        {/* ── Consent Mode default (denied until user accepts) ── */}
+        <Script id="consent-default" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('consent','default',{
+              analytics_storage: 'denied',
+              ad_storage: 'denied',
+              ad_user_data: 'denied',
+              ad_personalization: 'denied',
+              wait_for_update: 500
+            });
+          `}
+        </Script>
+
+        {/* Restore consent from localStorage on load */}
+        <Script id="consent-restore" strategy="beforeInteractive">
+          {`
+            (function(){
+              try {
+                var c = localStorage.getItem('ikd_cookie_consent');
+                if(c === 'accepted'){
+                  window.dataLayer = window.dataLayer || [];
+                  window.dataLayer.push({
+                    event: 'consent_update',
+                    analytics_storage: 'granted',
+                    ad_storage: 'granted',
+                    ad_user_data: 'granted',
+                    ad_personalization: 'granted'
+                  });
+                }
+              } catch(e){}
+            })();
+          `}
+        </Script>
+
         {/* ── Google Tag Manager ──────────────────────────────── */}
         {GTM_ID && (
           <Script id="gtm" strategy="afterInteractive">
@@ -84,8 +124,19 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window,document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
+fbq('consent','revoke');
 fbq('init','${META_PIXEL_ID}');
-fbq('track','PageView');`}
+fbq('track','PageView');
+(function(){
+  try {
+    if(localStorage.getItem('ikd_cookie_consent')==='accepted'){
+      fbq('consent','grant');
+    }
+  } catch(e){}
+  window.addEventListener('ikd_consent_accepted', function(){
+    fbq('consent','grant');
+  });
+})();`}
           </Script>
         )}
       </body>
