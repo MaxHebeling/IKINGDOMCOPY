@@ -24,6 +24,7 @@ export default function Home() {
       <Navbar />
       <main className="relative z-[2]">
         <Hero />
+        <ClarityStrip />
         <Capabilities />
         <WhatWeDo />
         <Marquee />
