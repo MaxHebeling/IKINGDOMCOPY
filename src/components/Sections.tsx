@@ -700,8 +700,8 @@ export function Clients() {
                   cx={CENTER} cy={CENTER} r={RING_R}
                   fill="none"
                   stroke="#D4AF37"
-                  strokeWidth="0.8"
-                  strokeOpacity="0.18"
+                  strokeWidth="0.6"
+                  strokeOpacity="0.13"
                   initial={{ pathLength: 0, opacity: 0 }}
                   animate={inView ? { pathLength: 1, opacity: 1 } : {}}
                   transition={{ duration: 2.8, ease: [0.08, 0.82, 0.17, 1] }}
