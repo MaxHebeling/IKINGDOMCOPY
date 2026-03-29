@@ -277,7 +277,7 @@ export function Capabilities() {
                       {plan.note}
                     </div>
                     <motion.a
-                      href="#contact"
+                      href="/fit"
                       whileTap={{ scale: 0.985 }}
                       onClick={() => trackCTAClick("capabilities-plan")}
                       className={[
@@ -287,7 +287,7 @@ export function Capabilities() {
                           : "border border-[#C9A85C]/30 bg-transparent text-[#D1B168] hover:border-[#D1B168]/60 hover:bg-[#C9A85C]/8",
                       ].join(" ")}
                     >
-                      Agendar estrategia
+                      Solicitar diagnóstico
                       <ArrowRight className="h-4 w-4" />
                     </motion.a>
                   </div>
