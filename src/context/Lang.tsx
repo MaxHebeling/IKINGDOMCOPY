@@ -29,8 +29,8 @@ const T: Record<string, { en: string; es: string }> = {
     es: "Aplicación limitada. Solo trabajamos con empresas listas para escalar.",
   },
   "hero.trust": {
-    en: "Systems designed for real growth, not superficial marketing.",
-    es: "Sistemas diseñados para crecimiento real, no marketing superficial.",
+    en: "Most companies have a digital presence. Few have a system that sells.",
+    es: "La mayoría tiene presencia digital. Pocos tienen un sistema que vende.",
   },
 
   // Stats
