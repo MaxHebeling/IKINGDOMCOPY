@@ -14,7 +14,11 @@
       "Bash(cp \"/Users/maxhebeling/.openclaw/workspace/ikingdom-brand/public/client-logos/dyt-comunicaciones.png\" /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/public/clients/dyt.png)",
       "Skill(update-config)",
       "Skill(update-config:*)",
-      "Bash(jq -e '.hooks.PostToolUse[] | select\\(.matcher == \"\"Write|Edit|NotebookEdit\"\"\\) | .hooks[] | .command' /Users/maxhebeling/Downloads/IKINGDOMCOPY-main/.claude/settings.json)"
+      "Bash(jq -e '.hooks.PostToolUse[] | select\\(.matcher == \"\"Write|Edit|NotebookEdit\"\"\\) | .hooks[] | .command' /Users/maxhebeling/Downloads/IKINGDOMCOPY-main/.claude/settings.json)",
+      "Bash(ls -la /Users/maxhebeling/Downloads/IKINGDOMCOPY-main/.env*)"
+    ],
+    "additionalDirectories": [
+      "/Users/maxhebeling/Downloads/IKINGDOMCOPY-main/src/lib"
     ]
   },
   "hooks": {
