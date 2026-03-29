@@ -94,7 +94,7 @@ export default function PrivacyPolicy() {
                 "Contactarte para continuar la conversación",
                 "Mejorar nuestros servicios y comunicaciones",
                 "Cumplir con obligaciones legales aplicables",
-                "Medir el rendimiento de nuestras campañas publicitarias (con tu consentimiento implícito al enviar el formulario)",
+                "Medir el rendimiento de nuestras campañas publicitarias (únicamente con tu consentimiento explícito, otorgado a través del banner de cookies)",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <span className="w-1 h-1 rounded-full bg-[#C9A85C]/40 flex-shrink-0 mt-[10px]" />
