@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const TO_EMAIL   = "executive@ikingdom.org";
-const FROM_EMAIL = "iKingdom Sistema <onboarding@resend.dev>";
+const FROM_EMAIL = "iKingdom Sistema <noreply@ikingdom.org>";
 
 interface FitPayload {
   // 1. Contact
