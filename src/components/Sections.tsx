@@ -2096,7 +2096,7 @@ export function Footer() {
               {/* Social icons */}
               <div className="flex items-center gap-3 mb-9">
                 {/* LinkedIn */}
-                <a href="https://linkedin.com/company/ikingdom-agency" target="_blank" rel="noopener noreferrer" data-hover aria-label="LinkedIn"
+                <a href="https://www.linkedin.com/in/maxhebeling" target="_blank" rel="noopener noreferrer" data-hover aria-label="LinkedIn"
                   className="flex items-center justify-center w-9 h-9 rounded-full transition-all duration-300"
                   style={{ border: "1px solid rgba(212,175,55,0.2)", color: "rgba(212,175,55,0.5)" }}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(212,175,55,0.6)"; (e.currentTarget as HTMLElement).style.color = "rgba(212,175,55,1)"; }}
