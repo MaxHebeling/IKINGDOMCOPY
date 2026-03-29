@@ -1,38 +1,54 @@
-import { NextRequest, NextResponse } from "next/server";
-import { jwtVerify } from "jose";
+// Supabase SSR middleware — refreshes user session and protects /app/* routes.
+// Pattern mirrors hebeling-imperium-hub canonical middleware.
 
-const COOKIE    = "app_token";
-const LOGIN_URL = "/app/login";
+import { createServerClient } from "@supabase/ssr";
+import { NextResponse, type NextRequest } from "next/server";
 
-function secret() {
-  const s = process.env.JWT_SECRET;
-  if (!s) return null;
-  return new TextEncoder().encode(s);
-}
+export async function middleware(request: NextRequest) {
+  let supabaseResponse = NextResponse.next({ request });
 
-export async function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
+          supabaseResponse = NextResponse.next({ request });
+          cookiesToSet.forEach(({ name, value, options }) =>
+            supabaseResponse.cookies.set(name, value, options)
+          );
+        },
+      },
+    }
+  );
 
-  // Only protect /app/* routes (except /app/login itself)
-  if (!pathname.startsWith("/app") || pathname.startsWith(LOGIN_URL)) {
-    return NextResponse.next();
+  // Refresh session — required to keep Supabase auth cookies alive
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { pathname } = request.nextUrl;
+
+  // Protect all /app/* routes except /app/login
+  if (
+    !user &&
+    pathname.startsWith("/app") &&
+    !pathname.startsWith("/app/login")
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/app/login";
+    return NextResponse.redirect(url);
   }
 
-  const token = req.cookies.get(COOKIE)?.value;
-  const key   = secret();
-
-  if (!token || !key) {
-    return NextResponse.redirect(new URL(LOGIN_URL, req.url));
-  }
-
-  try {
-    await jwtVerify(token, key);
-    return NextResponse.next();
-  } catch {
-    return NextResponse.redirect(new URL(LOGIN_URL, req.url));
-  }
+  return supabaseResponse;
 }
 
 export const config = {
-  matcher: ["/app/:path*"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
 };
