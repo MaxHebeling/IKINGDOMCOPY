@@ -1,0 +1,29 @@
+{
+  "swarmId": "swarm-mnb35i79",
+  "objective": "Full premium commercial website audit of iKingdom: analyze frontend UI/UX, performance, CRO, Google Ads readiness, Meta Ads readiness, tracking infrastructure, SEO/trust layer. Do NOT modify any files. Report only. Preserve luxury premium brand direction.",
+  "strategy": "research",
+  "status": "initialized",
+  "agents": 7,
+  "agentPlan": [
+    {
+      "role": "Coordinator",
+      "type": "coordinator",
+      "count": 1,
+      "purpose": "Research coordination"
+    },
+    {
+      "role": "Researcher",
+      "type": "researcher",
+      "count": 4,
+      "purpose": "Data gathering"
+    },
+    {
+      "role": "Analyst",
+      "type": "analyst",
+      "count": 2,
+      "purpose": "Analysis and synthesis"
+    }
+  ],
+  "startedAt": "2026-03-29T01:33:47.494Z",
+  "parallel": true
+}
