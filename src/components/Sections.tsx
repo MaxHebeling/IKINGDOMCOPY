@@ -771,10 +771,10 @@ export function Clients() {
                   height: (RING_R + 22) * 2,
                   background: [
                     "conic-gradient(from 0deg,",
-                    "  transparent 345deg,",
-                    "  rgba(212,175,55,0.025) 352deg,",
-                    "  rgba(212,175,55,0.055) 358deg,",
-                    "  rgba(212,175,55,0.025) 360deg)",
+                    "  transparent 350deg,",
+                    "  rgba(212,175,55,0.012) 355deg,",
+                    "  rgba(212,175,55,0.024) 359deg,",
+                    "  rgba(212,175,55,0.012) 360deg)",
                   ].join(""),
                 }}
                 initial={{ opacity: 0 }}
