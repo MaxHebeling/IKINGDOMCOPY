@@ -505,17 +505,17 @@ export function WhatWeDo() {
           <div className="text-center mb-[80px]">
             <Reveal>
               <p className="text-[10px] font-semibold tracking-[0.4em] uppercase text-secondary mb-6">
-                Lo que realmente hacemos
+                Nuestra diferencia
               </p>
             </Reveal>
             <Reveal delay={0.1}>
               <h2 className="text-white mb-5 leading-[1.06]" style={{ fontSize: "clamp(36px, 5vw, 60px)" }}>
-                No solo diseñamos websites.
+                No somos una agencia.<br className="hidden md:block" /> Somos tu equipo de arquitectura.
               </h2>
             </Reveal>
             <Reveal delay={0.2}>
               <p className="text-secondary text-[16px] leading-[1.85] font-light max-w-[600px] mx-auto">
-                Plataformas digitales que trabajan tu marca y convierten visitantes en clientes de alto valor.
+                Cada decisión está orientada a un resultado comercial. No ejecutamos tareas — diseñamos sistemas.
               </p>
             </Reveal>
           </div>
