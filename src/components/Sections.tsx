@@ -674,24 +674,19 @@ export function Clients() {
                 className="absolute pointer-events-none"
                 style={{ left: CENTER - 28, top: CENTER - 28, width: 56, height: 56 }}
               >
-                {/* Three staggered pulse rings */}
-                {[0, 1.1, 2.2].map((delay, pi) => (
+                {/* Two slow, barely-visible breath rings */}
+                {[0, 2.0].map((delay, pi) => (
                   <motion.div
                     key={pi}
                     className="absolute inset-0 rounded-full border border-[#D4AF37]"
                     initial={{ scale: 1, opacity: 0 }}
-                    animate={inView ? { scale: [1, 4], opacity: [0.14, 0] } : {}}
-                    transition={{ duration: 4, delay, repeat: Infinity, ease: "easeOut" }}
+                    animate={inView ? { scale: [1, 4.5], opacity: [0.07, 0] } : {}}
+                    transition={{ duration: 6.5, delay, repeat: Infinity, ease: "easeOut" }}
                   />
                 ))}
-                {/* Center crosshair */}
+                {/* Center mark — minimal dot only */}
                 <svg className="absolute inset-0 w-full h-full" viewBox="0 0 56 56">
-                  <line x1="28" y1="6"  x2="28" y2="18" stroke="#D4AF37" strokeWidth="0.6" strokeOpacity="0.28"/>
-                  <line x1="28" y1="38" x2="28" y2="50" stroke="#D4AF37" strokeWidth="0.6" strokeOpacity="0.28"/>
-                  <line x1="6"  y1="28" x2="18" y2="28" stroke="#D4AF37" strokeWidth="0.6" strokeOpacity="0.28"/>
-                  <line x1="38" y1="28" x2="50" y2="28" stroke="#D4AF37" strokeWidth="0.6" strokeOpacity="0.28"/>
-                  <circle cx="28" cy="28" r="2.5" fill="#D4AF37" fillOpacity="0.4"/>
-                  <circle cx="28" cy="28" r="6" fill="none" stroke="#D4AF37" strokeWidth="0.5" strokeOpacity="0.15"/>
+                  <circle cx="28" cy="28" r="2" fill="#D4AF37" fillOpacity="0.22"/>
                 </svg>
               </div>
 
