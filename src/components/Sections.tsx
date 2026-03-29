@@ -2215,7 +2215,7 @@ export function Footer() {
   return (
     <>
       <Divider />
-      <footer className="relative overflow-hidden" style={{ background: "#000000" }}>
+      <footer className="relative overflow-hidden" style={{ background: "#06162A" }}>
 
         {/* Background grid */}
         <div className="absolute inset-0 pointer-events-none" style={{
