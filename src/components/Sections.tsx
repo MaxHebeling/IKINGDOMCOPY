@@ -611,8 +611,8 @@ const TICKS = Array.from({ length: TICK_N }, (_, i) => {
     y1: CENTER + r0 * Math.sin(θ),
     x2: CENTER + r1 * Math.cos(θ),
     y2: CENTER + r1 * Math.sin(θ),
-    strokeWidth:   maj ? 0.7 : 0.4,
-    strokeOpacity: maj ? 0.16 : med ? 0.08 : 0.04,  // whispered, not asserted
+    strokeWidth:   maj ? 0.8 : 0.4,
+    strokeOpacity: maj ? 0.22 : med ? 0.11 : 0.05,  // instrument-readable, not decorative
   };
 });
 
