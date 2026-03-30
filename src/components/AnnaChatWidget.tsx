@@ -295,8 +295,8 @@ export default function AnnaChatWidget({ origin_page }: AnnaChatWidgetProps) {
                   </div>
                 )}
                 <div
-                  className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed whitespace-pre-wrap${
-                    m.role === "assistant" ? " bg-white/8 text-white/90" : ""
+                  className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed${
+                    m.role === "user" ? " whitespace-pre-wrap" : " bg-white/8 text-white/90"
                   }`}
                   style={
                     m.role === "user"
@@ -308,12 +308,14 @@ export default function AnnaChatWidget({ origin_page }: AnnaChatWidgetProps) {
                       : { borderBottomLeftRadius: "4px" }
                   }
                 >
-                  {m.content || (
-                    <span className="flex items-center gap-1.5 text-white/40">
-                      <Loader2 className="size-3 animate-spin" />
-                      <span className="text-xs">...</span>
-                    </span>
-                  )}
+                  {m.role === "assistant"
+                    ? m.content
+                      ? renderMarkdown(m.content)
+                      : <span className="flex items-center gap-1.5 text-white/40">
+                          <Loader2 className="size-3 animate-spin" />
+                          <span className="text-xs">...</span>
+                        </span>
+                    : m.content}
                 </div>
               </div>
             ))}
