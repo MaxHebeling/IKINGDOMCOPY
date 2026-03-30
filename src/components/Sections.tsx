@@ -2358,7 +2358,7 @@ export function Footer() {
           <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-5">
             <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
               <p className="text-[11px] tracking-[0.05em] font-light" style={{ color: "rgba(212,175,55,0.50)" }}>
-                © 2026 iKingdom. Todos los derechos reservados.
+                {t("footer.copyright")}
               </p>
               <span className="hidden sm:block w-px h-3" style={{ background: "rgba(212,175,55,0.25)" }} />
               <p className="text-[10px] tracking-[0.2em] uppercase font-light" style={{ color: "rgba(212,175,55,0.40)" }}>
