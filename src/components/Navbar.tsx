@@ -63,8 +63,26 @@ export default function Navbar() {
           </div>
 
           <div className="hidden lg:flex items-center gap-6">
+            {/* Language switcher */}
+            <div className="flex items-center gap-1 text-[11px] font-semibold tracking-[0.18em] uppercase">
+              <button
+                onClick={() => switchLang("es")}
+                className="transition-colors duration-200"
+                style={{ color: lang === "es" ? "rgba(212,175,55,0.9)" : "rgba(201,209,217,0.3)" }}
+              >
+                ES
+              </button>
+              <span style={{ color: "rgba(201,209,217,0.2)" }}>|</span>
+              <button
+                onClick={() => switchLang("en")}
+                className="transition-colors duration-200"
+                style={{ color: lang === "en" ? "rgba(212,175,55,0.9)" : "rgba(201,209,217,0.3)" }}
+              >
+                EN
+              </button>
+            </div>
             <a
-              href="/fit"
+              href={fitHref}
               data-hover
               className="group relative text-[13px] font-semibold tracking-[0.14em] uppercase text-ink border border-ink/25 px-7 py-[9px] overflow-hidden transition-all duration-500 hover:text-[#000000] hover:border-ink"
             >
