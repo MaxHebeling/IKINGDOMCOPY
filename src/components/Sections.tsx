@@ -548,9 +548,9 @@ export function WhatWeDo() {
           {/* CTA */}
           <Reveal delay={0.35}>
             <div className="text-center">
-              <a href="/fit" data-hover onClick={() => trackCTAClick("whatwedo")} className="group relative inline-flex items-center gap-3 px-8 py-[13px] text-[12px] font-semibold tracking-[0.18em] uppercase text-ink border border-ink/25 overflow-hidden transition-all duration-500 hover:text-bg hover:border-ink">
+              <a href={`/${lang}/fit`} data-hover onClick={() => trackCTAClick("whatwedo")} className="group relative inline-flex items-center gap-3 px-8 py-[13px] text-[12px] font-semibold tracking-[0.18em] uppercase text-ink border border-ink/25 overflow-hidden transition-all duration-500 hover:text-bg hover:border-ink">
                 <div className="absolute inset-0 bg-ink origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
-                <span className="relative z-10 transition-colors duration-500">Aplicar para diagnóstico estratégico →</span>
+                <span className="relative z-10 transition-colors duration-500">{t("hero.cta")} →</span>
               </a>
             </div>
           </Reveal>
