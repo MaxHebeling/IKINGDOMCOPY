@@ -192,7 +192,7 @@ export default function AnnaChatWidget({ origin_page }: AnnaChatWidgetProps) {
     <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end gap-3">
       {/* Chat Panel */}
       {isOpen && (
-        <div className="w-[340px] sm:w-[380px] rounded-2xl border border-white/10 bg-[#0f0f1a] shadow-2xl flex flex-col overflow-hidden">
+        <div className="w-[340px] sm:w-[380px] rounded-2xl border border-white/10 bg-[#06162A] shadow-2xl flex flex-col overflow-hidden">
 
           {/* Header */}
           <div
