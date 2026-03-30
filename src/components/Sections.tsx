@@ -2185,27 +2185,27 @@ export function DisqualificationSection() {
    ═══════════════════════════════════════════════════════════ */
 
 /* ── FOOTER data ─────────────────────────────────────────────────────────────*/
-const FOOTER_NAV = [
-  { label: "Capacidades",  href: "#capabilities" },
-  { label: "Proceso",      href: "#process" },
-  { label: "Clientes",     href: "#clients" },
-  { label: "Fit",          href: "#engagement" },
-  { label: "Contacto",     href: "#contact" },
+const FOOTER_NAV_DEFS = [
+  { labelKey: "footer.nav.1", href: "#capabilities" },
+  { labelKey: "footer.nav.2", href: "#process" },
+  { labelKey: "footer.nav.3", href: "#clients" },
+  { labelKey: "footer.nav.4", href: "#engagement" },
+  { labelKey: "footer.nav.5", href: "#contact" },
 ];
 
-const FOOTER_SERVICES = [
-  "Ecosistemas digitales con IA",
-  "Arquitectura de conversión",
-  "Automatización de operaciones",
-  "Estrategia y narrativa de marca",
-  "Implementación y escalamiento",
-  "Diseño web Premium",
+const FOOTER_SERVICE_KEYS = [
+  "footer.services.1",
+  "footer.services.2",
+  "footer.services.3",
+  "footer.services.4",
+  "footer.services.5",
+  "footer.services.6",
 ];
 
-const FOOTER_LEGAL = [
-  { label: "Privacidad",  href: "/privacy-policy" },
-  { label: "Términos",    href: "/terms-of-service" },
-  { label: "Cookies",     href: "/cookie-policy" },
+const FOOTER_LEGAL_DEFS = [
+  { labelKey: "footer.legal.privacy", href: "/privacy-policy" },
+  { labelKey: "footer.legal.terms",   href: "/terms-of-service" },
+  { labelKey: "footer.legal.cookies", href: "/cookie-policy" },
 ];
 
 export function Footer() {
