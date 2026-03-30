@@ -82,7 +82,7 @@ export function ClarityStrip() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.85, delay: 0.12, ease: [0.08, 0.82, 0.17, 1] }}
           >
-            Tener visibilidad no es lo mismo que tener conversión.
+            {t("clarity.headline")}
           </motion.p>
 
           <motion.p
@@ -92,7 +92,7 @@ export function ClarityStrip() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.85, delay: 0.22, ease: [0.08, 0.82, 0.17, 1] }}
           >
-            Diseñamos la infraestructura que transforma atención en oportunidad comercial.
+            {t("clarity.sub")}
           </motion.p>
 
           <motion.p
@@ -102,7 +102,7 @@ export function ClarityStrip() {
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.36 }}
           >
-            Estrategia · Arquitectura · Implementación
+            {t("clarity.tagline")}
           </motion.p>
         </motion.div>
       </div>
