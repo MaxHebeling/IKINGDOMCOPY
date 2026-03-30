@@ -1526,18 +1526,18 @@ export function Process() {
    ═══════════════════════════════════════════════════════════ */
 
 /* ── FIT DEL PROYECTO — data ────────────────────────────────────────────────*/
-const FIT_IDEAL = [
-  { n: "01", text: "Negocios que venden servicios o tickets altos y necesitan un sistema que los soporte." },
-  { n: "02", text: "Marcas que ya invierten en marketing pero no ven los resultados que esperaban." },
-  { n: "03", text: "Equipos que necesitan claridad de mensaje, más autoridad y mejores leads." },
-  { n: "04", text: "Empresas que valoran la estrategia, el diseño y la ejecución como una sola cosa." },
+const FIT_IDEAL_DEFS = [
+  { n: "01", textKey: "eng.fit.ideal.1" },
+  { n: "02", textKey: "eng.fit.ideal.2" },
+  { n: "03", textKey: "eng.fit.ideal.3" },
+  { n: "04", textKey: "eng.fit.ideal.4" },
 ];
 
-const FIT_NOT = [
-  { n: "01", text: "Negocios en etapa inicial sin modelo de negocio validado." },
-  { n: "02", text: "Quienes buscan soluciones rápidas, económicas o de bajo compromiso." },
-  { n: "03", text: "Quienes necesitan presencia sin objetivo comercial definido." },
-  { n: "04", text: "Quienes no están listos para invertir en arquitectura seria." },
+const FIT_NOT_DEFS = [
+  { n: "01", textKey: "eng.fit.not.1" },
+  { n: "02", textKey: "eng.fit.not.2" },
+  { n: "03", textKey: "eng.fit.not.3" },
+  { n: "04", textKey: "eng.fit.not.4" },
 ];
 
 // Precomputed ring tick marks — deterministic trig, SSR-safe
