@@ -52,6 +52,7 @@ function CTA({ href, children, onClick }: { href: string; children: string; onCl
    ═══════════════════════════════════════════════════════════ */
 
 export function ClarityStrip() {
+  const { t } = useLang();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-6%" });
 
