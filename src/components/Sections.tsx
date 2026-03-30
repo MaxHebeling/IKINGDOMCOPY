@@ -147,6 +147,14 @@ const planItem = {
 
 export function Capabilities() {
   const { t, lang } = useLang();
+  const plans = PLAN_DEFS.map((p) => ({
+    ...p,
+    name: t(p.nameKey),
+    description: t(p.descKey),
+    features: p.featureKeys.map((k) => t(k)),
+    note: t(p.noteKey),
+    badge: p.hasBadge ? t("cap.plan.badge") : undefined,
+  }));
   return (
     <>
       <Divider />
