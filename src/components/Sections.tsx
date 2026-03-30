@@ -1170,10 +1170,17 @@ function gCurvePath(x1: number, y1: number, x2: number, y2: number, cx: number, 
 }
 
 export function Process() {
+  const { t } = useLang();
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-10%" });
   const [hovered, setHovered] = useState<string | null>(null);
 
+  const GALAXY_NODES = GALAXY_NODE_DEFS.map((node) => ({
+    ...node,
+    week: t(node.weekKey),
+    title: t(node.titleKey),
+    desc: t(node.descKey),
+  }));
   const nodePositions = GALAXY_NODES.map((node) => {
     const pos = gToXY(GCX, GCY, node.r, node.angle);
     const rightSide = pos.x > GCX;
