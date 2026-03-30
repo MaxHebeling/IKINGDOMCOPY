@@ -23,6 +23,7 @@ export default function Navbar() {
     { label: t("nav.process"), href: "#process" },
     { label: t("nav.engagement"), href: "#engagement" },
   ];
+  const fitHref = `/${lang}/fit`;
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 30);
