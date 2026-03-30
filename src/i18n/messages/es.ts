@@ -119,7 +119,6 @@ const es = {
 
   // Shared
   "scarcity": "Solo aceptamos 4–6 proyectos por trimestre.",
-  "cap.plan.cta": "Solicitar diagnóstico",
 
   // ClarityStrip
   "clarity.headline": "Tener visibilidad no es lo mismo que tener conversión.",
