@@ -1827,20 +1827,20 @@ function playKeySound() {
   } catch {}
 }
 
-const CONTACT_FIELDS = [
-  { id: "name",    n: "01", label: "Nombre completo",          type: "text"     as const },
-  { id: "email",   n: "02", label: "Email corporativo",        type: "email"    as const },
-  { id: "company", n: "03", label: "Empresa",                  type: "text"     as const },
-  { id: "budget",  n: "04", label: "Revenue anual aproximado", type: "select"   as const },
-  { id: "needs",   n: "05", label: "¿Qué quieres resolver?",   type: "textarea" as const },
+const CONTACT_FIELD_DEFS = [
+  { id: "name",    n: "01", labelKey: "contact.eval.f1", type: "text"     as const },
+  { id: "email",   n: "02", labelKey: "contact.eval.f2", type: "email"    as const },
+  { id: "company", n: "03", labelKey: "contact.eval.f3", type: "text"     as const },
+  { id: "budget",  n: "04", labelKey: "contact.eval.f4", type: "select"   as const },
+  { id: "needs",   n: "05", labelKey: "contact.eval.f5", type: "textarea" as const },
 ] as const;
 
-const BUDGET_OPTS = [
-  "Menos de $500K USD",
-  "$500K – $2M USD",
-  "$2M – $10M USD",
-  "$10M – $50M USD",
-  "$50M+ USD",
+const BUDGET_OPT_KEYS = [
+  "contact.eval.b1",
+  "contact.eval.b2",
+  "contact.eval.b3",
+  "contact.eval.b4",
+  "contact.eval.b5",
 ];
 
 type ContactKey = "name" | "company" | "email" | "needs" | "budget";
