@@ -27,7 +27,7 @@ function RevealWord({ children, delay }: { children: string; delay: number }) {
 }
 
 export default function Hero() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const STATS = useStats();
   const headline = t("hero.headline");
   const words = headline.split(" ");
