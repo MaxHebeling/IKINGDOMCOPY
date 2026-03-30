@@ -2123,14 +2123,14 @@ export function DisqualificationSection() {
       <section ref={ref} className="py-[100px] md:py-[120px] px-8">
         <div className="max-w-[760px] mx-auto">
 
-          <Reveal><Label>Selección</Label></Reveal>
+          <Reveal><Label>{t("disq.label")}</Label></Reveal>
 
           <Reveal delay={0.1}>
             <h2
               className="mt-5 text-ink leading-[1.06]"
               style={{ fontSize: "clamp(36px, 4.5vw, 58px)", letterSpacing: "-0.03em" }}
             >
-              Si estás listo para operar a otro nivel.
+              {t("disq.heading")}
             </h2>
           </Reveal>
 
