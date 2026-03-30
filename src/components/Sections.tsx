@@ -498,6 +498,7 @@ function DigitalArchBg() {
 }
 
 export function WhatWeDo() {
+  const { t, lang } = useLang();
   return (
     <>
       <Divider />
