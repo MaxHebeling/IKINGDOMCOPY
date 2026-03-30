@@ -27,6 +27,7 @@ export default function LocalePage({ params }: { params: Promise<{ lang: string 
     <LangProvider initialLang={lang as Locale}>
       <Cursor />
       <WhatsAppButton />
+      <AnnaChatWidget origin_page={`/${lang}`} />
       <SpaceShipPass />
       <LightningPass />
       <AmbientLight />
