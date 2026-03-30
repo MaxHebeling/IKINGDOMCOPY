@@ -235,10 +235,10 @@ export default function AnnaChatWidget({ origin_page }: AnnaChatWidgetProps) {
               >
                 {m.role === "assistant" && (
                   <div
-                    className="flex-shrink-0 size-6 rounded-full flex items-center justify-center mr-2 mt-0.5 text-xs"
+                    className="flex-shrink-0 size-6 rounded-full flex items-center justify-center mr-2 mt-0.5"
                     style={{ background: `${THEME.accentColor}30`, color: THEME.accentColor }}
                   >
-                    {THEME.avatarEmoji}
+                    <IKLogo className="size-3.5" />
                   </div>
                 )}
                 <div
