@@ -1468,15 +1468,15 @@ export function Process() {
 
           {/* ── Mobile: vertical stack ───────────────────────────── */}
           <div className="md:hidden">
-            <Reveal><Label>Metodología</Label></Reveal>
+            <Reveal><Label>{t("proc.galaxy.label")}</Label></Reveal>
             <Reveal delay={0.1}>
               <h2 className="mt-5 text-ink leading-[1.06]" style={{ fontSize: "clamp(32px, 6vw, 48px)", letterSpacing: "-0.03em" }}>
-                Un método. Sin improvisación.
+                {t("proc.galaxy.heading.mobile")}
               </h2>
             </Reveal>
             <Reveal delay={0.2}>
               <p className="mt-5 text-secondary text-[14px] leading-[1.9] font-light">
-                Cuatro fases. Cada entregable, en tiempo.
+                {t("proc.galaxy.sub.mobile")}
               </p>
             </Reveal>
 
