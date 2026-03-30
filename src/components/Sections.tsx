@@ -2112,9 +2112,9 @@ export function DisqualificationSection() {
   const inView = useInView(ref, { once: true, margin: "-10%" });
 
   const lines = [
-    "No ejecutamos proyectos sin estrategia clara.",
-    "No vendemos diseño decorativo ni presencia vacía.",
-    "Trabajamos con empresas que quieren construir algo que funciona — no algo que solo se ve bien.",
+    t("disq.line.1"),
+    t("disq.line.2"),
+    t("disq.line.3"),
   ];
 
   return (
