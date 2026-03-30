@@ -276,7 +276,7 @@ export default function AnnaChatWidget({ origin_page }: AnnaChatWidgetProps) {
               placeholder={THEME.placeholder}
               disabled={isStreaming}
               rows={1}
-              className="flex-1 resize-none bg-white/8 text-white/90 placeholder:text-white/30 rounded-xl px-3 py-2 text-sm leading-normal focus:outline-none focus:ring-1 focus:ring-indigo-500/50 min-h-[38px] max-h-[120px] disabled:opacity-50"
+              className="flex-1 resize-none bg-white/8 text-white/90 placeholder:text-white/30 rounded-xl px-3 py-2 text-sm leading-normal focus:outline-none focus:ring-1 focus:ring-yellow-600/40 min-h-[38px] max-h-[120px] disabled:opacity-50"
               style={{ height: "38px", overflowY: "auto" }}
             />
             <button
