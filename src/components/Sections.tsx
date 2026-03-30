@@ -1216,15 +1216,15 @@ export function Process() {
 
             {/* Left: sticky header + stage list */}
             <div className="lg:sticky lg:top-[120px] lg:self-start">
-              <Reveal><Label>Metodología</Label></Reveal>
+              <Reveal><Label>{t("proc.galaxy.label")}</Label></Reveal>
               <Reveal delay={0.1}>
                 <h2 className="mt-5 text-ink leading-[1.06]" style={{ fontSize: "clamp(32px, 4vw, 56px)", letterSpacing: "-0.03em" }}>
-                  Un método.<br />Sin improvisación.
+                  {t("proc.galaxy.heading.1")}<br />{t("proc.galaxy.heading.2")}
                 </h2>
               </Reveal>
               <Reveal delay={0.2}>
                 <p className="mt-5 text-secondary text-[14px] leading-[1.9] font-light max-w-[340px]">
-                  Cuatro fases estructuradas. Cada semana tiene un entregable. Cada decisión tiene un impacto medible en tu negocio.
+                  {t("proc.galaxy.sub")}
                 </p>
               </Reveal>
 
