@@ -909,11 +909,11 @@ export function Clients() {
                 transition={{ duration: 2.4, repeat: Infinity }}
               />
               <span className="text-[9px] tracking-[0.36em] uppercase" style={{ color: "rgba(212,175,55,0.32)" }}>
-                10 unidades conectadas
+                {t("clients.status")}
               </span>
               <span className="h-px flex-1 max-w-[60px]" style={{ background: "rgba(212,175,55,0.10)" }} />
               <span className="text-[9px] tracking-[0.28em] uppercase" style={{ color: "rgba(212,175,55,0.18)" }}>
-                sys: activo
+                {t("clients.sys")}
               </span>
             </motion.div>
           </Reveal>
