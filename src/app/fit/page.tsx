@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import AnnaChatWidget from "@/components/AnnaChatWidget";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 interface FormData {
