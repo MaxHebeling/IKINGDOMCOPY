@@ -1897,25 +1897,25 @@ export function Contact() {
 
             {/* ── Left — context ── */}
             <div className="lg:sticky lg:top-[120px] lg:self-start">
-              <Reveal><Label>Evaluación Estratégica</Label></Reveal>
+              <Reveal><Label>{t("contact.eval.label")}</Label></Reveal>
               <Reveal delay={0.1}>
                 <h2 className="mt-5 text-ink leading-[1.08]" style={{ fontSize: "clamp(28px,3.5vw,44px)" }}>
-                  Aplicación para evaluación estratégica.
+                  {t("contact.eval.heading")}
                 </h2>
               </Reveal>
               <Reveal delay={0.2}>
                 <p className="mt-5 text-[15px] font-light leading-[1.85] text-justify" style={{ color: "rgba(201,209,217,0.75)" }}>
-                  Nuestro equipo revisará tu caso y te contactará si hay ajuste estratégico.
+                  {t("contact.eval.sub")}
                 </p>
               </Reveal>
               <Reveal delay={0.3}>
                 <div className="mt-10 space-y-3">
                   <div className="flex items-center gap-2.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-ink" style={{ animation: "pulseGlow 2.2s ease-in-out infinite" }} />
-                    <span className="text-[9px] tracking-[0.32em] uppercase" style={{ color: "rgba(212,175,55,0.35)" }}>Canal seguro activo</span>
+                    <span className="text-[9px] tracking-[0.32em] uppercase" style={{ color: "rgba(212,175,55,0.35)" }}>{t("contact.eval.channel")}</span>
                   </div>
                   <p className="text-[11px] font-light pl-[18px]" style={{ color: "rgba(212,175,55,0.25)" }}>executive@ikingdom.org</p>
-                  <p className="text-[11px] font-light pl-[18px]" style={{ color: "rgba(212,175,55,0.25)" }}>San Diego, California · EE.UU.</p>
+                  <p className="text-[11px] font-light pl-[18px]" style={{ color: "rgba(212,175,55,0.25)" }}>{t("contact.eval.location")}</p>
                 </div>
               </Reveal>
             </div>
