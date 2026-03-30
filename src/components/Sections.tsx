@@ -2334,7 +2334,7 @@ export function Footer() {
                   >+1 956 509 5558</a>
                 </li>
 
-                <li className="text-[13px] font-light" style={{ color: "rgba(212,175,55,0.55)" }}>San Diego, California · EE.UU.</li>
+                <li className="text-[13px] font-light" style={{ color: "rgba(212,175,55,0.55)" }}>{t("footer.contact.city")}</li>
               </ul>
 
               {/* CTA micro */}
