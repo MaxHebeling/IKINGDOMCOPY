@@ -1935,11 +1935,11 @@ export function Contact() {
                   <div className="p-8 md:p-10 space-y-5">
                     <div className="flex items-center gap-3">
                       <span className="w-2 h-2 rounded-full bg-ink flex-shrink-0" />
-                      <p className="text-[12px] tracking-[0.28em] uppercase font-semibold text-ink">DATOS RECIBIDOS</p>
+                      <p className="text-[12px] tracking-[0.28em] uppercase font-semibold text-ink">{t("contact.eval.success.received")}</p>
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: "rgba(212,175,55,0.5)" }} />
-                      <p className="text-[12px] tracking-[0.25em] uppercase font-light" style={{ color: "rgba(212,175,55,0.6)" }}>PROCESANDO DIAGNÓSTICO...</p>
+                      <p className="text-[12px] tracking-[0.25em] uppercase font-light" style={{ color: "rgba(212,175,55,0.6)" }}>{t("contact.eval.success.processing")}</p>
                     </div>
                     {/* Progress bar */}
                     <div className="relative h-px w-full overflow-hidden" style={{ background: "rgba(212,175,55,0.1)" }}>
@@ -1952,7 +1952,7 @@ export function Contact() {
                       />
                     </div>
                     <p className="text-[13px] font-light leading-[1.75]" style={{ color: "rgba(212,175,55,0.45)" }}>
-                      Responderemos dentro de las próximas 24 horas{formData.email ? <> a <span style={{ color: "rgba(212,175,55,0.75)" }}>{formData.email}</span></> : ""}.
+                      {t("contact.eval.success.reply")}{formData.email ? <> — <span style={{ color: "rgba(212,175,55,0.75)" }}>{formData.email}</span></> : ""}.
                     </p>
                   </div>
                 </div>
