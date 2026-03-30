@@ -1715,6 +1715,7 @@ function FitBG() {
 }
 
 export function Engagement() {
+  const { t, lang } = useLang();
   return (
     <>
       <Divider />
