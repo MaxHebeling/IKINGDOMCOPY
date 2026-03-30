@@ -1846,6 +1846,9 @@ const BUDGET_OPT_KEYS = [
 type ContactKey = "name" | "company" | "email" | "needs" | "budget";
 
 export function Contact() {
+  const { t } = useLang();
+  const CONTACT_FIELDS = CONTACT_FIELD_DEFS.map((f) => ({ ...f, label: t(f.labelKey) }));
+  const BUDGET_OPTS = BUDGET_OPT_KEYS.map((k) => t(k));
   const [formData, setFormData] = useState<Record<ContactKey, string>>({
     name: "", company: "", email: "", needs: "", budget: "",
   });
