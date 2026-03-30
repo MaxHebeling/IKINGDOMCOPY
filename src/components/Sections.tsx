@@ -2060,7 +2060,7 @@ export function Contact() {
                     <div className="min-h-[20px]">
                       {status === "error" && (
                         <p className="text-[11px] font-light" style={{ color: "rgba(220,80,80,0.75)" }}>
-                          Error al enviar. Intenta de nuevo.
+                          {t("contact.eval.error")}
                         </p>
                       )}
                     </div>
