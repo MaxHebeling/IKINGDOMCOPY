@@ -2209,6 +2209,10 @@ const FOOTER_LEGAL_DEFS = [
 ];
 
 export function Footer() {
+  const { t } = useLang();
+  const FOOTER_NAV = FOOTER_NAV_DEFS.map((d) => ({ ...d, label: t(d.labelKey) }));
+  const FOOTER_SERVICES = FOOTER_SERVICE_KEYS.map((k) => t(k));
+  const FOOTER_LEGAL = FOOTER_LEGAL_DEFS.map((d) => ({ ...d, label: t(d.labelKey) }));
   return (
     <>
       <Divider />
