@@ -175,6 +175,7 @@ const planItem = {
 };
 
 export function Capabilities() {
+  const { t, lang } = useLang();
   return (
     <>
       <Divider />
