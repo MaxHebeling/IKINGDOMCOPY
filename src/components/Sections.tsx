@@ -281,7 +281,7 @@ export function Capabilities() {
                       {plan.note}
                     </div>
                     <motion.a
-                      href="/fit"
+                      href={`/${lang}/fit`}
                       whileTap={{ scale: 0.985 }}
                       onClick={() => trackCTAClick("capabilities-plan")}
                       className={[
