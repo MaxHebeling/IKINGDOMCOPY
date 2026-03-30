@@ -187,6 +187,10 @@ const T: Record<string, { en: string; es: string }> = {
   "contact.rev.3": { en: "$5M — $20M", es: "$5M — $20M" },
   "contact.rev.4": { en: "$20M — $100M", es: "$20M — $100M" },
   "contact.rev.5": { en: "$100M+", es: "$100M+" },
+
+  // Shared CTAs
+  "scarcity": { en: "We only accept 4–6 projects per quarter.", es: "Solo aceptamos 4–6 proyectos por trimestre." },
+  "cap.plan.cta": { en: "Request diagnosis", es: "Solicitar diagnóstico" },
 };
 
 interface LangCtx { lang: Lang; toggle: () => void; t: (k: string) => string }
