@@ -121,7 +121,6 @@ const en: Messages = {
 
   // Shared
   "scarcity": "We only accept 4–6 projects per quarter.",
-  "cap.plan.cta": "Request diagnosis",
 
   // ClarityStrip
   "clarity.headline": "Visibility is not the same as conversion.",
