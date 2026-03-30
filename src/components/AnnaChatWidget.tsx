@@ -75,6 +75,59 @@ function getOrCreateSession(): string {
 const GREETING =
   "¡Hola! Soy ANNA, asistente de iKingdom. ¿En qué puedo ayudarte hoy? 👋";
 
+// ─── Markdown renderer ────────────────────────────────────────────────────────
+
+function renderInline(text: string): React.ReactNode {
+  const parts: React.ReactNode[] = [];
+  const pattern = /(\*\*[^*\n]+\*\*|\*[^*\n]+\*|`[^`\n]+`)/g;
+  let last = 0;
+  let key = 0;
+  let match: RegExpExecArray | null;
+  while ((match = pattern.exec(text)) !== null) {
+    if (match.index > last) parts.push(text.slice(last, match.index));
+    const m = match[0];
+    if (m.startsWith("**"))
+      parts.push(<strong key={key++}>{m.slice(2, -2)}</strong>);
+    else if (m.startsWith("*"))
+      parts.push(<em key={key++}>{m.slice(1, -1)}</em>);
+    else
+      parts.push(<code key={key++} className="bg-white/10 rounded px-1 font-mono text-xs">{m.slice(1, -1)}</code>);
+    last = match.index + m.length;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return parts.length === 0 ? text : parts;
+}
+
+function renderMarkdown(text: string): React.ReactNode {
+  const blocks = text.split(/\n{2,}/);
+  return blocks.map((block, bi) => {
+    const lines = block.split("\n").filter((l) => l.trim() !== "" || block.trim() === "");
+    const isList = lines.every((l) => /^[\s]*[•\-]\s/.test(l) || l.trim() === "");
+    if (isList) {
+      return (
+        <ul key={bi} className={`space-y-0.5 ${bi > 0 ? "mt-2" : ""}`}>
+          {lines.filter((l) => l.trim()).map((l, i) => (
+            <li key={i} className="flex gap-1.5">
+              <span className="flex-shrink-0 select-none">•</span>
+              <span>{renderInline(l.replace(/^[\s]*[•\-]\s/, ""))}</span>
+            </li>
+          ))}
+        </ul>
+      );
+    }
+    return (
+      <p key={bi} className={bi > 0 ? "mt-2" : ""}>
+        {lines.map((l, li) => (
+          <Fragment key={li}>
+            {li > 0 && <br />}
+            {renderInline(l)}
+          </Fragment>
+        ))}
+      </p>
+    );
+  });
+}
+
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function AnnaChatWidget({ origin_page }: AnnaChatWidgetProps) {
