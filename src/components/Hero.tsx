@@ -85,7 +85,7 @@ export default function Hero() {
             >
               <div className="flex flex-wrap items-center gap-5">
                 <Link
-                  href="/fit"
+                  href={`/${lang}/fit`}
                   data-hover
                   className="group relative inline-flex items-center gap-3 px-8 py-[14px] text-[13px] font-semibold tracking-[0.14em] uppercase text-bg bg-ink overflow-hidden transition-all duration-500"
                 >
