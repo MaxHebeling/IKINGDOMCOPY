@@ -114,54 +114,24 @@ export function ClarityStrip() {
    CAPABILITIES
    ═══════════════════════════════════════════════════════════ */
 
-const plans = [
+const PLAN_DEFS = [
   {
-    name: "Web Estratégica",
-    price: "$3,500",
-    currency: "USD",
-    description: "Tu presencia digital lista para posicionar tu marca y convertir desde el primer día.",
-    features: [
-      "Diagnóstico estratégico",
-      "Arquitectura de mensaje y copy",
-      "Diseño premium alineado a tu marca",
-      "Desarrollo responsive optimizado",
-      "Analítica y métricas base",
-    ],
-    note: "Para proyectos que necesitan claridad estructural con ejecución rápida.",
-    highlighted: false,
+    nameKey: "cap.plan.1.name", price: "$3,500", currency: "USD",
+    descKey: "cap.plan.1.desc",
+    featureKeys: ["cap.plan.1.f1","cap.plan.1.f2","cap.plan.1.f3","cap.plan.1.f4","cap.plan.1.f5"],
+    noteKey: "cap.plan.1.note", highlighted: false,
   },
   {
-    name: "Sistema de Captación",
-    price: "$7,500",
-    currency: "USD",
-    description: "Tu sistema de venta operando. Capta, filtra y convierte clientes sin intervención manual.",
-    features: [
-      "Todo lo de Web Estratégica",
-      "Páginas de conversión adicionales",
-      "Integraciones CRM y automatización",
-      "Flujos de captación automatizados",
-      "Formularios avanzados + calificación",
-      "Seguimiento y nurturing de leads",
-    ],
-    note: "Para negocios que ya venden y necesitan un sistema que escale sus resultados.",
-    highlighted: true,
-    badge: "RECOMENDADO",
+    nameKey: "cap.plan.2.name", price: "$7,500", currency: "USD",
+    descKey: "cap.plan.2.desc",
+    featureKeys: ["cap.plan.2.f1","cap.plan.2.f2","cap.plan.2.f3","cap.plan.2.f4","cap.plan.2.f5","cap.plan.2.f6"],
+    noteKey: "cap.plan.2.note", highlighted: true, hasBadge: true,
   },
   {
-    name: "Ecosistema Completo",
-    price: "$25,000",
-    currency: "USD",
-    description: "Arquitectura digital completa para operar, escalar y crecer sin límite de estructura.",
-    features: [
-      "Arquitectura digital end-to-end",
-      "CRM y procesos conectados",
-      "Automatizaciones avanzadas",
-      "Flujos operativos internos",
-      "Integraciones a medida",
-      "Infraestructura pensada para escalar",
-    ],
-    note: "Para empresas que necesitan infraestructura sólida, no soluciones temporales.",
-    highlighted: false,
+    nameKey: "cap.plan.3.name", price: "$25,000", currency: "USD",
+    descKey: "cap.plan.3.desc",
+    featureKeys: ["cap.plan.3.f1","cap.plan.3.f2","cap.plan.3.f3","cap.plan.3.f4","cap.plan.3.f5","cap.plan.3.f6"],
+    noteKey: "cap.plan.3.note", highlighted: false,
   },
 ];
 
