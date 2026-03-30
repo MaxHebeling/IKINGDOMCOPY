@@ -2305,7 +2305,7 @@ export function Footer() {
 
             {/* ── Col 3 · Servicios ── */}
             <div>
-              <p className="text-[9px] tracking-[0.38em] uppercase mb-7" style={{ color: "rgba(212,175,55,0.55)" }}>Servicios</p>
+              <p className="text-[9px] tracking-[0.38em] uppercase mb-7" style={{ color: "rgba(212,175,55,0.55)" }}>{t("footer.services.label")}</p>
               <ul className="space-y-3.5">
                 {FOOTER_SERVICES.map((s) => (
                   <li key={s} className="text-[13px] font-light leading-[1.55]" style={{ color: "rgba(212,175,55,0.62)" }}>{s}</li>
