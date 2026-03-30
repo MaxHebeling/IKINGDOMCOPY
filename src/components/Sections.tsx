@@ -2170,16 +2170,16 @@ export function DisqualificationSection() {
           <Reveal delay={0.58}>
             <div className="mt-14">
               <a
-                href="/fit"
+                href={`/${lang}/fit`}
                 data-hover
                 onClick={() => trackCTAClick("disqualification")}
                 className="group relative inline-flex items-center gap-3 px-8 py-[13px] text-[12px] font-semibold tracking-[0.18em] uppercase text-ink border border-ink/20 overflow-hidden transition-all duration-500 hover:text-bg hover:border-ink"
               >
                 <div className="absolute inset-0 bg-ink origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
-                <span className="relative z-10 transition-colors duration-500">Aplicar para diagnóstico estratégico →</span>
+                <span className="relative z-10 transition-colors duration-500">{t("hero.cta")} →</span>
               </a>
               <p className="mt-5 text-[10px] tracking-[0.28em] uppercase" style={{ color: "rgba(212,175,55,0.28)" }}>
-                Solo aceptamos 4–6 proyectos por trimestre.
+                {t("scarcity")}
               </p>
             </div>
           </Reveal>
