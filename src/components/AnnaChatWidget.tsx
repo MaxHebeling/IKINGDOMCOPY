@@ -201,10 +201,10 @@ export default function AnnaChatWidget({ origin_page }: AnnaChatWidgetProps) {
           >
             <div className="flex items-center gap-2 min-w-0">
               <div
-                className="flex-shrink-0 size-8 rounded-full flex items-center justify-center text-base"
-                style={{ background: "rgba(255,255,255,0.15)" }}
+                className="flex-shrink-0 size-8 rounded-full flex items-center justify-center"
+                style={{ background: "rgba(212,175,55,0.15)", color: THEME.accentColor }}
               >
-                {THEME.avatarEmoji}
+                <IKLogo className="size-5" />
               </div>
               <div className="min-w-0">
                 <p className="text-sm font-semibold leading-none">{THEME.botName}</p>
