@@ -1760,7 +1760,7 @@ export function Engagement() {
               >
                 <div className="absolute top-0 left-1/4 right-1/4 h-[1px]" style={{ background: "linear-gradient(90deg, rgba(212,175,55,0) 0%, rgba(212,175,55,0.22) 50%, rgba(212,175,55,0) 100%)" }} />
                 <p className="text-[10px] font-semibold tracking-[0.42em] uppercase mb-10" style={{ color: "rgba(212,175,55,0.55)" }}>
-                  No es para
+                  {t("eng.fit.not")}
                 </p>
                 <div className="space-y-9">
                   {FIT_NOT.map((item) => (
