@@ -79,7 +79,7 @@ const GREETING =
 
 function renderInline(text: string): React.ReactNode {
   const parts: React.ReactNode[] = [];
-  const pattern = /(\*\*[^*\n]+\*\*|\*[^*\n]+\*|`[^`\n]+`|https?:\/\/[^\s]+)/g;
+  const pattern = /(\*\*[^*\n]+\*\*|\*[^*\n]+\*|`[^`\n]+`|https?:\/\/[^\s]*[^\s.,;:!?)'"»])/g;
   let last = 0;
   let key = 0;
   let match: RegExpExecArray | null;
