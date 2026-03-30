@@ -110,15 +110,36 @@ export default function Navbar() {
               </motion.a>
             ))}
             <motion.a
-              href="/fit"
+              href={fitHref}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: LINKS.length * 0.06 + 0.06 }}
               onClick={() => setOpen(false)}
               className="mt-2 px-8 py-3 text-[12px] font-semibold tracking-[0.22em] uppercase text-bg bg-ink"
             >
-              Solicitar diagnóstico
+              {t("hero.cta")}
             </motion.a>
+            {/* Mobile language switcher */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: LINKS.length * 0.06 + 0.12 }}
+              className="flex items-center gap-3 text-[11px] font-semibold tracking-[0.22em] uppercase mt-2"
+            >
+              <button
+                onClick={() => { switchLang("es"); setOpen(false); }}
+                style={{ color: lang === "es" ? "rgba(212,175,55,0.9)" : "rgba(201,209,217,0.3)" }}
+              >
+                ES
+              </button>
+              <span style={{ color: "rgba(201,209,217,0.2)" }}>|</span>
+              <button
+                onClick={() => { switchLang("en"); setOpen(false); }}
+                style={{ color: lang === "en" ? "rgba(212,175,55,0.9)" : "rgba(201,209,217,0.3)" }}
+              >
+                EN
+              </button>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
