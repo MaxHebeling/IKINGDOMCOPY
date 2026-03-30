@@ -288,15 +288,14 @@ export function Capabilities() {
    WHAT WE DO — premium value proposition slide
    ═══════════════════════════════════════════════════════════ */
 
-const WWD_CARDS = [
+const WWD_CARD_DEFS = [
   {
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="4" /><line x1="12" y1="2" x2="12" y2="6" /><line x1="12" y1="18" x2="12" y2="22" /><line x1="2" y1="12" x2="6" y2="12" /><line x1="18" y1="12" x2="22" y2="12" />
       </svg>
     ),
-    title: "Posicionamiento estratégico",
-    desc: "Definimos el mensaje exacto que mueve a tu cliente ideal a tomar acción.",
+    titleKey: "wwd.card.1.title", descKey: "wwd.card.1.desc",
   },
   {
     icon: (
@@ -304,8 +303,7 @@ const WWD_CARDS = [
         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
       </svg>
     ),
-    title: "Autoridad visual premium",
-    desc: "Diseño que justifica tu precio antes de que el cliente lea una palabra.",
+    titleKey: "wwd.card.2.title", descKey: "wwd.card.2.desc",
   },
   {
     icon: (
@@ -313,8 +311,7 @@ const WWD_CARDS = [
         <rect x="2" y="3" width="20" height="5" rx="1" /><rect x="2" y="10" width="20" height="5" rx="1" /><rect x="2" y="17" width="20" height="5" rx="1" />
       </svg>
     ),
-    title: "Arquitectura de conversión",
-    desc: "Cada elemento tiene un propósito comercial. Nada es decorativo.",
+    titleKey: "wwd.card.3.title", descKey: "wwd.card.3.desc",
   },
   {
     icon: (
@@ -322,8 +319,7 @@ const WWD_CARDS = [
         <path d="M3 11l19-9-9 19-2-8-8-2z" />
       </svg>
     ),
-    title: "Sistemas de captación activa",
-    desc: "Infraestructura que genera y califica prospectos de forma continua.",
+    titleKey: "wwd.card.4.title", descKey: "wwd.card.4.desc",
   },
 ];
 
