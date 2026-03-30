@@ -889,12 +889,12 @@ export function Clients() {
 
           {/* Header */}
           <Reveal className="mb-8 md:mb-20">
-            <Label>Confianza</Label>
+            <Label>{t("clients.label")}</Label>
             <h2 className="mt-5 text-ink leading-[1.08] max-w-[680px]" style={{ fontSize: "clamp(26px, 3.2vw, 44px)", letterSpacing: "-0.03em" }}>
-              Empresas que confiaron en nosotros para crecer con estructura, no con intuición.
+              {t("clients.heading")}
             </h2>
             <p className="mt-4 text-secondary text-[13px] leading-[1.85] font-light max-w-[500px]">
-              No mostramos logos. Mostramos relaciones construidas sobre dirección, sistema y ejecución.
+              {t("clients.sub")}
             </p>
             <motion.div
               className="mt-6 flex items-center gap-4"
