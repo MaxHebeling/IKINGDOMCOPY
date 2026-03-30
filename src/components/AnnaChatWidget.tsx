@@ -24,15 +24,33 @@ interface AnnaChatWidgetProps {
 // ─── Theme (iKingdom) ─────────────────────────────────────────────────────────
 
 const THEME = {
-  headerBg: "#1e1b4b",
-  headerText: "#ffffff",
-  accentColor: "#4f46e5",
-  accentText: "#ffffff",
+  headerBg: "#041E39",
+  headerText: "#F8F6F1",
+  accentColor: "#D4AF37",
+  accentText: "#041E39",
   botName: "ANNA",
   brandLabel: "iKingdom Digital",
-  avatarEmoji: "👑",
   placeholder: "¿En qué te puedo ayudar?",
 };
+
+// ─── IK Logo SVG (from favicon, no background) ───────────────────────────────
+
+function IKLogo({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 800 800"
+      className={className}
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <rect x="108" y="148" width="88" height="88" />
+      <rect x="108" y="285" width="88" height="420" />
+      <rect x="296" y="148" width="88" height="557" />
+      <polygon points="384,400 692,148 580,148 296,348 296,420" />
+      <polygon points="296,385 296,460 580,705 692,705 384,415" />
+    </svg>
+  );
+}
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
