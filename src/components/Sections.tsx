@@ -1701,6 +1701,8 @@ function FitBG() {
 
 export function Engagement() {
   const { t, lang } = useLang();
+  const FIT_IDEAL = FIT_IDEAL_DEFS.map((d) => ({ ...d, text: t(d.textKey) }));
+  const FIT_NOT = FIT_NOT_DEFS.map((d) => ({ ...d, text: t(d.textKey) }));
   return (
     <>
       <Divider />
@@ -1715,14 +1717,14 @@ export function Engagement() {
         </div>
 
         <div className="relative z-10 max-w-[1280px] mx-auto">
-          <Reveal><Label>Fit del proyecto</Label></Reveal>
+          <Reveal><Label>{t("eng.fit.label")}</Label></Reveal>
 
           <Reveal delay={0.1}>
             <h2
               className="mt-6 text-ink leading-[1.06]"
               style={{ fontSize: "clamp(38px, 5vw, 66px)" }}
             >
-              Para quién sí<br className="hidden md:block" /> tiene sentido.
+              {t("eng.fit.heading")}
             </h2>
           </Reveal>
 
@@ -1735,7 +1737,7 @@ export function Engagement() {
               >
                 <div className="absolute top-0 left-0 w-2/3 h-[1px]" style={{ background: "linear-gradient(90deg, rgba(212,175,55,0.5) 0%, rgba(212,175,55,0) 100%)" }} />
                 <p className="text-[10px] font-semibold tracking-[0.42em] uppercase mb-10" style={{ color: "rgba(212,175,55,0.5)" }}>
-                  Ideal para
+                  {t("eng.fit.ideal")}
                 </p>
                 <div className="space-y-9">
                   {FIT_IDEAL.map((item) => (
