@@ -79,7 +79,7 @@ const GREETING =
 
 function renderInline(text: string): React.ReactNode {
   const parts: React.ReactNode[] = [];
-  const pattern = /(\*\*[^*\n]+\*\*|\*[^*\n]+\*|`[^`\n]+`)/g;
+  const pattern = /(\*\*[^*\n]+\*\*|\*[^*\n]+\*|`[^`\n]+`|https?:\/\/[^\s]+)/g;
   let last = 0;
   let key = 0;
   let match: RegExpExecArray | null;
@@ -90,8 +90,18 @@ function renderInline(text: string): React.ReactNode {
       parts.push(<strong key={key++}>{m.slice(2, -2)}</strong>);
     else if (m.startsWith("*"))
       parts.push(<em key={key++}>{m.slice(1, -1)}</em>);
-    else
+    else if (m.startsWith("`"))
       parts.push(<code key={key++} className="bg-white/10 rounded px-1 font-mono text-xs">{m.slice(1, -1)}</code>);
+    else if (m.includes("calendly.com"))
+      parts.push(
+        <a key={key++} href={m} target="_blank" rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 mt-1 px-3 py-1.5 rounded-lg text-xs font-semibold no-underline transition-opacity hover:opacity-80"
+          style={{ background: THEME.accentColor, color: THEME.accentText }}>
+          📅 Agendar llamada
+        </a>
+      );
+    else
+      parts.push(<a key={key++} href={m} target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80 break-all">{m}</a>);
     last = match.index + m.length;
   }
   if (last < text.length) parts.push(text.slice(last));
