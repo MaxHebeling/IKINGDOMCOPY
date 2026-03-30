@@ -2315,7 +2315,7 @@ export function Footer() {
 
             {/* ── Col 4 · Contacto ── */}
             <div>
-              <p className="text-[9px] tracking-[0.38em] uppercase mb-7" style={{ color: "rgba(212,175,55,0.55)" }}>Contacto</p>
+              <p className="text-[9px] tracking-[0.38em] uppercase mb-7" style={{ color: "rgba(212,175,55,0.55)" }}>{t("footer.contact.label")}</p>
               <ul className="space-y-4">
                 <li>
                   <a href="mailto:executive@ikingdom.org" data-hover
