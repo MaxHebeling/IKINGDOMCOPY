@@ -474,6 +474,7 @@ function DigitalArchBg() {
 
 export function WhatWeDo() {
   const { t, lang } = useLang();
+  const WWD_CARDS = WWD_CARD_DEFS.map((c) => ({ ...c, title: t(c.titleKey), desc: t(c.descKey) }));
   return (
     <>
       <Divider />
@@ -485,17 +486,17 @@ export function WhatWeDo() {
           <div className="text-center mb-[80px]">
             <Reveal>
               <p className="text-[10px] font-semibold tracking-[0.4em] uppercase text-secondary mb-6">
-                Nuestra diferencia
+                {t("wwd.label")}
               </p>
             </Reveal>
             <Reveal delay={0.1}>
               <h2 className="text-white mb-5 leading-[1.06]" style={{ fontSize: "clamp(36px, 5vw, 60px)" }}>
-                No somos una agencia.<br className="hidden md:block" /> Diseñamos la infraestructura que hace que tu negocio venda.
+                {t("wwd.heading")}
               </h2>
             </Reveal>
             <Reveal delay={0.2}>
               <p className="text-secondary text-[16px] leading-[1.85] font-light max-w-[600px] mx-auto">
-                Cada decisión apunta a un resultado comercial medible. No ejecutamos tareas — construimos sistemas que operan.
+                {t("wwd.sub")}
               </p>
             </Reveal>
           </div>
