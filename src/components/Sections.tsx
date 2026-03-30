@@ -2076,11 +2076,11 @@ export function Contact() {
                         {status === "loading" ? (
                           <>
                             <span className="inline-block w-3 h-3 border border-current border-t-transparent rounded-full" style={{ animation: "spin 0.8s linear infinite" }} />
-                            PROCESANDO
+                            {t("contact.eval.submit.loading")}
                           </>
                         ) : (
                           <>
-                            SOLICITAR DIAGNÓSTICO ESTRATÉGICO
+                            {t("contact.eval.submit")}
                             <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
                               <path d="M2 6.5h9M8 3l3.5 3.5L8 10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
