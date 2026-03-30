@@ -542,6 +542,7 @@ export function WhatWeDo() {
    ═══════════════════════════════════════════════════════════ */
 
 export function Marquee() {
+  const { t } = useLang();
   return (
     <div className="border-y border-divider py-14 md:py-20 px-8 text-center">
       <motion.h2
@@ -550,8 +551,8 @@ export function Marquee() {
         className="text-[clamp(22px,3.5vw,44px)] font-light leading-[1.3] tracking-[-0.01em]"
         style={{}}
       >
-        El problema no es tener presencia digital.<br />
-        Es no tener un sistema que venda.
+        {t("marquee.1")}<br />
+        {t("marquee.2")}
       </motion.h2>
     </div>
   );
