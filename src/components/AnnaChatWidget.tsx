@@ -6,8 +6,8 @@
  * Standalone — no shadcn dependencies.
  */
 
-import { useEffect, useRef, useState } from "react";
-import { Bot, Loader2, Send, X } from "lucide-react";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { Loader2, Send, X } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
