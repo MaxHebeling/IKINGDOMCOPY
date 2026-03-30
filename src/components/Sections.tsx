@@ -176,17 +176,17 @@ export function Capabilities() {
           >
             <div className="mb-5 inline-flex items-center justify-center gap-3 text-[11px] font-medium uppercase tracking-[0.38em] text-[#C9A85C]">
               <span className="h-px w-8 bg-[#C9A85C]/50" />
-              Soluciones
+              {t("cap.label")}
               <span className="h-px w-8 bg-[#C9A85C]/50" />
             </div>
             <h2 className="text-4xl font-semibold leading-tight tracking-[-0.04em] text-white md:text-5xl lg:text-6xl">
-              Arquitecturas diseñadas para escalar tu negocio.
+              {t("cap.section.heading")}
             </h2>
             <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-white/60 md:text-lg">
-              No vendemos páginas web. Construimos sistemas que convierten, posicionan y sostienen crecimiento real.
+              {t("cap.section.sub")}
             </p>
             <p className="mt-5 text-[11px] tracking-[0.32em] uppercase" style={{ color: "rgba(201,168,92,0.55)" }}>
-              Seleccionamos el nivel según tu estructura actual y objetivos.
+              {t("cap.section.select")}
             </p>
           </motion.div>
 
