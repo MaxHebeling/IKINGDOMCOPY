@@ -2117,6 +2117,7 @@ export function Contact() {
    ═══════════════════════════════════════════════════════════ */
 
 export function DisqualificationSection() {
+  const { t, lang } = useLang();
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-10%" });
 
