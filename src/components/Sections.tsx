@@ -291,7 +291,7 @@ export function Capabilities() {
                           : "border border-[#C9A85C]/30 bg-transparent text-[#D1B168] hover:border-[#D1B168]/60 hover:bg-[#C9A85C]/8",
                       ].join(" ")}
                     >
-                      Solicitar diagnóstico
+                      {t("cap.plan.cta")}
                       <ArrowRight className="h-4 w-4" />
                     </motion.a>
                   </div>
