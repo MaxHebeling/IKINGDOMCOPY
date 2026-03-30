@@ -308,7 +308,7 @@ export default function AnnaChatWidget({ origin_page }: AnnaChatWidgetProps) {
         style={{ background: THEME.accentColor, color: THEME.accentText }}
         aria-label={isOpen ? "Cerrar chat con ANNA" : "Chatear con ANNA"}
       >
-        {isOpen ? <X className="size-6" /> : THEME.avatarEmoji}
+        {isOpen ? <X className="size-6" /> : <IKLogo className="size-8" />}
       </button>
     </div>
   );
