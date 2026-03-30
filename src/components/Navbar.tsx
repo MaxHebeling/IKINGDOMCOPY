@@ -6,9 +6,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLang } from "@/context/Lang";
 
 export default function Navbar() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const pathname = usePathname();
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  function switchLang(target: "es" | "en") {
+    const newPath = pathname.replace(/^\/(es|en)/, `/${target}`);
+    router.push(newPath === pathname ? `/${target}` : newPath);
+  }
 
   const LINKS = [
     { label: t("nav.capabilities"), href: "#capabilities" },
