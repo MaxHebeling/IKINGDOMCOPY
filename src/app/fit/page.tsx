@@ -676,6 +676,7 @@ export default function FitIntake() {
             style={{ color: "rgba(180,210,255,0.2)" }}>Términos</Link>
         </div>
       </div>
+      <AnnaChatWidget origin_page="/fit" />
     </div>
   );
 }
