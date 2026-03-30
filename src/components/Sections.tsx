@@ -861,6 +861,7 @@ function VelocityNode({
 }
 
 export function Clients() {
+  const { t } = useLang();
   const sectionRef = useRef<HTMLDivElement>(null);
   const inView = useInView(sectionRef, { once: true, margin: "-12%" });
 
