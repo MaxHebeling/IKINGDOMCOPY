@@ -197,8 +197,8 @@ interface LangCtx { lang: Lang; toggle: () => void; t: (k: string) => string }
 
 const Ctx = createContext<LangCtx>({ lang: "es", toggle: () => {}, t: (k) => k });
 
-export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>("es");
+export function LangProvider({ children, initialLang = "es" }: { children: ReactNode; initialLang?: Lang }) {
+  const [lang, setLang] = useState<Lang>(initialLang);
   const toggle = useCallback(() => setLang((l) => (l === "en" ? "es" : "en")), []);
   const t = useCallback((k: string) => T[k]?.[lang] ?? k, [lang]);
   return <Ctx.Provider value={{ lang, toggle, t }}>{children}</Ctx.Provider>;
