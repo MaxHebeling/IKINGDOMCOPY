@@ -7,6 +7,7 @@ import { locales, type Locale } from "@/i18n/config";
 import { notFound } from "next/navigation";
 import Cursor from "@/components/Cursor";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import AnnaChatWidget from "@/components/AnnaChatWidget";
 import SpaceShipPass from "@/components/SpaceShipPass";
 import LightningPass from "@/components/LightningPass";
 import Navbar from "@/components/Navbar";
