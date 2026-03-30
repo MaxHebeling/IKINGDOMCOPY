@@ -2345,7 +2345,7 @@ export function Footer() {
                   onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(212,175,55,1)"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(212,175,55,0.55)"; }}
                 >
-                  Agendar estrategia
+                  {t("footer.contact.cta")}
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                     <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
