@@ -25,9 +25,6 @@ export default function LocalePage({ params }: { params: Promise<{ lang: string 
 
   return (
     <LangProvider initialLang={lang as Locale}>
-      {/* ── Cinematic scroll intro — sits before all other content ── */}
-      {/* Remove <SpaceIntroShell /> here to disable the intro entirely. */}
-      <SpaceIntroShell />
       <Cursor />
       <WhatsAppButton />
       <AnnaChatWidget origin_page={`/${lang}`} />
