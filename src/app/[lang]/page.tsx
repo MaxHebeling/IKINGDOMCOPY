@@ -14,6 +14,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import PixelBrain from "@/components/PixelBrain";
 import AmbientLight from "@/components/AmbientLight";
+import SpaceIntroShell from "@/components/experience/SpaceIntroShell";
 import {
   ClarityStrip, WhatWeDo, Capabilities, Marquee, Process,
   Proof, Clients, Engagement, Contact, DisqualificationSection, Footer,
