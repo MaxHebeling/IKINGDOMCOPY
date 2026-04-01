@@ -151,7 +151,7 @@ export default function AduablBriefPage() {
           <p style={{ fontSize: "15px", color: APPLE.secondary, lineHeight: 1.7, marginBottom: "32px" }}>
             Thank you, Will. Our team will review your brief and follow up at <strong style={{ color: APPLE.ink }}>will@aduabl.com</strong> within one business day.
           </p>
-          <p style={{ fontSize: "13px", color: APPLE.secondary, opacity: 0.7 }}>Questions? Reach us at jordan@ikingdom.ai</p>
+          <p style={{ fontSize: "13px", color: APPLE.secondary, opacity: 0.7 }}>Questions? Reach us at executive@ikingdom.org</p>
         </motion.div>
       </div>
     );
@@ -345,7 +345,7 @@ export default function AduablBriefPage() {
               Submit Brief
             </button>
             <p style={{ fontSize: "12px", color: APPLE.secondary, marginTop: "14px", opacity: 0.6 }}>
-              Complete the briefing above and return to <strong style={{ opacity: 1 }}>jordan@ikingdom.ai</strong>
+              Complete the briefing above and return to <strong style={{ opacity: 1 }}>executive@ikingdom.org</strong>
             </p>
           </div>
         </Reveal>
