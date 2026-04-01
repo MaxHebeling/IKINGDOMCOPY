@@ -91,11 +91,10 @@ export default function SpaceIntroShell() {
     return () => cleanup?.();
   }, []);
 
-  // ── Reduced-motion: skip intro, site appears immediately ─────────────────
-  if (reducedMotion) return null;
-
-  // ── Mobile: CSS-only lightweight starfield, no WebGL ─────────────────────
-  if (mobile) {
+  // ── Reduced-motion OR mobile: CSS-only static backdrop, no WebGL ────────
+  // (was `return null` for reduced-motion — changed to static section so
+  //  the intro always occupies space and the hero doesn't jump to the top)
+  if (reducedMotion || mobile) {
     return (
       <section
         aria-hidden="true"
