@@ -228,7 +228,7 @@
   font-family: inherit;
 }
 .tag:hover { border-color: #aaa; color: #333; }
-.tag.sel { background: var(--navy); border-color: var(--navy); color: var(--gold); }
+.tag.sel { background: var(--navy); border-color: var(--navy); color: #fff; }
 
 /* ─── NAVIGATION ──────────────────────────────────────────────────────────── */
 .nav {
