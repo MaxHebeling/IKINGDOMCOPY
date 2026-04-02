@@ -38,11 +38,7 @@ export interface LeadBriefPayload {
   generatedPrompt?: string;
   origen?: string;
   fecha?: string;
-<<<<<<< HEAD
-  /** Ruta del formulario (ej. "/cjaoficial") para tracking */
-=======
   /** Ruta pública del formulario (p. ej. "/cjaoficial") para tracking en leads y briefs */
->>>>>>> origin/main
   originPage?: string;
 }
 
