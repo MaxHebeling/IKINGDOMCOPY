@@ -606,21 +606,325 @@ export default function BriefForm() {
 
 // ─── SMALL HELPERS ────────────────────────────────────────────────────────────
 
-function Header() {
+function HeroSection() {
+  const stats: [string, string][] = [
+    ["110", "Años de historia"],
+    ["60K+", "Comunidad"],
+    ["8 min", "Para completar"],
+    ["48h", "Respuesta"],
+  ];
   return (
-    <header className={styles.hdr}>
-      <div className={styles.brand}>
-        <span className={styles.brandI}>i</span>
-        <span className={styles.brandK}>K</span>
-        <span className={styles.brandRest}>ingdom</span>
+    <div
+      style={{
+        background: "#0A0F1E",
+        borderRadius: "16px",
+        padding: "2.5rem 2rem 2rem",
+        marginBottom: "1.75rem",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "3px",
+          background: "#0A84FF",
+        }}
+      />
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: "1.75rem",
+        }}
+      >
+        <div style={{ fontSize: "18px", fontWeight: 600, letterSpacing: "2px", color: "#fff" }}>
+          <span style={{ color: "#0A84FF" }}>i</span>Kingdom
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <img
+            src="/logos/escudo-cja.png"
+            width={40}
+            height={40}
+            alt="CJA"
+            style={{ objectFit: "contain" }}
+          />
+          <span style={{ color: "#333", fontSize: "14px" }}>×</span>
+          <div style={{ fontSize: "13px", color: "#fff", fontWeight: 500 }}>
+            Juventud Antoniana
+            <br />
+            <span style={{ fontSize: "11px", color: "#8899BB" }}>Salta · 1916</span>
+          </div>
+        </div>
       </div>
-      <p className={styles.hdrSub}>Digital Strategy &amp; Growth Consulting</p>
-      <h1 className={styles.hdrTitle}>Brief de diagnóstico digital</h1>
-      <p className={styles.hdrDesc}>
-        Completá este formulario para que nuestro equipo entienda tu club, tu negocio y
-        tus objetivos. Tarda menos de 8 minutos.
-      </p>
-    </header>
+      <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+        <p
+          style={{
+            fontSize: "11px",
+            color: "#0A84FF",
+            letterSpacing: "3px",
+            textTransform: "uppercase",
+            marginBottom: ".6rem",
+          }}
+        >
+          Brief de diagnóstico digital
+        </p>
+        <h1
+          style={{
+            fontSize: "26px",
+            fontWeight: 600,
+            color: "#fff",
+            lineHeight: 1.25,
+            marginBottom: ".75rem",
+          }}
+        >
+          Tu club, tu historia,
+          <br />
+          <span style={{ color: "#0A84FF" }}>tu plataforma</span>
+        </h1>
+        <p
+          style={{
+            fontSize: "13px",
+            color: "#8899BB",
+            lineHeight: 1.6,
+            maxWidth: "400px",
+            margin: "0 auto",
+          }}
+        >
+          Completá el formulario y el equipo de iKingdom diseña la estrategia digital que tu club
+          merece.
+        </p>
+      </div>
+      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: "0" }}>
+        <div style={{ width: "260px", flexShrink: 0 }}>
+          <div
+            style={{
+              background: "#1C1C1E",
+              borderRadius: "8px 8px 0 0",
+              border: "2px solid #2C2C2E",
+              padding: "10px 10px 6px",
+            }}
+          >
+            <div
+              style={{
+                width: "50px",
+                height: "7px",
+                background: "#0A0F1E",
+                borderRadius: "0 0 5px 5px",
+                margin: "0 auto 6px",
+              }}
+            />
+            <div style={{ background: "#111827", borderRadius: "4px", height: "130px", padding: "8px" }}>
+              <div
+                style={{
+                  background: "#0A84FF",
+                  borderRadius: "3px",
+                  padding: "4px 6px",
+                  marginBottom: "6px",
+                }}
+              >
+                <div style={{ fontSize: "6px", color: "#fff", fontWeight: 600 }}>
+                  iKingdom · Brief digital
+                </div>
+                <div style={{ fontSize: "5px", color: "rgba(255,255,255,.7)" }}>Juventud Antoniana</div>
+              </div>
+              <div
+                style={{
+                  height: "2px",
+                  background: "#1E293B",
+                  borderRadius: "1px",
+                  marginBottom: "6px",
+                  overflow: "hidden",
+                }}
+              >
+                <div style={{ height: "100%", width: "40%", background: "#0A84FF" }} />
+              </div>
+              <div style={{ height: "8px", background: "#1E293B", borderRadius: "2px", marginBottom: "4px" }} />
+              <div style={{ display: "flex", gap: "3px", marginBottom: "4px" }}>
+                <div style={{ flex: 1, height: "8px", background: "#1E293B", borderRadius: "2px" }} />
+                <div style={{ flex: 1, height: "8px", background: "#1E293B", borderRadius: "2px" }} />
+              </div>
+              <div style={{ height: "8px", background: "#1E293B", borderRadius: "2px", marginBottom: "4px" }} />
+              <div
+                style={{
+                  background: "#0A84FF",
+                  borderRadius: "2px",
+                  padding: "3px 6px",
+                  textAlign: "center",
+                  marginTop: "8px",
+                }}
+              >
+                <div style={{ fontSize: "5px", color: "#fff", fontWeight: 600 }}>Siguiente →</div>
+              </div>
+            </div>
+          </div>
+          <div style={{ background: "#2C2C2E", height: "6px", margin: "0 -2px" }} />
+          <div style={{ width: "100px", height: "4px", background: "#1C1C1E", borderRadius: "2px", margin: "0 auto" }} />
+        </div>
+        <div style={{ width: "130px", flexShrink: 0, margin: "0 -6px", zIndex: 2 }}>
+          <div
+            style={{
+              background: "#1C1C1E",
+              borderRadius: "10px",
+              border: "2px solid #2C2C2E",
+              padding: "8px 5px",
+            }}
+          >
+            <div
+              style={{
+                width: "5px",
+                height: "5px",
+                borderRadius: "50%",
+                background: "#2C2C2E",
+                margin: "0 auto 5px",
+              }}
+            />
+            <div style={{ background: "#111827", borderRadius: "4px", height: "155px", padding: "8px" }}>
+              <div
+                style={{
+                  background: "#0A84FF",
+                  borderRadius: "3px",
+                  padding: "5px 6px",
+                  marginBottom: "6px",
+                }}
+              >
+                <div style={{ fontSize: "7px", color: "#fff", fontWeight: 600 }}>Brief · iKingdom</div>
+                <div style={{ fontSize: "5px", color: "rgba(255,255,255,.7)" }}>Juventud Antoniana</div>
+              </div>
+              <div
+                style={{
+                  height: "2px",
+                  background: "#1E293B",
+                  borderRadius: "1px",
+                  marginBottom: "6px",
+                  overflow: "hidden",
+                }}
+              >
+                <div style={{ height: "100%", width: "25%", background: "#0A84FF" }} />
+              </div>
+              <div style={{ fontSize: "5px", color: "#0A84FF", fontWeight: 600, marginBottom: "3px" }}>
+                SECCIÓN 01
+              </div>
+              <div style={{ fontSize: "7px", color: "#E5E7EB", fontWeight: 500, marginBottom: "5px" }}>
+                Datos del club
+              </div>
+              <div style={{ height: "12px", background: "#1E293B", borderRadius: "2px", marginBottom: "4px" }} />
+              <div style={{ display: "flex", gap: "3px" }}>
+                <div style={{ flex: 1, height: "12px", background: "#1E293B", borderRadius: "2px" }} />
+                <div style={{ flex: 1, height: "12px", background: "#1E293B", borderRadius: "2px" }} />
+              </div>
+            </div>
+            <div
+              style={{
+                width: "22px",
+                height: "22px",
+                borderRadius: "50%",
+                background: "#2C2C2E",
+                margin: "5px auto 0",
+              }}
+            />
+          </div>
+        </div>
+        <div style={{ width: "75px", flexShrink: 0 }}>
+          <div
+            style={{
+              background: "#1C1C1E",
+              borderRadius: "14px",
+              border: "2px solid #2C2C2E",
+              padding: "7px 5px",
+            }}
+          >
+            <div
+              style={{
+                width: "26px",
+                height: "6px",
+                background: "#0A0F1E",
+                borderRadius: "4px",
+                margin: "0 auto 4px",
+              }}
+            />
+            <div style={{ background: "#111827", borderRadius: "6px", height: "125px", padding: "6px" }}>
+              <div
+                style={{
+                  background: "#0A84FF",
+                  borderRadius: "3px",
+                  padding: "3px 4px",
+                  marginBottom: "4px",
+                }}
+              >
+                <div style={{ fontSize: "5.5px", color: "#fff", fontWeight: 600 }}>iKingdom</div>
+                <div style={{ fontSize: "4px", color: "rgba(255,255,255,.7)" }}>Paso 3 de 5</div>
+              </div>
+              <div
+                style={{
+                  height: "2px",
+                  background: "#1E293B",
+                  borderRadius: "1px",
+                  marginBottom: "4px",
+                  overflow: "hidden",
+                }}
+              >
+                <div style={{ height: "100%", width: "60%", background: "#0A84FF" }} />
+              </div>
+              <div style={{ height: "9px", background: "#1E293B", borderRadius: "2px", marginBottom: "3px" }} />
+              <div style={{ height: "9px", background: "#1E293B", borderRadius: "2px", marginBottom: "3px" }} />
+              <div style={{ height: "9px", background: "#1E293B", borderRadius: "2px", marginBottom: "3px" }} />
+              <div
+                style={{
+                  background: "#0A84FF",
+                  borderRadius: "3px",
+                  padding: "3px",
+                  textAlign: "center",
+                  marginTop: "8px",
+                }}
+              >
+                <div style={{ fontSize: "5px", color: "#fff", fontWeight: 600 }}>Siguiente →</div>
+              </div>
+            </div>
+            <div
+              style={{
+                width: "26px",
+                height: "3px",
+                background: "#2C2C2E",
+                borderRadius: "2px",
+                margin: "4px auto 0",
+              }}
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "2rem",
+          marginTop: "2rem",
+          paddingTop: "1.5rem",
+          borderTop: "0.5px solid #1E2A3A",
+        }}
+      >
+        {stats.map(([v, l]) => (
+          <div key={l} style={{ textAlign: "center" }}>
+            <div style={{ fontSize: "20px", fontWeight: 600, color: "#0A84FF" }}>{v}</div>
+            <div
+              style={{
+                fontSize: "10px",
+                color: "#4B5563",
+                letterSpacing: ".5px",
+                textTransform: "uppercase",
+                marginTop: "2px",
+              }}
+            >
+              {l}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
