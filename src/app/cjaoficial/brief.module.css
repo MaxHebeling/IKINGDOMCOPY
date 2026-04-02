@@ -264,7 +264,7 @@
 .btnNext:hover { opacity: 0.88; }
 .btnSubmit {
   background: var(--gold);
-  color: #000;
+  color: #fff;
   margin-left: auto;
 }
 .btnSubmit:hover { opacity: 0.88; }
