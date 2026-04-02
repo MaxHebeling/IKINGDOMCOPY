@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import styles from "./brief.module.css";
+import styles from "../../cjaoficial/brief.module.css";
 
 // ─── REEMPLAZÁ ESTO con tu form ID de Formspree ──────────────────────────────
 // 1. Creá cuenta gratis en https://formspree.io
