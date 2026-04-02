@@ -653,9 +653,7 @@ function HeroSection() {
             alt="CJA"
             style={{ objectFit: "contain" }}
           />
-          <span style={{ color: "#6B7280", fontSize: "14px" }} aria-hidden>
-            ×
-          </span>
+          <span style={{ color: "#555", fontSize: "14px" }}>×</span>
           <div style={{ fontSize: "13px", color: "#fff", fontWeight: 500 }}>
             Juventud Antoniana
             <br />
@@ -701,7 +699,7 @@ function HeroSection() {
           merece.
         </p>
       </div>
-      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: "0" }}>
+      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
         <div style={{ width: "260px", flexShrink: 0 }}>
           <div
             style={{
