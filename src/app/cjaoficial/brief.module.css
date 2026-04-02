@@ -15,7 +15,8 @@
 
 /* ─── HEADER ──────────────────────────────────────────────────────────────── */
 .hdr {
-  background: var(--navy);
+  background: #ffffff;
+  border: 0.5px solid #E5E7EB;
   border-radius: 14px;
   padding: 2rem 2rem 1.75rem;
   margin-bottom: 1.75rem;
@@ -27,29 +28,15 @@
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 4px;
-  background: var(--gold);
+  background: #0A84FF;
 }
-
 .brand { font-size: 22px; font-weight: 600; letter-spacing: 2px; margin-bottom: 0.2rem; }
-.brandI  { color: var(--gold); }
-.brandK  { color: #ffffff; }
-.brandRest { color: var(--gold); }
-
-.hdrSub {
-  font-size: 11px;
-  color: #8899bb;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-}
-.hdrTitle {
-  color: #ffffff;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1.3;
-  margin-bottom: 0.4rem;
-}
-.hdrDesc { color: #8899bb; font-size: 13px; line-height: 1.6; }
+.brandI  { color: #0A84FF; }
+.brandK  { color: #111111; }
+.brandRest { color: #0A84FF; }
+.hdrSub { font-size: 11px; color: #6B7280; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; }
+.hdrTitle { color: #111111; font-size: 20px; font-weight: 600; line-height: 1.3; margin-bottom: 0.4rem; }
+.hdrDesc { color: #6B7280; font-size: 13px; line-height: 1.6; }
 
 /* ─── PROGRESS ────────────────────────────────────────────────────────────── */
 .progressWrap { margin-bottom: 1.5rem; }
