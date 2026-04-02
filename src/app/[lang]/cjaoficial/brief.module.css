@@ -128,7 +128,7 @@
 .field select:focus {
   outline: none;
   border-color: var(--navy);
-  box-shadow: 0 0 0 3px rgba(13, 31, 60, 0.1);
+  box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.1);
 }
 .field textarea { min-height: 90px; line-height: 1.6; }
 .field select {
