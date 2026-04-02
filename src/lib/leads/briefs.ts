@@ -38,6 +38,8 @@ export interface LeadBriefPayload {
   generatedPrompt?: string;
   origen?: string;
   fecha?: string;
+  /** Ruta pública del formulario (p. ej. "/cjaoficial") para tracking en leads y briefs */
+  originPage?: string;
 }
 
 export interface StoredLeadBrief {
@@ -114,7 +116,7 @@ async function ensureLead(payload: LeadBriefPayload): Promise<Lead> {
     additional_notes: payload.mainOffer || payload.generatedPrompt,
     source: "ikingdom-brief",
     brand: "ikingdom",
-    origin_page: "/brief",
+    origin_page: payload.originPage ?? "/brief",
     form_type: "brief_general",
   });
 
@@ -144,7 +146,7 @@ export async function storeLeadBrief(
       lead_id: lead.id,
       brand: "ikingdom",
       source: "ikingdom-website",
-      origin_page: "/brief",
+      origin_page: payload.originPage ?? "/brief",
       status: "received",
       company_name: payload.companyName,
       contact_email: payload.email || null,
