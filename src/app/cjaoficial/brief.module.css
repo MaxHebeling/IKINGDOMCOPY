@@ -2,15 +2,15 @@
 .wrap {
   --navy: #0A84FF;
   --navy2: #0071E3;
-  --gold: #b8960a;
-  --gold-l: #c9a84c;
-  --red-err: #a32d2d;
-
+  --gold: #0A84FF;
+  --gold-l: #60B3FF;
+  --red-err: #FF3B30;
   max-width: 700px;
   margin: 0 auto;
   padding: 2rem 1.25rem 5rem;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: #1a1a1a;
+  background: #F5F5F7;
 }
 
 /* ─── HEADER ──────────────────────────────────────────────────────────────── */
