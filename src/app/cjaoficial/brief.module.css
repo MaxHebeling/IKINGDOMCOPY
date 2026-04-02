@@ -301,9 +301,9 @@
 }
 .successBadge {
   display: inline-block;
-  background: rgba(184, 150, 10, 0.1);
+  background: rgba(10, 132, 255, 0.1);
   border: 1px solid var(--gold);
-  color: var(--gold-l);
+  color: var(--navy2);
   font-size: 12px;
   letter-spacing: 1px;
   padding: 6px 18px;
