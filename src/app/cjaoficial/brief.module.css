@@ -258,7 +258,7 @@
 .btnBack:hover { opacity: 0.8; }
 .btnNext {
   background: var(--navy);
-  color: var(--gold);
+  color: #fff;
   margin-left: auto;
 }
 .btnNext:hover { opacity: 0.88; }
