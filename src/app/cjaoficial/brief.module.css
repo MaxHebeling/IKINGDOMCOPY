@@ -205,7 +205,7 @@
   font-family: inherit;
 }
 .scaleBtn:hover { border-color: #aaa; color: #333; }
-.scaleBtn.sel { background: var(--navy); border-color: var(--navy); color: var(--gold); }
+.scaleBtn.sel { background: var(--navy); border-color: var(--navy); color: #fff; }
 .scaleLabels {
   display: flex;
   justify-content: space-between;
