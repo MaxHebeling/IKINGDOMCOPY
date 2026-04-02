@@ -286,7 +286,7 @@ export default function BriefForm() {
   // ── FORM ─────────────────────────────────────────────────────────────────────
   return (
     <main className={styles.wrap} ref={topRef}>
-      <Header />
+      <HeroSection />
       <ProgressBar step={step} />
 
       <form onSubmit={(e) => e.preventDefault()}>
