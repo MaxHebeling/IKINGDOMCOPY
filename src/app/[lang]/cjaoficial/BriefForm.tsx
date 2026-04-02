@@ -653,7 +653,9 @@ function HeroSection() {
             alt="CJA"
             style={{ objectFit: "contain" }}
           />
-          <span style={{ color: "#333", fontSize: "14px" }}>×</span>
+          <span style={{ color: "#6B7280", fontSize: "14px" }} aria-hidden>
+            ×
+          </span>
           <div style={{ fontSize: "13px", color: "#fff", fontWeight: 500 }}>
             Juventud Antoniana
             <br />
