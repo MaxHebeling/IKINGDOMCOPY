@@ -166,7 +166,7 @@
 .radioItem.selected,
 .checkItem.selected {
   border-color: var(--navy);
-  background: rgba(13, 31, 60, 0.05);
+  background: rgba(10, 132, 255, 0.05);
 }
 .radioItem input,
 .checkItem input {
