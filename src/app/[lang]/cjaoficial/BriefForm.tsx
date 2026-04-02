@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import styles from "../../cjaoficial/brief.module.css";
+import styles from "./brief.module.css";
 
 // ─── REEMPLAZÁ ESTO con tu form ID de Formspree ──────────────────────────────
 // 1. Creá cuenta gratis en https://formspree.io
@@ -647,7 +647,7 @@ function HeroSection() {
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <img
-            src="/logos/escudo-cja.png"
+            src="/Juventud Antoniana - Escudo.png"
             width={40}
             height={40}
             alt="CJA"
