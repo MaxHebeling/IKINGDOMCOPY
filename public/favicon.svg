@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <rect width="800" height="800" fill="#FFFFFF"/>
+
+  <!-- i: square dot -->
+  <rect x="108" y="148" width="88" height="88" fill="#C9A85C"/>
+  <!-- i: stem -->
+  <rect x="108" y="285" width="88" height="420" fill="#C9A85C"/>
+
+  <!-- k: vertical bar -->
+  <rect x="296" y="148" width="88" height="557" fill="#C9A85C"/>
+  <!-- k: upper diagonal arm -->
+  <polygon points="384,400 692,148 580,148 296,348 296,420" fill="#C9A85C"/>
+  <!-- k: lower diagonal arm -->
+  <polygon points="296,385 296,460 580,705 692,705 384,415" fill="#C9A85C"/>
+</svg>

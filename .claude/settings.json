@@ -1,0 +1,50 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/maxhebeling -type f \\\\\\(-name *.png -o -name *.svg -o -name *.webp \\\\\\) -newer /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/package.json)",
+      "Bash(find /Users/maxhebeling -type d -iname *hebeling*group* -o -type d -iname '*hebeling group*')",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(find /Users/maxhebeling -type f \\\\\\(-name *.png -o -name *.jpg -o -name *.svg -o -name *.webp \\\\\\))",
+      "Bash(cp \"/Users/maxhebeling/.openclaw/workspace/ikingdom-brand/public/client-logos/reino-editorial.png\" /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/public/clients/reino-editorial.png)",
+      "Bash(cp \"/Users/maxhebeling/.openclaw/workspace/ikingdom-brand/public/client-logos/imperium-group.png\" /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/public/clients/imperium-group.png)",
+      "Bash(cp \"/Users/maxhebeling/.openclaw/workspace/ikingdom-brand/public/client-logos/distinct-construction.png\" /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/public/clients/distinct-construction.png)",
+      "Bash(cp \"/Users/maxhebeling/.openclaw/workspace/ikingdom-brand/public/client-logos/raf-logo.png\" /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/public/clients/raf.png)",
+      "Bash(cp \"/Users/maxhebeling/.openclaw/workspace/ikingdom-brand/public/client-logos/dyt-comunicaciones.png\" /Users/maxhebeling/IKINGDOMCOPY/IKINGDOMCOPY/public/clients/dyt.png)",
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "Bash(jq -e '.hooks.PostToolUse[] | select\\(.matcher == \"\"Write|Edit|NotebookEdit\"\"\\) | .hooks[] | .command' /Users/maxhebeling/Downloads/IKINGDOMCOPY-main/.claude/settings.json)",
+      "Bash(ls -la /Users/maxhebeling/Downloads/IKINGDOMCOPY-main/.env*)",
+      "Bash(git checkout:*)",
+      "Read(//Users/maxhebeling/Downloads/**)",
+      "Bash(ls -1d /Users/maxhebeling/Downloads/*/)",
+      "Read(//Users/maxhebeling/**)",
+      "Bash(npm uninstall:*)",
+      "Bash(wc -l /Users/maxhebeling/Downloads/IKINGDOMCOPY-main/src/components/*.tsx)",
+      "WebFetch(domain:ikingdom.org)",
+      "WebFetch(domain:www.ikingdom.org)",
+      "Bash(ls -la ~/Downloads/*.jpg ~/Downloads/*.jpeg ~/Downloads/*.png)",
+      "Bash(sort -k6,7)",
+      "Bash(sips -g pixelWidth -g pixelHeight ~/Downloads/ikingdom-og.jpg ~/Downloads/og-image.png)"
+    ],
+    "additionalDirectories": [
+      "/Users/maxhebeling/Downloads/IKINGDOMCOPY-main/src/lib",
+      "/Users/maxhebeling/Downloads"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /Users/maxhebeling/Downloads/IKINGDOMCOPY-main && git add -A && git commit -m \"auto: update via Claude Code\" && git push origin main 2>/dev/null || true",
+            "statusMessage": "Deploying to Vercel..."
+          }
+        ]
+      }
+    ]
+  }
+}

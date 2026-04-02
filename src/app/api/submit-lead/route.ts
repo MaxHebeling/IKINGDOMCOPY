@@ -1,0 +1,75 @@
+import { NextRequest, NextResponse } from "next/server";
+import { createLead } from "@/lib/leads/helpers";
+
+// ── Lead payload ─────────────────────────────────────────────────────────────
+// Attribution fields are pre-wired and ready to populate once ads are running.
+interface LeadPayload {
+  // Form fields
+  name: string;
+  organization: string;
+  website: string;
+  revenue: string;
+  challenge: string;
+  // Attribution — populated automatically from URL params when ads are live
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_content?: string;
+  utm_term?: string;
+  gclid?: string;
+  fbclid?: string;
+}
+
+export async function POST(req: NextRequest) {
+  let body: LeadPayload;
+
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
+
+  // ── Validation ────────────────────────────────────────────────────────────
+  if (!body.name?.trim() || !body.organization?.trim()) {
+    return NextResponse.json({ error: "Name and organization are required" }, { status: 400 });
+  }
+
+  // Structured log — visible in Vercel Function logs immediately
+  console.log("[iKingdom] New lead submission", {
+    timestamp: new Date().toISOString(),
+    name: body.name,
+    organization: body.organization,
+    website: body.website,
+    revenue: body.revenue,
+    challenge: body.challenge,
+    attribution: {
+      utm_source: body.utm_source,
+      utm_medium: body.utm_medium,
+      utm_campaign: body.utm_campaign,
+      utm_content: body.utm_content,
+      utm_term: body.utm_term,
+      gclid: body.gclid,
+      fbclid: body.fbclid,
+    },
+  });
+
+  // Non-blocking DB insert into canonical Supabase leads table
+  (async () => {
+    try {
+      await createLead({
+        full_name:           String(body.name).slice(0, 200),
+        company_name:        body.organization ? String(body.organization).slice(0, 200) : undefined,
+        website_url:         body.website  ? String(body.website).slice(0, 300)   : undefined,
+        budget_range:        body.revenue  ? String(body.revenue).slice(0, 200)   : undefined,
+        project_description: body.challenge ? String(body.challenge).slice(0, 2000) : undefined,
+        source:              "submit-lead",
+        brand:               "ikingdom",
+        form_type:           "submit_lead",
+      });
+    } catch (err) {
+      console.error("[iKingdom] DB insert failed (submit-lead):", err);
+    }
+  })();
+
+  return NextResponse.json({ success: true }, { status: 200 });
+}
