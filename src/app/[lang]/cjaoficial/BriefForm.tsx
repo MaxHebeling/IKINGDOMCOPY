@@ -267,7 +267,7 @@ export default function BriefForm() {
   if (status === "success") {
     return (
       <main className={styles.wrap}>
-        <Header />
+        <HeroSection />
         <div className={styles.success}>
           <div className={styles.successIcon}>✓</div>
           <h2 className={styles.successTitle}>Brief recibido</h2>
