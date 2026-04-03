@@ -19,13 +19,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: {
       default: isEs
-        ? "iKingdom — Arquitectura de Crecimiento Digital"
-        : "iKingdom — Premium Growth Architecture",
+        ? "iKingdom LLC — Agencia Digital en San Diego | Diseño Web, Branding y Crecimiento"
+        : "iKingdom LLC — Digital Agency in San Diego | Web Design, Branding & Growth",
       template: "%s | iKingdom",
     },
     description: isEs
-      ? "Sistemas de captación, conversión y escalamiento para empresas que operan a alto nivel."
-      : "Revenue systems, AI operations, and enterprise platforms for companies that don't play average.",
+      ? "Agencia digital en San Diego especializada en diseño web premium, estrategia de marca y arquitectura de conversión. Servicio local y nacional."
+      : "San Diego digital agency specializing in premium web design, brand strategy, and conversion architecture. Serving local and nationwide clients.",
     alternates: {
       canonical: `${BASE}/${lang}`,
       languages: {
@@ -36,11 +36,11 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     },
     openGraph: {
       title: isEs
-        ? "iKingdom — Arquitectura de Crecimiento Digital"
-        : "iKingdom — Premium Growth Architecture",
+        ? "iKingdom LLC — Agencia Digital en San Diego | Diseño Web, Branding y Crecimiento"
+        : "iKingdom LLC — Digital Agency in San Diego | Web Design, Branding & Growth",
       description: isEs
-        ? "Sistemas de captación, conversión y escalamiento para empresas que operan a alto nivel."
-        : "Revenue systems, AI operations, and enterprise platforms for companies that don't play average.",
+        ? "Agencia digital en San Diego: diseño web premium, estrategia de marca y arquitectura de conversión."
+        : "San Diego digital agency: premium web design, brand strategy & conversion architecture.",
       url: `${BASE}/${lang}`,
       siteName: "iKingdom",
       images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "iKingdom" }],
@@ -50,11 +50,11 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     twitter: {
       card: "summary_large_image",
       title: isEs
-        ? "iKingdom — Arquitectura de Crecimiento Digital"
-        : "iKingdom — Premium Growth Architecture",
+        ? "iKingdom LLC — Agencia Digital en San Diego"
+        : "iKingdom LLC — Digital Agency in San Diego",
       description: isEs
-        ? "Sistemas de captación, conversión y escalamiento para empresas que operan a alto nivel."
-        : "Revenue systems, AI operations, and enterprise platforms for companies that don't play average.",
+        ? "Diseño web premium, estrategia de marca y arquitectura de conversión en San Diego."
+        : "Premium web design, brand strategy & conversion architecture in San Diego.",
       images: ["/og-image.jpg"],
     },
   };

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import CookieConsent from "@/components/CookieConsent";
+import { JsonLd } from "@/components/JsonLd";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,18 +16,23 @@ export const metadata: Metadata = {
     apple: "/logo.png",
   },
   title: {
-    default: "iKingdom — Agencia de crecimiento digital",
+    default: "iKingdom LLC — Digital Agency in San Diego | Web Design, Branding & Growth",
     template: "%s | iKingdom",
   },
   description:
-    "Creamos sistemas de captación, conversión y escalamiento digital de alto nivel.",
+    "San Diego digital agency specializing in premium web design, brand strategy, conversion architecture, and AI-powered business systems. Serving local and nationwide clients.",
   alternates: {
     canonical: "https://www.ikingdom.org",
+    languages: {
+      es: "https://www.ikingdom.org/es",
+      en: "https://www.ikingdom.org/en",
+      "x-default": "https://www.ikingdom.org/es",
+    },
   },
   openGraph: {
-    title: "iKingdom — Agencia de crecimiento digital",
+    title: "iKingdom LLC — Digital Agency in San Diego | Web Design, Branding & Growth",
     description:
-      "Creamos sistemas de captación, conversión y escalamiento digital de alto nivel.",
+      "Premium web design, brand strategy & conversion architecture for businesses ready to grow. San Diego digital agency serving clients nationwide.",
     url: "https://www.ikingdom.org",
     siteName: "iKingdom",
     images: [
@@ -34,17 +40,18 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "iKingdom — Agencia de crecimiento digital",
+        alt: "iKingdom LLC — Digital Agency in San Diego, CA",
       },
     ],
-    locale: "es_ES",
+    locale: "es_US",
+    alternateLocale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "iKingdom — Agencia de crecimiento digital",
+    title: "iKingdom LLC — Digital Agency in San Diego",
     description:
-      "Creamos sistemas de captación, conversión y escalamiento digital de alto nivel.",
+      "Premium web design, brand strategy & conversion architecture for businesses ready to grow.",
     images: ["/og-image.jpg"],
   },
 };
@@ -56,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es">
       <head>
+        <JsonLd />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
